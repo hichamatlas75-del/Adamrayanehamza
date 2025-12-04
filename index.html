@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hub Révisions - Ultimate Custom</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0f172a;
+            --surface: #1e293b;
+            --surface-light: #334155;
+            --hamza: #3b82f6;
+            --twins: #8b5cf6;
+            --accent-red: #ef4444;
+            --accent-green: #10b981;
+            --accent-orange: #f59e0b;
+            --text: #f8fafc;
+            
+            /* Couleurs Hobbies */
+            --hobby-manga: #d946ef; /* Rose Fuchsia */
+            --hobby-sport: #eab308; /* Jaune Or */
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; -webkit-tap-highlight-color: transparent; }
+        
+        body { background-color: var(--bg); color: var(--text); padding-bottom: 90px; }
+
+        /* HEADER */
+        header {
+            background: linear-gradient(180deg, #1e293b 0%, var(--bg) 100%);
+            padding: 30px 20px; text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        h1 { font-weight: 900; font-size: 1.8rem; letter-spacing: -1px; margin-bottom: 5px; }
+        .tagline { color: #94a3b8; font-size: 0.9rem; font-weight: 500; }
+
+        /* NAV */
+        .nav-wrapper { position: sticky; top: 0; z-index: 50; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(10px); padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .nav-container { display: flex; gap: 10px; background: var(--surface); padding: 5px; border-radius: 12px; }
+        .nav-btn {
+            flex: 1; padding: 12px; border: none; border-radius: 8px;
+            font-weight: 700; color: #94a3b8; background: transparent; cursor: pointer; transition: 0.3s;
+        }
+        .nav-btn.active { color: white; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+        #btn-hamza.active { background: var(--hamza); }
+        #btn-twins.active { background: var(--twins); }
+
+        /* CARDS */
+        .section { display: none; padding: 20px; animation: fadeIn 0.4s ease; }
+        .section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .category-title {
+            font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1.5px;
+            color: #64748b; margin: 30px 0 15px 5px; font-weight: 800;
+        }
+
+        .card-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
+
+        .resource-card {
+            background: var(--surface); border-radius: 16px; padding: 15px;
+            display: flex; align-items: center; text-decoration: none; color: white;
+            border: 1px solid rgba(255,255,255,0.03); transition: transform 0.2s, background 0.2s;
+        }
+        .resource-card:active { transform: scale(0.98); background: var(--surface-light); }
+
+        .card-icon {
+            width: 45px; height: 45px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.4rem; margin-right: 15px; flex-shrink: 0;
+            background: rgba(255,255,255,0.05);
+        }
+        
+        .card-info { flex: 1; }
+        .card-name { font-weight: 700; font-size: 1rem; margin-bottom: 2px; }
+        .card-sub { font-size: 0.75rem; color: #94a3b8; }
+        .card-arrow { color: #475569; font-weight: 900; }
+
+        /* HOBBY CARDS SPECIAL STYLE */
+        .hobby-card { border: 1px solid rgba(255,255,255,0.1); background: linear-gradient(90deg, #1e293b, #0f172a); }
+        .hobby-section-title {
+            display: flex; align-items: center; gap: 10px; font-weight: 900; 
+            font-size: 1rem; margin-bottom: 10px; color: white;
+        }
+        .badge-hobby { font-size: 0.7rem; padding: 3px 8px; border-radius: 4px; color: #000; font-weight: 700; }
+        
+        /* ICONS COLORS */
+        .icon-maths { color: #f87171; background: rgba(248, 113, 113, 0.1); }
+        .icon-pc { color: #fbbf24; background: rgba(251, 191, 36, 0.1); }
+        .icon-svt { color: #34d399; background: rgba(52, 211, 153, 0.1); }
+        .icon-fr { color: #60a5fa; background: rgba(96, 165, 250, 0.1); }
+        .icon-ar { color: #a78bfa; background: rgba(167, 139, 250, 0.1); }
+        .icon-islam { color: #10b981; background: rgba(16, 185, 129, 0.1); }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>⚡ MY REVISION HUB</h1>
+        <div class="tagline">Work Hard • Play Hard</div>
+    </header>
+
+    <div class="nav-wrapper">
+        <div class="nav-container">
+            <button id="btn-hamza" class="nav-btn active" onclick="switchTab('hamza')">👤 Hamza</button>
+            <button id="btn-twins" class="nav-btn" onclick="switchTab('twins')">👥 Les Frères</button>
+        </div>
+    </div>
+
+    <!-- =========================================
+         SECTION HAMZA (TC)
+    ========================================= -->
+    <div id="hamza-section" class="section active">
+        
+        <div class="category-title">🧬 Zone Scientifique</div>
+        <div class="card-grid">
+            <a href="https://www.youtube.com/@YoussefNejjari" class="resource-card">
+                <div class="card-icon icon-maths">📐</div>
+                <div class="card-info">
+                    <div class="card-name">Maths - Nejjari</div>
+                    <div class="card-sub">Top Prof Maroc</div>
+                </div>
+                <div class="card-arrow">➜</div>
+            </a>
+            <a href="https://www.youtube.com/@ZakariaChoukri" class="resource-card">
+                <div class="card-icon icon-pc">⚡</div>
+                <div class="card-info">
+                    <div class="card-name">Physique - Zakaria</div>
+                    <div class="card-sub">Cours & Exos PC</div>
+                </div>
+                <div class="card-arrow">➜</div>
+            </a>
+        </div>
+
+        <div class="category-title">📚 Matières Littéraires</div>
+        <div class="card-grid">
+            <a href="https://www.youtube.com/results?search_query=tronc+commun+fran%C3%A7ais+oeuvres" class="resource-card">
+                <div class="card-icon icon-fr">🇫🇷</div>
+                <div class="card-info">
+                    <div class="card-name">Français (Œuvres)</div>
+                    <div class="card-sub">Résumés des romans</div>
+                </div>
+                <div class="card-arrow">➜</div>
+            </a>
+            <a href="https://www.youtube.com/@moullfalsafa" class="resource-card">
+                <div class="card-icon icon-ar" style="color:#db2777">🦉</div>
+                <div class="card-info">
+                    <div class="card-name">Philo (Moul l'Falsafa)</div>
+                    <div class="card-sub">Initiation Pensée</div>
+                </div>
+                <div class="card-arrow">➜</div>
+            </a>
+        </div>
+
+        <!-- ZONE HOBBIES HAMZA -->
+        <hr style="margin: 30px 0; border: 0; border-top: 1px solid rgba(255,255,255,0.1);">
+        
+        <div class="hobby-section-title">
+            <span>⚽ ZONE DÉTENTE</span>
+            <span class="badge-hobby" style="background:var(--hobby-sport);">HAMZA</span>
+        </div>
+        <div class="card-grid">
+            <a href="https://www.kooora.com/" class="resource-card hobby-card">
+                <div class="card-icon" style="background:var(--hobby-sport); color:black;">🏆</div>
+                <div class="card-info">
+                    <div class="card-name">Kooora</div>
+                    <div class="card-sub">Actu Football Maroc & Monde</div>
+                </div>
+                <div class="card-arrow">➜</div>
+            </a>
+            <a href="https://www.youtube.com/@NassimSahili" class="resource-card hobby-card">
+                <div class="card-icon" style="background:var(--hobby-sport); color:black;">🏋️</div>
+                <div class="card-info">
+                    <div class="card-name">Nassim Sahili</div>
+                    <div class="card-sub">Progression Musculation</div>
+                </div>
+                <div class="card-arrow">➜</div>
+            </a>
+        </div>
+
+    </div>
+
+    <!-- =========================================
+         SECTION TWINS (1er BAC)
+    ========================================= -->
+    <div id="twins-section" class="section">
+
+        <!-- BANNIÈRE ALERTE -->
+        <div style="background: linear-gradient(90deg, #7f1d1d, #b91c1c); padding: 15px; border-radius: 12px; margin-bottom: 20px; color: white; border: 1px solid #ef4444;">
+            <div style="font-weight: 800; font-size: 1.1rem;">🚨 MISSION RÉGIONAL</div>
+            <div style="font-size: 0.8rem; opacity: 0.9;">Coeff total : 25%. Priorité absolue.</div>
+        </div>
+
+        <div class="category-title">📖 Pack Survie (Français/Islam)</div>
+        <div class="card-grid">
+            <a href="https://www.youtube.com/@SoutienAdnan" class="resource-card" style="border-left: 3px solid #3b82f6;">
+                <div class="card-icon icon-fr">🏆</div>
+                <div class="card-info">
+                    <div class="card-name">Soutien Adnan</div>
+                    <div class="card-sub">Le Roi du Régional</div>
+                </div>
+                <div class="card-arrow">➜</div>
+            </a>
+            <a href="https://www.youtube.com/results?search_query=ayman+oueld+lhaj+education+islamique" class="resource-card">
+                <div class="card-icon icon-islam">🕋</div>
+                <div class="card-info">
+                    <div class="card-name">Islamique - Ayman</div>
+                    <div class="card-sub">Apprendre en rigolant</div>
+                </div>
+                <div class="card-arrow">➜</div>
+            </a>
+             <a href="https://www.youtube.com/@khalidhachadi" class="resource-card">
+                <div class="card-icon icon-ar">🇸🇦</div>
+                <div class="card-info">
+                    <div class="card-name">Arabe - Khalid</div>
+                    <div class="card-sub">Méthodo Analyse Texte</div>
+                </div>
+                <div class="card-arrow">➜</div>
+            </a>
+        </div>
+
+        <div class="category-title">🧪 Sciences Sc. Exp</div>
+        <div class="card-grid">
+            <a href="https://www.youtube.com/@profFaysal" class="resource-card">
+                <div class="card-icon icon-pc">⚛️</div>
+                <div class="card-info">
+                    <div class="card-name">Prof Faysal (PC)</div>
+                    <div class="card-sub">Spécial 1er Bac</div>
+                </div>
+                <div class="card-arrow">➜</div>
+            </a>
+            <a href="https://www.youtube.com/@Kezakoo" class="resource-card">
+                <div class="card-icon icon-maths">🎓</div>
+                <div class="card-info">
+                    <div class="card-name">Kezakoo</div>
+                    <div class="card-sub">Toutes matières</div>
+                </div>
+                <div class="card-arrow">➜</div>
+            </a>
+        </div>
+
+        <!-- ZONE HOBBIES ADAM & RAYANE -->
+        <hr style="margin: 30px 0; border: 0; border-top: 1px solid rgba(255,255,255,0.1);">
+
+        <!-- ADAM -->
+        <div class="hobby-section-title">
+            <span>🏋️ LA PAUSE D'ADAM</span>
+            <span class="badge-hobby" style="background:var(--hobby-sport);">SPORT</span>
+        </div>
+        <div class="card-grid" style="margin-bottom: 25px;">
+            <a href="https://www.flashscore.fr/" class="resource-card hobby-card">
+                <div class="card-icon" style="background:var(--hobby-sport); color:black;">⚽</div>
+                <div class="card-info">
+                    <div class="card-name">FlashScore</div>
+                    <div class="card-sub">Résultats en direct</div>
+                </div>
+                <div class="card-arrow">➜</div>
+            </a>
+             <a href="https://www.youtube.com/@NassimSahili" class="resource-card hobby-card">
+                <div class="card-icon" style="background:var(--hobby-sport); color:black;">💪</div>
+                <div class="card-info">
+                    <div class="card-name">Nassim Sahili</div>
+                    <div class="card-sub">Conseils Muscu</div>
+                </div>
+                <div class="card-arrow">➜</div>
+            </a>
+        </div>
+
+        <!-- RAYANE -->
+        <div class="hobby-section-title">
+            <span>⛩️ LA PAUSE DE RAYANE</span>
+            <span class="badge-hobby" style="background:var(--hobby-manga);">MANGA</span>
+        </div>
+        <div class="card-grid">
+            <a href="https://mangaplus.shueisha.co.jp/updates" class="resource-card hobby-card" style="border-color: var(--hobby-manga);">
+                <div class="card-icon" style="background:var(--hobby-manga); color:white;">📖</div>
+                <div class="card-info">
+                    <div class="card-name">Manga Plus</div>
+                    <div class="card-sub">Chapitres officiels Gratuits</div>
+                </div>
+                <div class="card-arrow">➜</div>
+            </a>
+            <a href="https://www.adkami.com/" class="resource-card hobby-card" style="border-color: var(--hobby-manga);">
+                <div class="card-icon" style="background:var(--hobby-manga); color:white;">📺</div>
+                <div class="card-info">
+                    <div class="card-name">Adkami</div>
+                    <div class="card-sub">Actu Anime & Sorties</div>
+                </div>
+                <div class="card-arrow">➜</div>
+            </a>
+        </div>
+
+    </div>
+
+    <script>
+        function switchTab(who) {
+            document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+
+            if(who === 'hamza') {
+                document.getElementById('hamza-section').classList.add('active');
+                document.getElementById('btn-hamza').classList.add('active');
+            } else {
+                document.getElementById('twins-section').classList.add('active');
+                document.getElementById('btn-twins').classList.add('active');
+            }
+        }
+    </script>
+
+</body>
+</html>

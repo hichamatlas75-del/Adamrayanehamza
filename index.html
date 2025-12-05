@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>QG REVISIONS - ULTIMATEs QUIZ</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <title>QG EXAMENS 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Orbitron:wght@700&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #0f172a;
@@ -14,7 +14,7 @@
             --text: #f8fafc;
             --success: #10b981;
             --error: #ef4444;
-            --quiz-bg: #2d3748;
+            --alarm: #ef4444;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; -webkit-tap-highlight-color: transparent; }
@@ -22,7 +22,7 @@
 
         /* HEADER & NAV */
         header { text-align: center; padding: 20px; background: rgba(15,23,42,0.95); border-bottom: 1px solid #334155; }
-        h1 { font-weight: 800; letter-spacing: 1px; font-size: 1.4rem; }
+        h1 { font-weight: 900; letter-spacing: 1px; font-size: 1.4rem; }
 
         .nav-bar { display: flex; gap: 10px; padding: 15px; position: sticky; top: 0; background: var(--bg); z-index: 100; border-bottom: 1px solid #334155; }
         .tab-btn { flex: 1; padding: 12px; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; background: #334155; color: #94a3b8; transition: 0.3s; }
@@ -34,55 +34,69 @@
         .show { display: block; }
         @keyframes fade { from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:translateY(0)} }
 
+        /* COMPTE A REBOURS */
+        .countdown-box {
+            background: linear-gradient(180deg, #450a0a 0%, #7f1d1d 100%);
+            border: 2px solid #ef4444; border-radius: 12px; padding: 15px;
+            text-align: center; margin-bottom: 25px;
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
+        }
+        .countdown-title { color: #fca5a5; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; }
+        .timer-display {
+            font-family: 'Orbitron', sans-serif; font-size: 1.8rem; color: white;
+            display: flex; justify-content: center; gap: 10px;
+        }
+        .time-unit { display: flex; flex-direction: column; align-items: center; }
+        .unit-label { font-family: 'Outfit', sans-serif; font-size: 0.6rem; opacity: 0.7; margin-top: -5px; }
+
         /* TITRES & GRILLES */
         .section-title { font-size: 0.9rem; font-weight: 800; color: #64748b; margin: 30px 0 10px 0; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 8px; }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 15px; }
 
-        /* CARTES LIENS (RESSOURCES) */
+        /* CARTES LIENS */
         .card { 
             background: var(--surface); padding: 15px; border-radius: 12px; text-decoration: none; color: white; 
             border: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; transition: 0.2s;
         }
-        .card:active { transform: scale(0.95); }
         .card-icon { font-size: 1.5rem; }
         .card h3 { font-size: 0.9rem; font-weight: 700; }
-        .card p { font-size: 0.7rem; opacity: 0.7; }
 
-        /* BOUTONS QUIZ (NOUVEAU DESIGN) */
+        /* BOUTONS QUIZ ETENDUS */
         .btn-quiz {
-            background: linear-gradient(135deg, #4c1d95 0%, #6d28d9 100%);
-            color: white; border: none; padding: 15px; border-radius: 12px;
-            font-weight: 700; text-align: left; display: flex; align-items: center; justify-content: space-between;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2); cursor: pointer; margin-bottom: 8px;
+            background: #1e293b; color: white; border: 1px solid rgba(255,255,255,0.1); 
+            padding: 15px; border-radius: 12px; font-weight: 700; text-align: left; 
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 8px; transition: 0.2s;
         }
-        .btn-quiz span { font-size: 1.2rem; }
-        .btn-quiz small { display: block; font-size: 0.7rem; font-weight: 400; opacity: 0.8; }
-        .q-science { background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%); } /* Teal */
-        .q-litt { background: linear-gradient(135deg, #be185d 0%, #f43f5e 100%); } /* Pink */
+        .btn-quiz:active { transform: scale(0.98); background: #334155; }
+        
+        /* Styles spécifiques Quiz */
+        .q-fr { border-left: 4px solid #3b82f6; }
+        .q-islam { border-left: 4px solid #10b981; }
+        .q-hg { border-left: 4px solid #d97706; }
+        .q-sci { border-left: 4px solid #ef4444; }
 
-        /* MODAL QUIZ (POPUP) */
+        /* MODAL QUIZ */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9); z-index: 2000; display: none;
-            justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(5px);
+            background: rgba(0,0,0,0.95); z-index: 2000; display: none;
+            justify-content: center; align-items: center; padding: 20px;
         }
         .modal-content {
-            background: var(--quiz-bg); width: 100%; max-width: 500px; border-radius: 16px;
-            padding: 25px; border: 1px solid #4a5568; position: relative;
+            background: #1e293b; width: 100%; max-width: 500px; border-radius: 16px;
+            padding: 25px; border: 1px solid #475569; max-height: 80vh; overflow-y: auto;
         }
-        .close-btn {
-            position: absolute; top: 15px; right: 15px; background: none; border: none;
-            color: #a0aec0; font-size: 1.5rem; cursor: pointer;
-        }
-        .quiz-question { font-size: 1.1rem; font-weight: 700; margin-bottom: 20px; line-height: 1.4; }
+        .quiz-question { font-size: 1.1rem; font-weight: 700; margin-bottom: 20px; line-height: 1.4; color: white; }
         .quiz-opt-btn {
             width: 100%; padding: 14px; margin-bottom: 10px; background: rgba(255,255,255,0.05);
-            border: 2px solid rgba(255,255,255,0.1); color: white; border-radius: 8px;
-            text-align: left; font-weight: 600; cursor: pointer; transition: 0.2s;
+            border: 1px solid rgba(255,255,255,0.1); color: #cbd5e1; border-radius: 8px;
+            text-align: left; font-weight: 600; cursor: pointer;
         }
-        .quiz-opt-btn.correct { background: var(--success); border-color: var(--success); color: #000; }
-        .quiz-opt-btn.wrong { background: var(--error); border-color: var(--error); }
-        .score-display { text-align: center; font-size: 1.5rem; font-weight: 900; color: var(--success); margin-top: 20px; }
+        .quiz-opt-btn.correct { background: #10b981; color: white; border-color: #10b981; }
+        .quiz-opt-btn.wrong { background: #ef4444; color: white; border-color: #ef4444; }
+        
+        .score-final { font-size: 2rem; font-weight: 900; color: #fbbf24; text-align: center; margin-top: 20px; }
+        .close-modal { position: absolute; top: 15px; right: 20px; background: none; border: none; color: white; font-size: 1.5rem; }
 
         /* BOUTONS DOCS */
         .btn-doc { 
@@ -96,7 +110,7 @@
 <body>
 
     <header>
-        <h1>🎓 MASTER CLASS 2025</h1>
+        <h1>⚡ MISSION EXAMEN</h1>
     </header>
 
     <div class="nav-bar">
@@ -108,58 +122,37 @@
          SECTION HAMZA (TC)
     ============================================= -->
     <div id="zone-hamza" class="zone show">
-        
-        <!-- RESSOURCES -->
-        <div class="section-title"><span>📚</span> COURS & VIDÉOS</div>
+        <div class="section-title"><span>🧪</span> PÔLE SCIENTIFIQUE</div>
         <div class="grid">
             <a href="https://www.youtube.com/@YoussefNejjari" target="_blank" class="card" style="border-left: 3px solid #ef4444;">
                 <div class="card-icon">📐</div>
-                <div><h3>Maths</h3><p>Nejjari</p></div>
+                <div><h3>Maths</h3></div>
             </a>
             <a href="https://www.youtube.com/results?search_query=zakaria+choukri+tronc+commun" target="_blank" class="card" style="border-left: 3px solid #f59e0b;">
                 <div class="card-icon">⚡</div>
-                <div><h3>Physique</h3><p>Zakaria</p></div>
+                <div><h3>Physique</h3></div>
             </a>
             <a href="https://www.youtube.com/@SVTFABOUR" target="_blank" class="card" style="border-left: 3px solid #10b981;">
                 <div class="card-icon">🧬</div>
-                <div><h3>SVT</h3><p>Fabour</p></div>
-            </a>
-            <a href="https://www.youtube.com/results?search_query=aux+champs+analyse" target="_blank" class="card" style="border-left: 3px solid #3b82f6;">
-                <div class="card-icon">🇫🇷</div>
-                <div><h3>Français</h3><p>Œuvres</p></div>
+                <div><h3>SVT</h3></div>
             </a>
         </div>
 
-        <!-- ZONE QUIZ HAMZA -->
-        <div class="section-title"><span>🧠</span> QUIZ EXPRESS (Entraînement)</div>
-        <button class="btn-quiz q-science" onclick="startQuiz('tc_maths')">
-            <div>Mathématiques <small>Vecteurs, Calcul, Ordre</small></div>
-            <span>📐</span>
+        <div class="section-title"><span>🧠</span> QUIZ ENTRAÎNEMENT</div>
+        <button class="btn-quiz q-sci" onclick="startQuiz('tc_maths')">
+            <div>Mathématiques <br><small>Vecteurs & Calcul</small></div> <span>📐</span>
         </button>
-        <button class="btn-quiz q-science" onclick="startQuiz('tc_pc')">
-            <div>Physique-Chimie <small>Gravitation, Espèces Chimiques</small></div>
-            <span>⚡</span>
+        <button class="btn-quiz q-sci" onclick="startQuiz('tc_pc')">
+            <div>Physique-Chimie <br><small>Gravitation & Espèces</small></div> <span>⚡</span>
         </button>
-        <button class="btn-quiz q-litt" onclick="startQuiz('tc_fr')">
-            <div>Français <small>La Parure, Aux Champs</small></div>
-            <span>🇫🇷</span>
-        </button>
-        <button class="btn-quiz q-litt" onclick="startQuiz('tc_svt')">
-            <div>SVT <small>Écologie, Chaînes trophiques</small></div>
-            <span>🧬</span>
+        <button class="btn-quiz q-fr" onclick="startQuiz('tc_fr')">
+            <div>Français <br><small>Nouvelles Réalistes</small></div> <span>🇫🇷</span>
         </button>
 
-        <!-- HOBBIES -->
         <div class="section-title"><span>⚽</span> PAUSE SPORT</div>
         <div class="grid">
-            <a href="https://www.kooora.com/" target="_blank" class="card">
-                <div class="card-icon">🏆</div>
-                <h3>Kooora</h3>
-            </a>
-            <a href="https://www.youtube.com/@NassimSahili" target="_blank" class="card">
-                <div class="card-icon">💪</div>
-                <h3>Muscu</h3>
-            </a>
+            <a href="https://www.kooora.com/" target="_blank" class="card"><div class="card-icon">🏆</div><h3>Kooora</h3></a>
+            <a href="https://www.youtube.com/@NassimSahili" target="_blank" class="card"><div class="card-icon">💪</div><h3>Muscu</h3></a>
         </div>
     </div>
 
@@ -168,250 +161,227 @@
     ============================================= -->
     <div id="zone-twins" class="zone">
         
-        <!-- ALERT REGIONAL -->
-        <div style="background: linear-gradient(90deg, #7f1d1d, #991b1b); padding: 15px; border-radius: 12px; margin-bottom: 20px; border: 1px solid #ef4444; text-align: center;">
-            <h3 style="color: white;">🚨 MISSION RÉGIONAL</h3>
-            <p style="color: #fca5a5; font-size: 0.8rem;">Objectif : Sécuriser les 25%</p>
+        <!-- COMPTE A REBOURS -->
+        <div class="countdown-box">
+            <div class="countdown-title">🚨 DÉBUT EXAMEN RÉGIONAL</div>
+            <div class="timer-display" id="timer">
+                <div class="time-unit"><span id="days">00</span><span class="unit-label">Jours</span></div> :
+                <div class="time-unit"><span id="hours">00</span><span class="unit-label">Hrs</span></div> :
+                <div class="time-unit"><span id="mins">00</span><span class="unit-label">Min</span></div>
+            </div>
         </div>
 
-        <!-- RESSOURCES -->
+        <!-- GROS BLOC LITTERAIRE (EXAMEN REGIONAL) -->
+        <div class="section-title" style="color: #fbbf24;"><span>📚</span> PRÉPA RÉGIONAL (COEFF MAX)</div>
+        
+        <!-- QUIZ FRANCAIS DETAILLES -->
+        <button class="btn-quiz q-fr" onclick="startQuiz('bac_fr_boite')">
+            <div>La Boîte à Merveilles <br><small>Personnages & Lieux</small></div> <span>📦</span>
+        </button>
+        <button class="btn-quiz q-fr" onclick="startQuiz('bac_fr_antigone')">
+            <div>Antigone <br><small>Intrigue & Mythe</small></div> <span>🎭</span>
+        </button>
+        <button class="btn-quiz q-fr" onclick="startQuiz('bac_fr_condamne')">
+            <div>Le Dernier Jour... <br><small>Thèse & Arguments</small></div> <span>⚖️</span>
+        </button>
+
+        <!-- QUIZ ISLAM & HG -->
+        <button class="btn-quiz q-islam" onclick="startQuiz('bac_islam_youssef')">
+            <div>Islam : Sourate Youssef <br><small>Le récit et les leçons</small></div> <span>🕋</span>
+        </button>
+        <button class="btn-quiz q-islam" onclick="startQuiz('bac_islam_concepts')">
+            <div>Islam : Foi & Famille <br><small>Mariage, Divorce, Athéisme</small></div> <span>🕌</span>
+        </button>
+        <button class="btn-quiz q-hg" onclick="startQuiz('bac_hg')">
+            <div>Histoire-Géo <br><small>Guerre, Protectorat, USA</small></div> <span>🌍</span>
+        </button>
+
+        <div class="section-title"><span>⚛️</span> SCIENCES (SC. EXP)</div>
+        <button class="btn-quiz q-sci" onclick="startQuiz('bac_pc')">
+            <div>Physique-Chimie <br><small>Mécanique & Chimie</small></div> <span>⚡</span>
+        </button>
+
+        <div class="section-title"><span>📂</span> RESSOURCES</div>
         <div class="grid">
-            <a href="https://www.youtube.com/@SoutienAdnan" target="_blank" class="card" style="border-color: #3b82f6;">
-                <div class="card-icon">👑</div>
-                <div><h3>S. Adnan</h3><p>Le Boss du FR</p></div>
-            </a>
-            <a href="https://www.youtube.com/@AymanOueldLhaj" target="_blank" class="card" style="border-color: #10b981;">
-                <div class="card-icon">🕌</div>
-                <div><h3>Islam</h3><p>Ayman</p></div>
-            </a>
+            <a href="https://www.youtube.com/@SoutienAdnan" target="_blank" class="card"><div class="card-icon">👑</div><h3>Adnan (FR)</h3></a>
+            <a href="https://moutamadris.ma/" target="_blank" class="card"><div class="card-icon">📝</div><h3>Annales</h3></a>
         </div>
 
-        <!-- ZONE QUIZ TWINS -->
-        <div class="section-title"><span>📝</span> TEST CONNAISSANCES (Régional)</div>
-        <button class="btn-quiz q-litt" onclick="startQuiz('bac_fr')">
-            <div>Français <small>Boîte à Merveilles, Antigone</small></div>
-            <span>🇫🇷</span>
-        </button>
-        <button class="btn-quiz q-litt" onclick="startQuiz('bac_islam')">
-            <div>Éducation Islamique <small>Sourates, Définitions</small></div>
-            <span>🕌</span>
-        </button>
-        <button class="btn-quiz q-litt" onclick="startQuiz('bac_hg')">
-            <div>Histoire-Géo <small>Maroc, Capitalisme, Europe</small></div>
-            <span>🌍</span>
-        </button>
-        <button class="btn-quiz q-litt" onclick="startQuiz('bac_ar')">
-            <div>Arabe <small>Langue & Analyse</small></div>
-            <span>🇸🇦</span>
-        </button>
-
-        <div class="section-title"><span>⚛️</span> TEST SCIENCES (Sc. Exp)</div>
-        <button class="btn-quiz q-science" onclick="startQuiz('bac_maths')">
-            <div>Mathématiques <small>Logique, Généralités Fonctions</small></div>
-            <span>📐</span>
-        </button>
-        <button class="btn-quiz q-science" onclick="startQuiz('bac_pc')">
-            <div>Physique-Chimie <small>Rotation, Travail, Titrage</small></div>
-            <span>⚡</span>
-        </button>
-
-        <!-- LIENS UTILES -->
-        <div class="section-title"><span>📂</span> DOCUMENTS</div>
-        <a href="https://moutamadris.ma/" target="_blank" class="btn-doc">
-            <span>📝 Annales Examens (PDF)</span> <span>➜</span>
-        </a>
-        <a href="https://www.kezakoo.com/" target="_blank" class="btn-doc" style="background: #1e1b4b; border-color: #4f46e5; color: #a5b4fc;">
-            <span>🎓 KEZAKOO OFFICIEL</span> <span>➜</span>
-        </a>
-
-        <!-- HOBBIES -->
-        <div class="section-title"><span>⛩️</span> PAUSE MANGA & FOOT</div>
+        <div class="section-title"><span>⛩️</span> PAUSE MANGA</div>
         <div class="grid">
-            <a href="https://www.flashscore.fr/" target="_blank" class="card">
-                <div class="card-icon">⚽</div>
-                <h3>FlashScore</h3>
-            </a>
-            <a href="https://mangaplus.shueisha.co.jp/updates" target="_blank" class="card">
-                <div class="card-icon">📖</div>
-                <h3>Manga+</h3>
-            </a>
+            <a href="https://mangaplus.shueisha.co.jp/updates" target="_blank" class="card"><div class="card-icon">📖</div><h3>Manga+</h3></a>
+            <a href="https://www.flashscore.fr/" target="_blank" class="card"><div class="card-icon">⚽</div><h3>FlashScore</h3></a>
         </div>
     </div>
 
     <!-- =============================================
-         MODAL QUIZ (POPUP)
+         MODAL QUIZ
     ============================================= -->
     <div id="quiz-modal" class="modal-overlay">
         <div class="modal-content">
-            <button class="close-btn" onclick="closeQuiz()">×</button>
+            <button class="close-modal" onclick="closeQuiz()">×</button>
             <div id="quiz-body">
-                <h3 id="q-category" style="color:#a5b4fc; text-transform:uppercase; font-size:0.8rem; margin-bottom:10px;">MATIÈRE</h3>
-                <div id="q-text" class="quiz-question">Chargement...</div>
-                <div id="q-options">
-                    <!-- Options injectées par JS -->
-                </div>
+                <h3 id="q-cat-title" style="color:#94a3b8; font-size:0.8rem; margin-bottom:10px;">CATEGORIE</h3>
+                <div id="q-text" class="quiz-question">...</div>
+                <div id="q-options"></div>
             </div>
-            <div id="quiz-result" class="score-display" style="display:none;"></div>
-            <button id="btn-next" class="btn-doc" style="margin-top:20px; justify-content:center; display:none;" onclick="nextQuestion()">Suivant ➜</button>
+            <div id="quiz-result" style="display:none;">
+                <div id="score-val" class="score-final"></div>
+                <button class="btn-doc" style="margin-top:20px; justify-content:center;" onclick="closeQuiz()">Fermer</button>
+            </div>
+            <button id="btn-next" class="btn-doc" style="margin-top:15px; justify-content:center; display:none; background:#3b82f6;" onclick="nextQuestion()">Question Suivante ➜</button>
         </div>
     </div>
 
     <script>
-        // --- DONNÉES DES QUESTIONS ---
+        // --- COMPTE A REBOURS ---
+        function startCountdown() {
+            // Date approximative du Régional : 8 Juin 2026 (à ajuster selon calendrier officiel)
+            const examDate = new Date("June 8, 2026 08:00:00").getTime();
+
+            setInterval(function() {
+                const now = new Date().getTime();
+                const distance = examDate - now;
+
+                if (distance < 0) {
+                    document.getElementById("timer").innerHTML = "EXAMEN EN COURS !";
+                    return;
+                }
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+                document.getElementById("days").innerText = days < 10 ? "0" + days : days;
+                document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
+                document.getElementById("mins").innerText = minutes < 10 ? "0" + minutes : minutes;
+            }, 1000);
+        }
+        startCountdown();
+
+        // --- DATA QUIZ ETENDUE ---
         const quizData = {
-            // HAMZA (TC)
+            // HAMZA
             'tc_maths': [
-                { q: "Un nombre pair s'écrit toujours sous la forme :", opt: ["2k", "2k+1", "k²", "2k-1"], ans: 0 },
-                { q: "Si AB = CD (vecteurs), alors ABDC est un :", opt: ["Carré", "Parallélogramme", "Losange", "Trapèze"], ans: 1 },
-                { q: "La projection conserve :", opt: ["Les longueurs", "Les angles", "Le coefficient de colinéarité", "Les aires"], ans: 2 }
+                { q: "Si AB = CD (vecteurs), alors ABDC est un :", opt: ["Carré", "Parallélogramme", "Losange"], ans: 1 },
+                { q: "La projection conserve :", opt: ["Les longueurs", "Le coefficient de colinéarité", "Les aires"], ans: 1 },
+                { q: "Un nombre pair s'écrit :", opt: ["2k+1", "2k", "k²"], ans: 1 }
             ],
             'tc_pc': [
-                { q: "L'unité de la constante de gravitation G est :", opt: ["N.kg", "N.m²/kg²", "kg/N", "m/s²"], ans: 1 },
-                { q: "Pour extraire l'huile essentielle de lavande, on utilise :", opt: ["La décantation", "L'hydrodistillation", "La filtration", "L'électrolyse"], ans: 1 },
-                { q: "Une espèce chimique pure a :", opt: ["Des températures de changement d'état fixes", "Une couleur unique", "Une odeur forte", "Aucune masse"], ans: 0 }
+                { q: "L'unité de G (Gravitation) :", opt: ["N.kg", "N.m²/kg²", "m/s²"], ans: 1 },
+                { q: "Extraction huile essentielle lavande :", opt: ["Décantation", "Hydrodistillation", "Filtration"], ans: 1 }
             ],
             'tc_fr': [
-                { q: "Qui est l'auteur de 'La Parure' ?", opt: ["Victor Hugo", "Guy de Maupassant", "Émile Zola", "Balzac"], ans: 1 },
-                { q: "Dans 'Aux Champs', pourquoi les Tuvache refusent-ils ?", opt: ["Par amour", "Par fierté", "Pour l'argent", "Ils acceptent"], ans: 1 },
-                { q: "Quel est le genre de ces œuvres ?", opt: ["Roman", "Nouvelle réaliste", "Théâtre", "Poésie"], ans: 1 }
-            ],
-            'tc_svt': [
-                { q: "Un ensemble d'individus de la même espèce vivant dans un lieu donné :", opt: ["Biocénose", "Population", "Biotope", "Écosystème"], ans: 1 },
-                { q: "Dans une chaîne trophique, les plantes vertes sont des :", opt: ["Consommateurs I", "Producteurs", "Décomposeurs", "Consommateurs II"], ans: 1 }
+                { q: "Genre de 'La Parure' ?", opt: ["Roman", "Nouvelle réaliste", "Théâtre"], ans: 1 },
+                { q: "Auteur de 'Aux Champs' ?", opt: ["Zola", "Maupassant", "Hugo"], ans: 1 }
             ],
 
-            // TWINS (BAC)
-            'bac_fr': [
-                { q: "Qui est le narrateur de la Boîte à Merveilles ?", opt: ["Sidi Mohammed", "Ahmed Sefrioui", "Le Maalem Abdeslam", "Driss El Aouad"], ans: 0 },
-                { q: "Antigone est une tragédie écrite par :", opt: ["Sophocle", "Jean Anouilh", "Molière", "Corneille"], ans: 1 },
-                { q: "La relation entre Créon et Antigone est :", opt: ["Père/Fille", "Oncle/Nièce", "Frère/Sœur", "Inconnus"], ans: 1 },
-                { q: "La figure de style : 'Ma solitude ne date pas d'hier' est :", opt: ["Une métaphore", "Une litote", "Une hyperbole", "Une comparaison"], ans: 1 }
+            // TWINS - FRANCAIS
+            'bac_fr_boite': [
+                { q: "Le narrateur a quel âge ?", opt: ["6 ans", "8 ans", "10 ans"], ans: 0 },
+                { q: "Le métier du père du narrateur ?", opt: ["Barbier", "Tisserand", "Faqih"], ans: 1 },
+                { q: "Où habite la famille ?", opt: ["Dar Chouafa", "Dar Kitoun", "Fès Jdid"], ans: 0 },
+                { q: "Quel objet contient la boîte ?", opt: ["De l'or", "Des objets hétéroclites", "Des bonbons"], ans: 1 }
             ],
-            'bac_islam': [
-                { q: "Le traité de Houdaibiya a eu lieu en l'an :", opt: ["2 Hégire", "6 Hégire", "8 Hégire", "10 Hégire"], ans: 1 },
-                { q: "L'Iman (La foi), c'est croire :", opt: ["Avec le cœur, la langue et les actes", "Seulement avec le cœur", "Seulement en priant", "En aidant les pauvres"], ans: 0 },
-                { q: "Youssef (Joseph) a été jeté dans le puits par :", opt: ["Des voleurs", "Ses frères", "Le roi", "Des marchands"], ans: 1 }
+            'bac_fr_antigone': [
+                { q: "Lien Antigone / Hémon ?", opt: ["Frère/Sœur", "Cousins", "Fiancés"], ans: 2 },
+                { q: "Qui a enterré Polynice ?", opt: ["Ismène", "Antigone", "La Nourrice"], ans: 1 },
+                { q: "Le dénouement de la pièce ?", opt: ["Antigone meurt", "Tout le monde survit", "Créon meurt"], ans: 0 },
+                { q: "L'époque de l'écriture de la pièce ?", opt: ["Antiquité", "2ème Guerre Mondiale", "Révolution Française"], ans: 1 }
             ],
+            'bac_fr_condamne': [
+                { q: "Où est le condamné au début ?", opt: ["Conciergerie", "Bicêtre", "Hôtel de Ville"], ans: 1 },
+                { q: "Quelle est la thèse de l'œuvre ?", opt: ["Abolition peine de mort", "Amélioration des prisons", "Défense des crimes"], ans: 0 },
+                { q: "Qui visite le condamné à la fin ?", opt: ["Sa mère", "Sa fille Marie", "Sa femme"], ans: 1 }
+            ],
+
+            // TWINS - ISLAM
+            'bac_islam_youssef': [
+                { q: "Qui a essayé de séduire Youssef ?", opt: ["La femme d'Al-Aziz", "La reine", "Sa cousine"], ans: 0 },
+                { q: "Combien de frères avait Youssef ?", opt: ["10", "11", "12"], ans: 1 },
+                { q: "Le rêve du Roi concernait :", opt: ["7 vaches", "7 étoiles", "7 montagnes"], ans: 0 }
+            ],
+            'bac_islam_concepts': [
+                { q: "Le divorce 'Raji' (révocable) permet :", opt: ["De reprendre sa femme sans nouveau contrat", "Nécessite un nouveau contrat", "Est interdit"], ans: 0 },
+                { q: "La Foi (Al Iman) se situe dans :", opt: ["Le cœur uniquement", "Le cœur, la langue et l'action", "La mosquée"], ans: 1 }
+            ],
+
+            // TWINS - HISTOIRE GEO
             'bac_hg': [
-                { q: "La crise économique de 1929 a débuté :", opt: ["En France", "Aux USA", "En Allemagne", "Au Maroc"], ans: 1 },
-                { q: "Le Maroc est situé :", opt: ["Au Nord-Est de l'Afrique", "Au Nord-Ouest de l'Afrique", "Au Sud de l'Europe", "En Asie"], ans: 1 },
-                { q: "Une transformation sociale du capitalisme au 19ème siècle :", opt: ["L'apparition du prolétariat", "La fin de l'esclavage", "L'invention d'Internet", "La monarchie"], ans: 0 }
+                { q: "Date du Protectorat au Maroc ?", opt: ["1912", "1956", "1944"], ans: 0 },
+                { q: "Le Manifeste de l'Indépendance ?", opt: ["11 Janvier 1944", "18 Novembre 1956", "20 Août 1953"], ans: 0 },
+                { q: "Facteur puissance USA :", opt: ["Territoire petit", "Esprit d'entreprise & Ressources", "Monarchie"], ans: 1 },
+                { q: "La mégalopole américaine s'appelle :", opt: ["Sun Belt", "Megalopolis", "Silicon Valley"], ans: 1 }
             ],
-            'bac_ar': [
-                { q: "La fonction principale du discours publicitaire est :", opt: ["Informative", "Persuasive (Incitative)", "Narrative", "Poétique"], ans: 1 },
-                { q: "Quel est le pluriel de 'Technologie' en arabe ?", opt: ["Teknolojiat", "Teknoloja", "Tekniya", "Tekn"], ans: 0 }
-            ],
-            'bac_maths': [
-                { q: "La négation de '∀x∈R, f(x)>0' est :", opt: ["∀x∈R, f(x)≤0", "∃x∈R, f(x)≤0", "∃x∈R, f(x)<0", "Aucune"], ans: 1 },
-                { q: "Si f est une fonction paire, sa courbe est symétrique par rapport à :", opt: ["L'axe des abscisses", "L'axe des ordonnées", "L'origine O", "La droite y=x"], ans: 1 }
-            ],
+            
+            // TWINS - SCIENCE
             'bac_pc': [
-                { q: "L'énergie cinétique d'un solide en translation est :", opt: ["Ec = 1/2 mv²", "Ec = mgh", "Ec = 1/2 Jω²", "Ec = mv"], ans: 0 },
-                { q: "Lors d'un dosage, à l'équivalence :", opt: ["Les réactifs sont limitants", "Les réactifs ont été introduits dans les proportions stœchiométriques", "Le pH est toujours 7", "La couleur change toujours au bleu"], ans: 1 }
+                { q: "Formule énergie cinétique translation :", opt: ["1/2 mv²", "mgh", "mv"], ans: 0 },
+                { q: "Le travail d'une force est moteur si :", opt: ["W > 0", "W < 0", "W = 0"], ans: 0 }
             ]
         };
 
-        // --- ETAT DU QUIZ ---
-        let currentQuiz = [];
+        // --- MOTEUR QUIZ ---
+        let currentQList = [];
         let qIndex = 0;
         let score = 0;
 
-        // --- NAVIGATION ONGLETS ---
         function switchTab(who) {
             document.querySelectorAll('.zone').forEach(z => z.classList.remove('show'));
-            document.querySelectorAll('.tab-btn').forEach(b => {
-                b.classList.remove('active-h');
-                b.classList.remove('active-t');
-            });
-            if(who === 'hamza') {
-                document.getElementById('zone-hamza').classList.add('show');
-                document.getElementById('btn-hamza').classList.add('active-h');
-            } else {
-                document.getElementById('zone-twins').classList.add('show');
-                document.getElementById('btn-twins').classList.add('active-t');
-            }
+            document.querySelectorAll('.tab-btn').forEach(b => { b.classList.remove('active-h'); b.classList.remove('active-t'); });
+            if(who === 'hamza') { document.getElementById('zone-hamza').classList.add('show'); document.getElementById('btn-hamza').classList.add('active-h'); } 
+            else { document.getElementById('zone-twins').classList.add('show'); document.getElementById('btn-twins').classList.add('active-t'); }
         }
 
-        // --- LOGIQUE QUIZ ---
-        function startQuiz(category) {
-            currentQuiz = quizData[category];
-            if(!currentQuiz) { alert("Quiz bientôt disponible !"); return; }
-            
-            qIndex = 0;
-            score = 0;
-            
-            document.getElementById('q-category').innerText = category.replace('_', ' ').toUpperCase();
+        function startQuiz(cat) {
+            currentQList = quizData[cat];
+            if(!currentQList) return alert("Quiz en construction !");
+            qIndex = 0; score = 0;
+            document.getElementById('q-cat-title').innerText = cat.toUpperCase().replace(/_/g, " ");
             document.getElementById('quiz-result').style.display = 'none';
             document.getElementById('quiz-body').style.display = 'block';
             document.getElementById('btn-next').style.display = 'none';
             document.getElementById('quiz-modal').style.display = 'flex';
-            
             showQuestion();
         }
 
         function showQuestion() {
-            const q = currentQuiz[qIndex];
+            const q = currentQList[qIndex];
             document.getElementById('q-text').innerText = (qIndex + 1) + ". " + q.q;
-            
-            const optDiv = document.getElementById('q-options');
-            optDiv.innerHTML = '';
-
-            q.opt.forEach((option, idx) => {
+            const div = document.getElementById('q-options');
+            div.innerHTML = '';
+            q.opt.forEach((o, i) => {
                 const btn = document.createElement('button');
                 btn.className = 'quiz-opt-btn';
-                btn.innerText = option;
-                btn.onclick = () => checkAnswer(idx, btn);
-                optDiv.appendChild(btn);
+                btn.innerText = o;
+                btn.onclick = () => check(i, btn);
+                div.appendChild(btn);
             });
         }
 
-        function checkAnswer(selectedIdx, btnElement) {
-            // Bloquer tous les boutons
-            const allBtns = document.querySelectorAll('.quiz-opt-btn');
-            allBtns.forEach(b => b.disabled = true);
-
-            const correctIdx = currentQuiz[qIndex].ans;
-
-            if(selectedIdx === correctIdx) {
-                btnElement.classList.add('correct');
-                score++;
-            } else {
-                btnElement.classList.add('wrong');
-                allBtns[correctIdx].classList.add('correct'); // Montrer la bonne réponse
-            }
-
+        function check(idx, btn) {
+            const all = document.querySelectorAll('.quiz-opt-btn');
+            all.forEach(b => b.disabled = true);
+            const ans = currentQList[qIndex].ans;
+            if(idx === ans) { btn.classList.add('correct'); score++; }
+            else { btn.classList.add('wrong'); all[ans].classList.add('correct'); }
             document.getElementById('btn-next').style.display = 'flex';
         }
 
         function nextQuestion() {
             qIndex++;
             document.getElementById('btn-next').style.display = 'none';
-            
-            if(qIndex < currentQuiz.length) {
-                showQuestion();
-            } else {
-                endQuiz();
-            }
+            if(qIndex < currentQList.length) showQuestion();
+            else showResult();
         }
 
-        function endQuiz() {
+        function showResult() {
             document.getElementById('quiz-body').style.display = 'none';
-            const resDiv = document.getElementById('quiz-result');
-            resDiv.style.display = 'block';
-            
-            let msg = "";
-            if(score === currentQuiz.length) msg = "🥇 PARFAIT !";
-            else if(score > currentQuiz.length / 2) msg = "✅ BIEN JOUÉ !";
-            else msg = "⚠️ À REVOIR";
-
-            resDiv.innerHTML = `SCORE : ${score} / ${currentQuiz.length}<br><span style="font-size:1rem; color:white; font-weight:400;">${msg}</span>`;
+            document.getElementById('quiz-result').style.display = 'block';
+            document.getElementById('score-val').innerText = score + " / " + currentQList.length;
         }
 
-        function closeQuiz() {
-            document.getElementById('quiz-modal').style.display = 'none';
-        }
-
+        function closeQuiz() { document.getElementById('quiz-modal').style.display = 'none'; }
     </script>
-
 </body>
 </html>

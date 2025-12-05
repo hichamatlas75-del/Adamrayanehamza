@@ -3,25 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>QG EXAMENS 2026</title>
+    <title>QG FAMILY & EXAMS</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Orbitron:wght@700&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #0f172a;
             --surface: #1e293b;
-            --primary-h: #3b82f6; /* Hamza */
-            --primary-t: #8b5cf6; /* Twins */
+            --primary-h: #3b82f6;
+            --primary-t: #8b5cf6;
             --text: #f8fafc;
-            --success: #10b981;
-            --error: #ef4444;
-            --alarm: #ef4444;
+            --chat-bg: #25d366; /* Couleur WhatsApp */
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; -webkit-tap-highlight-color: transparent; }
-        body { background-color: var(--bg); color: var(--text); padding-bottom: 80px; }
+        body { background-color: var(--bg); color: var(--text); padding-bottom: 100px; }
 
         /* HEADER & NAV */
-        header { text-align: center; padding: 20px; background: rgba(15,23,42,0.95); border-bottom: 1px solid #334155; }
+        header { text-align: center; padding: 20px; background: rgba(15,23,42,0.98); border-bottom: 1px solid #334155; }
         h1 { font-weight: 900; letter-spacing: 1px; font-size: 1.4rem; }
 
         .nav-bar { display: flex; gap: 10px; padding: 15px; position: sticky; top: 0; background: var(--bg); z-index: 100; border-bottom: 1px solid #334155; }
@@ -29,54 +27,50 @@
         .tab-btn.active-h { background: var(--primary-h); color: white; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(59,130,246,0.3); }
         .tab-btn.active-t { background: var(--primary-t); color: white; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(139,92,246,0.3); }
 
-        /* ZONES */
+        /* ZONES CONTENT */
         .zone { display: none; padding: 15px; animation: fade 0.4s; }
         .show { display: block; }
         @keyframes fade { from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:translateY(0)} }
 
-        /* COMPTE A REBOURS */
+        /* COUNTDOWN */
         .countdown-box {
             background: linear-gradient(180deg, #450a0a 0%, #7f1d1d 100%);
             border: 2px solid #ef4444; border-radius: 12px; padding: 15px;
-            text-align: center; margin-bottom: 25px;
-            box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
+            text-align: center; margin-bottom: 25px; box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
         }
-        .countdown-title { color: #fca5a5; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; }
-        .timer-display {
-            font-family: 'Orbitron', sans-serif; font-size: 1.8rem; color: white;
-            display: flex; justify-content: center; gap: 10px;
-        }
-        .time-unit { display: flex; flex-direction: column; align-items: center; }
-        .unit-label { font-family: 'Outfit', sans-serif; font-size: 0.6rem; opacity: 0.7; margin-top: -5px; }
+        .timer-display { font-family: 'Orbitron', sans-serif; font-size: 1.8rem; color: white; display: flex; justify-content: center; gap: 10px; }
+        .unit-label { font-family: 'Outfit', sans-serif; font-size: 0.6rem; opacity: 0.7; }
 
-        /* TITRES & GRILLES */
+        /* ELEMENTS GRAPHIQUES */
         .section-title { font-size: 0.9rem; font-weight: 800; color: #64748b; margin: 30px 0 10px 0; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 8px; }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 15px; }
 
-        /* CARTES LIENS */
         .card { 
             background: var(--surface); padding: 15px; border-radius: 12px; text-decoration: none; color: white; 
             border: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; transition: 0.2s;
         }
         .card-icon { font-size: 1.5rem; }
-        .card h3 { font-size: 0.9rem; font-weight: 700; }
 
-        /* BOUTONS QUIZ ETENDUS */
         .btn-quiz {
             background: #1e293b; color: white; border: 1px solid rgba(255,255,255,0.1); 
             padding: 15px; border-radius: 12px; font-weight: 700; text-align: left; 
-            display: flex; align-items: center; justify-content: space-between;
-            margin-bottom: 8px; transition: 0.2s;
+            display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;
         }
-        .btn-quiz:active { transform: scale(0.98); background: #334155; }
-        
-        /* Styles spécifiques Quiz */
         .q-fr { border-left: 4px solid #3b82f6; }
-        .q-islam { border-left: 4px solid #10b981; }
-        .q-hg { border-left: 4px solid #d97706; }
         .q-sci { border-left: 4px solid #ef4444; }
 
-        /* MODAL QUIZ */
+        /* --- FLOATING CHAT BUTTON --- */
+        .fab-chat {
+            position: fixed; bottom: 20px; right: 20px;
+            background: var(--chat-bg); color: white;
+            width: 60px; height: 60px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 30px; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.5);
+            z-index: 900; cursor: pointer; transition: transform 0.2s; border: 2px solid white;
+        }
+        .fab-chat:active { transform: scale(0.9); }
+
+        /* MODALS (QUIZ & CHAT) */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.95); z-index: 2000; display: none;
@@ -84,39 +78,49 @@
         }
         .modal-content {
             background: #1e293b; width: 100%; max-width: 500px; border-radius: 16px;
-            padding: 25px; border: 1px solid #475569; max-height: 80vh; overflow-y: auto;
+            padding: 25px; border: 1px solid #475569; position: relative;
         }
-        .quiz-question { font-size: 1.1rem; font-weight: 700; margin-bottom: 20px; line-height: 1.4; color: white; }
+        .close-modal { position: absolute; top: 15px; right: 20px; background: none; border: none; color: white; font-size: 1.5rem; }
+        
+        /* CHAT FORM STYLES */
+        .chat-input {
+            width: 100%; background: #0f172a; border: 1px solid #475569;
+            color: white; padding: 15px; border-radius: 10px; margin: 15px 0;
+            font-size: 1rem; resize: none; height: 100px;
+        }
+        .quick-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 15px; }
+        .tag { background: #334155; padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; cursor: pointer; }
+        .btn-send {
+            width: 100%; background: var(--chat-bg); color: white; font-weight: 800;
+            padding: 15px; border: none; border-radius: 10px; font-size: 1rem;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+        }
+        
+        /* QUIZ STYLES */
         .quiz-opt-btn {
             width: 100%; padding: 14px; margin-bottom: 10px; background: rgba(255,255,255,0.05);
             border: 1px solid rgba(255,255,255,0.1); color: #cbd5e1; border-radius: 8px;
-            text-align: left; font-weight: 600; cursor: pointer;
+            text-align: left; font-weight: 600;
         }
-        .quiz-opt-btn.correct { background: #10b981; color: white; border-color: #10b981; }
-        .quiz-opt-btn.wrong { background: #ef4444; color: white; border-color: #ef4444; }
-        
+        .quiz-opt-btn.correct { background: #10b981; color: white; }
+        .quiz-opt-btn.wrong { background: #ef4444; color: white; }
         .score-final { font-size: 2rem; font-weight: 900; color: #fbbf24; text-align: center; margin-top: 20px; }
-        .close-modal { position: absolute; top: 15px; right: 20px; background: none; border: none; color: white; font-size: 1.5rem; }
-
-        /* BOUTONS DOCS */
-        .btn-doc { 
-            display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 15px; 
-            border-radius: 10px; margin-bottom: 10px; text-decoration: none; font-weight: 700; 
-            background: rgba(255,255,255,0.05); color: white; border: 1px solid rgba(255,255,255,0.1);
-        }
 
     </style>
 </head>
 <body>
 
     <header>
-        <h1>⚡ MISSION EXAMEN</h1>
+        <h1>⚡ QG FAMILY</h1>
     </header>
 
     <div class="nav-bar">
         <button id="btn-hamza" class="tab-btn active-h" onclick="switchTab('hamza')">HAMZA (TC)</button>
         <button id="btn-twins" class="tab-btn" onclick="switchTab('twins')">FRÈRES (BAC)</button>
     </div>
+
+    <!-- BOUTON CHAT FLOTTANT -->
+    <div class="fab-chat" onclick="openChat()">💬</div>
 
     <!-- =============================================
          SECTION HAMZA (TC)
@@ -125,31 +129,25 @@
         <div class="section-title"><span>🧪</span> PÔLE SCIENTIFIQUE</div>
         <div class="grid">
             <a href="https://www.youtube.com/@YoussefNejjari" target="_blank" class="card" style="border-left: 3px solid #ef4444;">
-                <div class="card-icon">📐</div>
-                <div><h3>Maths</h3></div>
+                <div class="card-icon">📐</div><div><h3>Maths</h3></div>
             </a>
             <a href="https://www.youtube.com/results?search_query=zakaria+choukri+tronc+commun" target="_blank" class="card" style="border-left: 3px solid #f59e0b;">
-                <div class="card-icon">⚡</div>
-                <div><h3>Physique</h3></div>
+                <div class="card-icon">⚡</div><div><h3>Physique</h3></div>
             </a>
             <a href="https://www.youtube.com/@SVTFABOUR" target="_blank" class="card" style="border-left: 3px solid #10b981;">
-                <div class="card-icon">🧬</div>
-                <div><h3>SVT</h3></div>
+                <div class="card-icon">🧬</div><div><h3>SVT</h3></div>
             </a>
         </div>
 
-        <div class="section-title"><span>🧠</span> QUIZ ENTRAÎNEMENT</div>
+        <div class="section-title"><span>🧠</span> QUIZ RAPIDE</div>
         <button class="btn-quiz q-sci" onclick="startQuiz('tc_maths')">
-            <div>Mathématiques <br><small>Vecteurs & Calcul</small></div> <span>📐</span>
+            <div>Mathématiques <small>Vecteurs</small></div><span>📐</span>
         </button>
         <button class="btn-quiz q-sci" onclick="startQuiz('tc_pc')">
-            <div>Physique-Chimie <br><small>Gravitation & Espèces</small></div> <span>⚡</span>
-        </button>
-        <button class="btn-quiz q-fr" onclick="startQuiz('tc_fr')">
-            <div>Français <br><small>Nouvelles Réalistes</small></div> <span>🇫🇷</span>
+            <div>Physique <small>Gravitation</small></div><span>⚡</span>
         </button>
 
-        <div class="section-title"><span>⚽</span> PAUSE SPORT</div>
+        <div class="section-title"><span>⚽</span> LOISIRS</div>
         <div class="grid">
             <a href="https://www.kooora.com/" target="_blank" class="card"><div class="card-icon">🏆</div><h3>Kooora</h3></a>
             <a href="https://www.youtube.com/@NassimSahili" target="_blank" class="card"><div class="card-icon">💪</div><h3>Muscu</h3></a>
@@ -161,44 +159,25 @@
     ============================================= -->
     <div id="zone-twins" class="zone">
         
-        <!-- COMPTE A REBOURS -->
         <div class="countdown-box">
-            <div class="countdown-title">🚨 DÉBUT EXAMEN RÉGIONAL</div>
+            <div style="color: #fca5a5; font-size: 0.8rem; margin-bottom:10px;">🚨 DÉBUT EXAMEN RÉGIONAL</div>
             <div class="timer-display" id="timer">
-                <div class="time-unit"><span id="days">00</span><span class="unit-label">Jours</span></div> :
-                <div class="time-unit"><span id="hours">00</span><span class="unit-label">Hrs</span></div> :
-                <div class="time-unit"><span id="mins">00</span><span class="unit-label">Min</span></div>
+                <div><span id="days">00</span><small class="unit-label">J</small></div> :
+                <div><span id="hours">00</span><small class="unit-label">H</small></div> :
+                <div><span id="mins">00</span><small class="unit-label">M</small></div>
             </div>
         </div>
 
-        <!-- GROS BLOC LITTERAIRE (EXAMEN REGIONAL) -->
-        <div class="section-title" style="color: #fbbf24;"><span>📚</span> PRÉPA RÉGIONAL (COEFF MAX)</div>
+        <div class="section-title" style="color: #fbbf24;"><span>📚</span> MISSION RÉGIONAL</div>
         
-        <!-- QUIZ FRANCAIS DETAILLES -->
         <button class="btn-quiz q-fr" onclick="startQuiz('bac_fr_boite')">
-            <div>La Boîte à Merveilles <br><small>Personnages & Lieux</small></div> <span>📦</span>
+            <div>Boîte à Merveilles <small>Personnages</small></div><span>📦</span>
         </button>
         <button class="btn-quiz q-fr" onclick="startQuiz('bac_fr_antigone')">
-            <div>Antigone <br><small>Intrigue & Mythe</small></div> <span>🎭</span>
+            <div>Antigone <small>Mythe & Tragédie</small></div><span>🎭</span>
         </button>
-        <button class="btn-quiz q-fr" onclick="startQuiz('bac_fr_condamne')">
-            <div>Le Dernier Jour... <br><small>Thèse & Arguments</small></div> <span>⚖️</span>
-        </button>
-
-        <!-- QUIZ ISLAM & HG -->
-        <button class="btn-quiz q-islam" onclick="startQuiz('bac_islam_youssef')">
-            <div>Islam : Sourate Youssef <br><small>Le récit et les leçons</small></div> <span>🕋</span>
-        </button>
-        <button class="btn-quiz q-islam" onclick="startQuiz('bac_islam_concepts')">
-            <div>Islam : Foi & Famille <br><small>Mariage, Divorce, Athéisme</small></div> <span>🕌</span>
-        </button>
-        <button class="btn-quiz q-hg" onclick="startQuiz('bac_hg')">
-            <div>Histoire-Géo <br><small>Guerre, Protectorat, USA</small></div> <span>🌍</span>
-        </button>
-
-        <div class="section-title"><span>⚛️</span> SCIENCES (SC. EXP)</div>
-        <button class="btn-quiz q-sci" onclick="startQuiz('bac_pc')">
-            <div>Physique-Chimie <br><small>Mécanique & Chimie</small></div> <span>⚡</span>
+        <button class="btn-quiz q-fr" onclick="startQuiz('bac_islam')">
+            <div>Islam <small>Sourate Youssef</small></div><span>🕌</span>
         </button>
 
         <div class="section-title"><span>📂</span> RESSOURCES</div>
@@ -207,10 +186,35 @@
             <a href="https://moutamadris.ma/" target="_blank" class="card"><div class="card-icon">📝</div><h3>Annales</h3></a>
         </div>
 
-        <div class="section-title"><span>⛩️</span> PAUSE MANGA</div>
+        <div class="section-title"><span>⛩️</span> LOISIRS</div>
         <div class="grid">
             <a href="https://mangaplus.shueisha.co.jp/updates" target="_blank" class="card"><div class="card-icon">📖</div><h3>Manga+</h3></a>
             <a href="https://www.flashscore.fr/" target="_blank" class="card"><div class="card-icon">⚽</div><h3>FlashScore</h3></a>
+        </div>
+    </div>
+
+    <!-- =============================================
+         MODAL CHAT / DEMANDES
+    ============================================= -->
+    <div id="chat-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeChat()">×</button>
+            <h3 style="color:white; margin-bottom:5px;">💬 CONTACTER PAPA/MAMAN</h3>
+            <p style="color:#94a3b8; font-size:0.8rem;">Envoie ta demande directement sur WhatsApp.</p>
+            
+            <div class="quick-tags">
+                <div class="tag" onclick="addTag('Besoin d\'argent 💸')">💸 Argent</div>
+                <div class="tag" onclick="addTag('Je sors un peu 🚶')">🚶 Sortie</div>
+                <div class="tag" onclick="addTag('Besoin d\'aide devoirs 🆘')">🆘 Aide Devoirs</div>
+                <div class="tag" onclick="addTag('Problème Wifi 📶')">📶 Wifi</div>
+                <div class="tag" onclick="addTag('J\'ai fini mes révisions ✅')">✅ Fini</div>
+            </div>
+
+            <textarea id="msg-input" class="chat-input" placeholder="Écris ton message ici..."></textarea>
+            
+            <button class="btn-send" onclick="sendToWhatsApp()">
+                <span>ENVOYER SUR WHATSAPP</span> <span>🚀</span>
+            </button>
         </div>
     </div>
 
@@ -221,111 +225,42 @@
         <div class="modal-content">
             <button class="close-modal" onclick="closeQuiz()">×</button>
             <div id="quiz-body">
-                <h3 id="q-cat-title" style="color:#94a3b8; font-size:0.8rem; margin-bottom:10px;">CATEGORIE</h3>
-                <div id="q-text" class="quiz-question">...</div>
+                <h3 id="q-cat-title" style="color:#94a3b8; font-size:0.8rem; margin-bottom:10px;">QUIZ</h3>
+                <div id="q-text" style="font-size:1.1rem; font-weight:700; margin-bottom:20px; color:white;">...</div>
                 <div id="q-options"></div>
             </div>
             <div id="quiz-result" style="display:none;">
                 <div id="score-val" class="score-final"></div>
-                <button class="btn-doc" style="margin-top:20px; justify-content:center;" onclick="closeQuiz()">Fermer</button>
             </div>
-            <button id="btn-next" class="btn-doc" style="margin-top:15px; justify-content:center; display:none; background:#3b82f6;" onclick="nextQuestion()">Question Suivante ➜</button>
+            <button id="btn-next" style="width:100%; padding:15px; background:#3b82f6; color:white; border:none; border-radius:10px; margin-top:15px; display:none; font-weight:700;" onclick="nextQuestion()">Suivant ➜</button>
         </div>
     </div>
 
     <script>
-        // --- COMPTE A REBOURS ---
-        function startCountdown() {
-            // Date approximative du Régional : 8 Juin 2026 (à ajuster selon calendrier officiel)
-            const examDate = new Date("June 8, 2026 08:00:00").getTime();
+        // --- CONFIGURATION CHAT ---
+        // REMPLACEZ LES ZÉROS PAR VOTRE NUMÉRO (Ex: 212661234567)
+        const parentNumber = "212661446680"; 
 
-            setInterval(function() {
-                const now = new Date().getTime();
-                const distance = examDate - now;
-
-                if (distance < 0) {
-                    document.getElementById("timer").innerHTML = "EXAMEN EN COURS !";
-                    return;
-                }
-
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-
-                document.getElementById("days").innerText = days < 10 ? "0" + days : days;
-                document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
-                document.getElementById("mins").innerText = minutes < 10 ? "0" + minutes : minutes;
-            }, 1000);
+        function openChat() { document.getElementById('chat-modal').style.display = 'flex'; }
+        function closeChat() { document.getElementById('chat-modal').style.display = 'none'; }
+        
+        function addTag(text) {
+            const input = document.getElementById('msg-input');
+            input.value += text + " ";
         }
-        startCountdown();
 
-        // --- DATA QUIZ ETENDUE ---
-        const quizData = {
-            // HAMZA
-            'tc_maths': [
-                { q: "Si AB = CD (vecteurs), alors ABDC est un :", opt: ["Carré", "Parallélogramme", "Losange"], ans: 1 },
-                { q: "La projection conserve :", opt: ["Les longueurs", "Le coefficient de colinéarité", "Les aires"], ans: 1 },
-                { q: "Un nombre pair s'écrit :", opt: ["2k+1", "2k", "k²"], ans: 1 }
-            ],
-            'tc_pc': [
-                { q: "L'unité de G (Gravitation) :", opt: ["N.kg", "N.m²/kg²", "m/s²"], ans: 1 },
-                { q: "Extraction huile essentielle lavande :", opt: ["Décantation", "Hydrodistillation", "Filtration"], ans: 1 }
-            ],
-            'tc_fr': [
-                { q: "Genre de 'La Parure' ?", opt: ["Roman", "Nouvelle réaliste", "Théâtre"], ans: 1 },
-                { q: "Auteur de 'Aux Champs' ?", opt: ["Zola", "Maupassant", "Hugo"], ans: 1 }
-            ],
-
-            // TWINS - FRANCAIS
-            'bac_fr_boite': [
-                { q: "Le narrateur a quel âge ?", opt: ["6 ans", "8 ans", "10 ans"], ans: 0 },
-                { q: "Le métier du père du narrateur ?", opt: ["Barbier", "Tisserand", "Faqih"], ans: 1 },
-                { q: "Où habite la famille ?", opt: ["Dar Chouafa", "Dar Kitoun", "Fès Jdid"], ans: 0 },
-                { q: "Quel objet contient la boîte ?", opt: ["De l'or", "Des objets hétéroclites", "Des bonbons"], ans: 1 }
-            ],
-            'bac_fr_antigone': [
-                { q: "Lien Antigone / Hémon ?", opt: ["Frère/Sœur", "Cousins", "Fiancés"], ans: 2 },
-                { q: "Qui a enterré Polynice ?", opt: ["Ismène", "Antigone", "La Nourrice"], ans: 1 },
-                { q: "Le dénouement de la pièce ?", opt: ["Antigone meurt", "Tout le monde survit", "Créon meurt"], ans: 0 },
-                { q: "L'époque de l'écriture de la pièce ?", opt: ["Antiquité", "2ème Guerre Mondiale", "Révolution Française"], ans: 1 }
-            ],
-            'bac_fr_condamne': [
-                { q: "Où est le condamné au début ?", opt: ["Conciergerie", "Bicêtre", "Hôtel de Ville"], ans: 1 },
-                { q: "Quelle est la thèse de l'œuvre ?", opt: ["Abolition peine de mort", "Amélioration des prisons", "Défense des crimes"], ans: 0 },
-                { q: "Qui visite le condamné à la fin ?", opt: ["Sa mère", "Sa fille Marie", "Sa femme"], ans: 1 }
-            ],
-
-            // TWINS - ISLAM
-            'bac_islam_youssef': [
-                { q: "Qui a essayé de séduire Youssef ?", opt: ["La femme d'Al-Aziz", "La reine", "Sa cousine"], ans: 0 },
-                { q: "Combien de frères avait Youssef ?", opt: ["10", "11", "12"], ans: 1 },
-                { q: "Le rêve du Roi concernait :", opt: ["7 vaches", "7 étoiles", "7 montagnes"], ans: 0 }
-            ],
-            'bac_islam_concepts': [
-                { q: "Le divorce 'Raji' (révocable) permet :", opt: ["De reprendre sa femme sans nouveau contrat", "Nécessite un nouveau contrat", "Est interdit"], ans: 0 },
-                { q: "La Foi (Al Iman) se situe dans :", opt: ["Le cœur uniquement", "Le cœur, la langue et l'action", "La mosquée"], ans: 1 }
-            ],
-
-            // TWINS - HISTOIRE GEO
-            'bac_hg': [
-                { q: "Date du Protectorat au Maroc ?", opt: ["1912", "1956", "1944"], ans: 0 },
-                { q: "Le Manifeste de l'Indépendance ?", opt: ["11 Janvier 1944", "18 Novembre 1956", "20 Août 1953"], ans: 0 },
-                { q: "Facteur puissance USA :", opt: ["Territoire petit", "Esprit d'entreprise & Ressources", "Monarchie"], ans: 1 },
-                { q: "La mégalopole américaine s'appelle :", opt: ["Sun Belt", "Megalopolis", "Silicon Valley"], ans: 1 }
-            ],
+        function sendToWhatsApp() {
+            const msg = document.getElementById('msg-input').value;
+            if(!msg) return alert("Écris un message d'abord !");
             
-            // TWINS - SCIENCE
-            'bac_pc': [
-                { q: "Formule énergie cinétique translation :", opt: ["1/2 mv²", "mgh", "mv"], ans: 0 },
-                { q: "Le travail d'une force est moteur si :", opt: ["W > 0", "W < 0", "W = 0"], ans: 0 }
-            ]
-        };
+            // Ouvrir WhatsApp
+            const url = `https://wa.me/${parentNumber}?text=${encodeURIComponent(msg)}`;
+            window.open(url, '_blank');
+            closeChat();
+            document.getElementById('msg-input').value = ""; // Vider
+        }
 
-        // --- MOTEUR QUIZ ---
-        let currentQList = [];
-        let qIndex = 0;
-        let score = 0;
-
+        // --- NAVIGATION & TIMER ---
         function switchTab(who) {
             document.querySelectorAll('.zone').forEach(z => z.classList.remove('show'));
             document.querySelectorAll('.tab-btn').forEach(b => { b.classList.remove('active-h'); b.classList.remove('active-t'); });
@@ -333,36 +268,89 @@
             else { document.getElementById('zone-twins').classList.add('show'); document.getElementById('btn-twins').classList.add('active-t'); }
         }
 
+        const examDate = new Date("June 8, 2026 08:00:00").getTime();
+        setInterval(() => {
+            const now = new Date().getTime();
+            const distance = examDate - now;
+            const d = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            document.getElementById("days").innerText = d < 10 ? "0"+d : d;
+            document.getElementById("hours").innerText = h < 10 ? "0"+h : h;
+            document.getElementById("mins").innerText = m < 10 ? "0"+m : m;
+        }, 1000);
+
+        // --- QUIZ DATA & LOGIC ---
+        const quizData = {
+            'tc_maths': [
+                {q: "Si AB = CD (vecteurs), alors ABDC est un :", opt: ["Carré", "Parallélogramme", "Losange"], ans: 1},
+                {q: "Un nombre pair s'écrit :", opt: ["2k+1", "2k", "k²"], ans: 1}
+            ],
+            'tc_pc': [
+                {q: "Unité de la Gravitation G :", opt: ["N.kg", "N.m²/kg²", "m/s²"], ans: 1},
+                {q: "Hydrodistillation sert à :", opt: ["Séparer", "Extraire", "Synthétiser"], ans: 1}
+            ],
+            'bac_fr_boite': [
+                {q: "Narrateur ?", opt: ["Sidi Mohammed", "Ahmed", "Driss"], ans: 0},
+                {q: "Métier du père ?", opt: ["Tisserand", "Barbier", "Maçon"], ans: 0}
+            ],
+            'bac_fr_antigone': [
+                {q: "Lien Antigone/Hémon ?", opt: ["Cousins", "Fiancés", "Frères"], ans: 1},
+                {q: "Qui meurt à la fin ?", opt: ["Antigone, Hémon, Eurydice", "Juste Antigone", "Créon"], ans: 0}
+            ],
+            'bac_islam': [
+                {q: "Sourate Youssef révélée à :", opt: ["Médine", "La Mecque", "Jérusalem"], ans: 1},
+                {q: "Le loup a-t-il mangé Youssef ?", opt: ["Oui", "Non, c'était un mensonge", "On ne sait pas"], ans: 1}
+            ]
+        };
+
+        let curQ = [], qIdx = 0, score = 0;
+
         function startQuiz(cat) {
-            currentQList = quizData[cat];
-            if(!currentQList) return alert("Quiz en construction !");
-            qIndex = 0; score = 0;
-            document.getElementById('q-cat-title').innerText = cat.toUpperCase().replace(/_/g, " ");
+            curQ = quizData[cat];
+            if(!curQ) return alert("Bientôt !");
+            qIdx = 0; score = 0;
             document.getElementById('quiz-result').style.display = 'none';
             document.getElementById('quiz-body').style.display = 'block';
             document.getElementById('btn-next').style.display = 'none';
             document.getElementById('quiz-modal').style.display = 'flex';
-            showQuestion();
+            showQ();
         }
 
-        function showQuestion() {
-            const q = currentQList[qIndex];
-            document.getElementById('q-text').innerText = (qIndex + 1) + ". " + q.q;
-            const div = document.getElementById('q-options');
-            div.innerHTML = '';
+        function showQ() {
+            const q = curQ[qIdx];
+            document.getElementById('q-text').innerText = (qIdx+1) + ". " + q.q;
+            const div = document.getElementById('q-options'); div.innerHTML = '';
             q.opt.forEach((o, i) => {
-                const btn = document.createElement('button');
-                btn.className = 'quiz-opt-btn';
-                btn.innerText = o;
-                btn.onclick = () => check(i, btn);
-                div.appendChild(btn);
+                const b = document.createElement('button'); b.className = 'quiz-opt-btn'; b.innerText = o;
+                b.onclick = () => check(i, b);
+                div.appendChild(b);
             });
         }
 
-        function check(idx, btn) {
-            const all = document.querySelectorAll('.quiz-opt-btn');
-            all.forEach(b => b.disabled = true);
-            const ans = currentQList[qIndex].ans;
+        function check(i, b) {
+            document.querySelectorAll('.quiz-opt-btn').forEach(btn => btn.disabled = true);
+            const ans = curQ[qIdx].ans;
+            if(i === ans) { b.classList.add('correct'); score++; }
+            else { b.classList.add('wrong'); document.querySelectorAll('.quiz-opt-btn')[ans].classList.add('correct'); }
+            document.getElementById('btn-next').style.display = 'block';
+        }
+
+        function nextQuestion() {
+            qIdx++; document.getElementById('btn-next').style.display = 'none';
+            if(qIdx < curQ.length) showQ(); else endQuiz();
+        }
+
+        function endQuiz() {
+            document.getElementById('quiz-body').style.display = 'none';
+            document.getElementById('quiz-result').style.display = 'block';
+            document.getElementById('score-val').innerText = score + " / " + curQ.length;
+        }
+        function closeQuiz() { document.getElementById('quiz-modal').style.display = 'none'; }
+
+    </script>
+</body>
+</html>            const ans = currentQList[qIndex].ans;
             if(idx === ans) { btn.classList.add('correct'); score++; }
             else { btn.classList.add('wrong'); all[ans].classList.add('correct'); }
             document.getElementById('btn-next').style.display = 'flex';

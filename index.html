@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>QG FAMILY ULTIMATE V5</title>
+    <title>QG FAMILY V6</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Orbitron:wght@700&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -13,8 +13,7 @@
             --primary-t: #8b5cf6;
             --text: #f8fafc;
             --chat-bg: #25d366;
-            --psycho: #8b5cf6;
-            --eng: #0ea5e9; /* Bleu cyan pour Anglais */
+            --eng: #0ea5e9;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; -webkit-tap-highlight-color: transparent; }
@@ -35,28 +34,28 @@
         .show { display: block; }
         @keyframes fade { from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:translateY(0)} }
 
-        /* BOUTONS GENERATEURS */
+        /* BOUTONS GENERATEURS (CORRIGÉS) */
         .gen-container { display: flex; flex-direction: column; gap: 15px; margin-bottom: 25px; }
         
         .infinite-btn {
-            width: 100%; padding: 15px; border-radius: 12px; 
+            width: 100%; padding: 20px; border-radius: 12px; border: none;
             color: white; font-weight: 900; font-size: 1rem; text-transform: uppercase;
             display: flex; align-items: center; justify-content: center; gap: 10px;
             cursor: pointer; position: relative; overflow: hidden;
-            transition: transform 0.2s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
-        .infinite-btn:active { transform: scale(0.98); }
+        .infinite-btn:active { transform: scale(0.95); opacity: 0.9; }
 
         .btn-maths {
             background: linear-gradient(135deg, #b45309 0%, #f59e0b 100%);
-            border: 2px solid #fcd34d; box-shadow: 0 0 15px rgba(245, 158, 11, 0.3);
+            border: 2px solid #fcd34d; 
         }
         .btn-psycho {
             background: linear-gradient(135deg, #4c1d95 0%, #8b5cf6 100%);
-            border: 2px solid #c4b5fd; box-shadow: 0 0 15px rgba(139, 92, 246, 0.3);
+            border: 2px solid #c4b5fd;
             animation: pulse 3s infinite;
         }
-        @keyframes pulse { 0% {box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.4);} 70% {box-shadow: 0 0 0 10px rgba(139, 92, 246, 0);} 100% {box-shadow: 0 0 0 0 rgba(139, 92, 246, 0);} }
+        @keyframes pulse { 0% {transform: scale(1);} 50% {transform: scale(1.02);} 100% {transform: scale(1);} }
 
         /* COUNTDOWN */
         .countdown-box {
@@ -67,7 +66,7 @@
         .timer-display { font-family: 'Orbitron', sans-serif; font-size: 1.8rem; color: white; display: flex; justify-content: center; gap: 10px; }
         .unit-label { font-family: 'Outfit', sans-serif; font-size: 0.6rem; opacity: 0.7; }
 
-        /* SECTION TITLES & GRID */
+        /* TITRES & GRILLES */
         .section-title { font-size: 0.9rem; font-weight: 800; color: #64748b; margin: 30px 0 10px 0; text-transform: uppercase; display: flex; align-items: center; gap: 8px; }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 15px; }
         
@@ -77,18 +76,19 @@
         }
         .card-icon { font-size: 1.5rem; }
 
-        /* QUIZ BTNS */
+        /* BOUTONS QUIZ CLASSIQUE */
         .btn-quiz {
             background: #1e293b; color: white; border: 1px solid rgba(255,255,255,0.1); 
-            padding: 15px; border-radius: 12px; font-weight: 700; text-align: left; 
-            display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;
+            padding: 15px; border-radius: 12px; font-weight: 700; text-align: left; width: 100%;
+            display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; cursor: pointer;
         }
+        .btn-quiz:active { background: #334155; }
         .q-fr { border-left: 4px solid #3b82f6; } 
         .q-eng { border-left: 4px solid var(--eng); }
         .q-sci { border-left: 4px solid #ef4444; }
         .q-ar { border-left: 4px solid #10b981; border-right: 4px solid #10b981; text-align: right; flex-direction: row-reverse; }
 
-        /* CHAT FAB */
+        /* FAB CHAT */
         .fab-chat {
             position: fixed; bottom: 20px; right: 20px; background: var(--chat-bg); color: white;
             width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
@@ -107,7 +107,7 @@
         }
         .close-modal { position: absolute; top: 15px; right: 20px; background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
 
-        /* QUIZ STYLES */
+        /* QUIZ MODAL STYLES */
         .quiz-opt-btn {
             width: 100%; padding: 14px; margin-bottom: 10px; background: rgba(255,255,255,0.05);
             border: 1px solid rgba(255,255,255,0.1); color: #cbd5e1; border-radius: 8px; text-align: left; font-weight: 600; cursor: pointer;
@@ -119,7 +119,7 @@
         .quiz-ar-mode .quiz-question { font-family: 'Cairo'; text-align: right; direction: rtl; font-size: 1.3rem; }
         .quiz-ar-mode .quiz-opt-btn { font-family: 'Cairo'; text-align: right; direction: rtl; font-size: 1.1rem; }
         
-        /* CHAT */
+        /* CHAT STYLES */
         .chat-input { width: 100%; background: #0f172a; border: 1px solid #475569; color: white; padding: 15px; border-radius: 10px; margin: 15px 0; resize: none; height: 100px; }
         .quick-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 15px; }
         .tag { background: #334155; padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; cursor: pointer; }
@@ -130,7 +130,7 @@
 <body>
 
     <header>
-        <h1>⚡ QG FAMILY & PREPA</h1>
+        <h1>⚡ QG FAMILY V6</h1>
     </header>
 
     <div class="nav-bar">
@@ -146,12 +146,12 @@
     <div id="zone-hamza" class="zone show">
         
         <div class="gen-container">
-            <div class="infinite-btn btn-maths" onclick="startInfiniteQuiz('tc')">
+            <button class="infinite-btn btn-maths" onclick="startInfiniteQuiz('tc')">
                 <span>♾️</span> GÉNÉRATEUR (MATHS/PC/SVT)
-            </div>
-            <div class="infinite-btn btn-psycho" onclick="startInfinitePsycho()">
+            </button>
+            <button class="infinite-btn btn-psycho" onclick="startInfinitePsycho()">
                 <span>🧩</span> PRÉPA CONCOURS (LOGIQUE)
-            </div>
+            </button>
         </div>
 
         <div class="section-title"><span>🧪</span> PÔLE SCIENTIFIQUE</div>
@@ -168,9 +168,7 @@
         
         <div class="section-title"><span>📂</span> RESSOURCES</div>
         <div class="grid">
-             <!-- Lien Philo Réparé (Recherche YouTube) -->
              <a href="https://www.youtube.com/results?search_query=moul+l+falsafa+tronc+commun" target="_blank" class="card"><div class="card-icon">🦉</div><h3>Philo</h3></a>
-             <!-- Lien AlloSchool Gratuit (Accueil) -->
              <a href="https://www.alloschool.com/" target="_blank" class="card"><div class="card-icon">📚</div><h3>AlloSchool</h3></a>
         </div>
     </div>
@@ -190,12 +188,12 @@
         </div>
 
         <div class="gen-container">
-            <div class="infinite-btn btn-maths" onclick="startInfiniteQuiz('bac')">
+            <button class="infinite-btn btn-maths" onclick="startInfiniteQuiz('bac')">
                 <span>♾️</span> GÉNÉRATEUR (MATHS/PC/SVT)
-            </div>
-            <div class="infinite-btn btn-psycho" onclick="startInfinitePsycho()">
+            </button>
+            <button class="infinite-btn btn-psycho" onclick="startInfinitePsycho()">
                 <span>🧩</span> PRÉPA CONCOURS (LOGIQUE)
-            </div>
+            </button>
         </div>
 
         <div class="section-title" style="color: #fbbf24;"><span>📚</span> MISSION RÉGIONAL (AR)</div>
@@ -206,8 +204,8 @@
         <div class="section-title"><span>🇫🇷</span> FRANÇAIS & ANGLAIS</div>
         <button class="btn-quiz q-fr" onclick="startQuiz('bac_fr_boite')"><div>Boîte à Merveilles</div><span>📦</span></button>
         <button class="btn-quiz q-fr" onclick="startQuiz('bac_fr_antigone')"><div>Antigone</div><span>🎭</span></button>
-        <button class="btn-quiz q-fr" onclick="startQuiz('bac_fr_condamne')"><div>Dernier Jour d'un Condamné</div><span>⚖️</span></button>
-        <button class="btn-quiz q-eng" onclick="startQuiz('bac_anglais')"><div>English (Grammar/Vocab)</div><span>🇬🇧</span></button>
+        <button class="btn-quiz q-fr" onclick="startQuiz('bac_fr_condamne')"><div>Dernier Jour Condamné</div><span>⚖️</span></button>
+        <button class="btn-quiz q-eng" onclick="startQuiz('bac_anglais')"><div>English (Quiz)</div><span>🇬🇧</span></button>
 
         <div class="section-title"><span>📂</span> DOCS & LOISIRS</div>
         <div class="grid">
@@ -250,104 +248,98 @@
     </div>
 
     <script>
-        // CONFIG
+        // CONFIGURATION TELEPHONE
         const parentNumber = "212661446680"; 
 
-        // --- MOTEUR GENERATEUR PSYCHO ---
+        // VARIABLES GLOBALES (Essentielles pour que ça marche)
+        let curQ = [], qIdx = 0, score = 0;
+
+        // --- 1. MOTEUR PSYCHOTECHNIQUE ---
         function generatePsychoQuestion() {
             const types = ['suite_nb', 'suite_lettre', 'math_mental'];
             const type = types[Math.floor(Math.random() * types.length)];
+            
             if(type === 'suite_nb') {
                 const start = Math.floor(Math.random() * 10);
                 const step = Math.floor(Math.random() * 5) + 2;
                 const seq = [start, start+step, start+(step*2), start+(step*3)];
                 const ans = start+(step*4);
-                return { q: `Suite logique : ${seq.join(' , ')} , ?`, opt: [ans, ans+1, ans-2, ans+step].sort(()=>Math.random()-0.5), ansIdx: -1, realAns: ans };
-            } else if (type === 'suite_lettre') {
+                return { q: `Suite : ${seq.join(' , ')} , ?`, opt: [ans, ans+1, ans-2, ans+step].sort(()=>Math.random()-0.5), ansIdx: -1, realAns: ans };
+            } 
+            else if (type === 'suite_lettre') {
                 const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-                const startIdx = Math.floor(Math.random() * 15);
+                const start = Math.floor(Math.random() * 15);
                 const step = Math.floor(Math.random() * 2) + 1;
-                const l1 = alphabet[startIdx]; const l2 = alphabet[startIdx+step]; const l3 = alphabet[startIdx+(step*2)];
-                const ans = alphabet[startIdx+(step*3)];
-                return { q: `Suite logique : ${l1}, ${l2}, ${l3}, ?`, opt: [ans, alphabet[startIdx+(step*3)+1], alphabet[startIdx+(step*3)-1], "Z"].sort(()=>Math.random()-0.5), ansIdx: -1, realAns: ans };
-            } else {
+                const ans = alphabet[start+(step*3)] || "Z";
+                return { q: `Lettres : ${alphabet[start]}, ${alphabet[start+step]}, ${alphabet[start+(step*2)]}, ?`, opt: [ans, "X", "A", "M"].sort(()=>Math.random()-0.5), ansIdx: -1, realAns: ans };
+            } 
+            else {
                 const pct = [10, 20, 25, 50][Math.floor(Math.random()*4)];
                 const val = Math.floor(Math.random() * 20) * 10;
                 const ans = (val * pct) / 100;
-                return { q: `Calcul mental : ${pct}% de ${val} ?`, opt: [ans, ans+5, ans/2, ans*2].sort(()=>Math.random()-0.5), ansIdx: -1, realAns: ans };
+                return { q: `Mental : ${pct}% de ${val} ?`, opt: [ans, ans+5, ans/2, ans*2].sort(()=>Math.random()-0.5), ansIdx: -1, realAns: ans };
             }
         }
 
         function startInfinitePsycho() {
-            let infiniteQ = [];
-            for(let i=0; i<6; i++) {
-                let gen = generatePsychoQuestion();
-                gen.ans = gen.opt.indexOf(gen.realAns);
-                infiniteQ.push(gen);
-            }
-            curQ = infiniteQ; qIdx = 0; score = 0;
-            document.getElementById('q-cat-title').innerText = "🧩 PRÉPA CONCOURS";
-            document.querySelector('.modal-content').classList.remove('quiz-ar-mode'); 
-            openQuizModal();
+            try {
+                let infiniteQ = [];
+                for(let i=0; i<6; i++) {
+                    let gen = generatePsychoQuestion();
+                    gen.ans = gen.opt.indexOf(gen.realAns);
+                    infiniteQ.push(gen);
+                }
+                curQ = infiniteQ; qIdx = 0; score = 0;
+                document.getElementById('q-cat-title').innerText = "🧩 PRÉPA CONCOURS";
+                document.querySelector('.modal-content').classList.remove('quiz-ar-mode'); 
+                openQuizModal();
+            } catch(e) { alert("Erreur générateur: " + e); }
         }
 
-        // --- MOTEUR GENERATEUR SCIENTIFIQUE (MATHS/PC/SVT) ---
-        function generateInfiniteQuestion(level) {
-            // Choix aléatoire entre Maths, PC et SVT
-            const matiere = ['math', 'pc', 'svt'][Math.floor(Math.random() * 3)];
-            
+        // --- 2. MOTEUR MATHS/PC/SVT (INFINI) ---
+        function generateSciQuestion(level) {
+            const matieres = ['math', 'pc', 'svt'];
+            const matiere = matieres[Math.floor(Math.random() * 3)];
+            let qObj = {};
+
             if (matiere === 'math') {
                 let a = Math.floor(Math.random() * 5) + 1;
                 let b = Math.floor(Math.random() * 8) + 1;
                 let c = Math.floor(Math.random() * 5) - 2;
-                if(level === 'tc') {
-                    const delta = (b * b) - (4 * a * c);
-                    return { q: `[MATHS] Discriminant Δ de : ${a}x² + ${b}x + ${c} = 0`, opt: [delta, delta+2, delta-4, delta*2].sort(()=>Math.random()-0.5), ansIdx: -1, realAns: delta };
-                } else {
-                    const u0 = Math.floor(Math.random()*5);
-                    const un = u0 + 10 * a;
-                    return { q: `[MATHS] Suite Arithmétique u0=${u0}, r=${a}. u10 ?`, opt: [un, un-2, un+5, un*2].sort(()=>Math.random()-0.5), ansIdx: -1, realAns: un };
-                }
+                const delta = (b * b) - (4 * a * c);
+                qObj = { q: `[MATHS] Discriminant Δ de ${a}x² + ${b}x + ${c} ?`, opt: [delta, delta+2, delta-5, delta*2].sort(()=>Math.random()-0.5), realAns: delta };
             } else if (matiere === 'pc') {
-                let m = Math.floor(Math.random() * 10) + 1; // Masse
-                let g = 10;
-                let h = Math.floor(Math.random() * 20) + 5; // Hauteur
-                const ep = m * g * h;
-                return { q: `[PC] Énergie Potentielle (Ep=mgh) pour m=${m}kg, h=${h}m ?`, opt: [ep, ep+50, ep*2, ep/2].sort(()=>Math.random()-0.5), ansIdx: -1, realAns: ep };
+                let m = Math.floor(Math.random() * 10) + 1;
+                let h = Math.floor(Math.random() * 20) + 5;
+                const ep = m * 10 * h;
+                qObj = { q: `[PC] Ep (mgh) pour m=${m}kg, h=${h}m ?`, opt: [ep, ep+50, ep*2, ep/2].sort(()=>Math.random()-0.5), realAns: ep };
             } else {
-                // SVT - Simulation Infini (Banque aléatoire)
-                const svtPoolTC = [
-                    {q: "La structure fondamentale du vivant est :", ans: "La cellule"},
-                    {q: "Les facteurs abiotiques concernent :", ans: "Le milieu physique"},
-                    {q: "Le niveau trophique des plantes vertes :", ans: "Producteurs"},
-                    {q: "La sortie écologique permet :", ans: "L'étude du terrain"}
-                ];
-                const svtPoolBAC = [
-                    {q: "La mitose permet :", ans: "La conservation de l'information"},
-                    {q: "L'ADN est constitué de :", ans: "Nucléotides"},
-                    {q: "La phase S du cycle cellulaire correspond à :", ans: "Réplication ADN"},
-                    {q: "Les histones sont des :", ans: "Protéines"}
-                ];
-                const pool = (level === 'tc') ? svtPoolTC : svtPoolBAC;
-                const qData = pool[Math.floor(Math.random() * pool.length)];
-                return { q: `[SVT] ${qData.q}`, opt: [qData.ans, "Autre réponse", "Aucune", "Je ne sais pas"].sort(()=>Math.random()-0.5), ansIdx: -1, realAns: qData.ans };
+                // SVT Banques
+                const svtTC = [{q:"Structure du vivant ?", a:"Cellule"}, {q:"Niveau plantes vertes ?", a:"Producteurs"}, {q:"Facteurs climatiques ?", a:"Abiotiques"}];
+                const svtBac = [{q:"Phase S du cycle ?", a:"Réplication ADN"}, {q:"Constituant ADN ?", a:"Nucléotides"}, {q:"Information génétique ?", a:"Dans le noyau"}];
+                const pool = (level === 'tc') ? svtTC : svtBac;
+                const item = pool[Math.floor(Math.random() * pool.length)];
+                qObj = { q: `[SVT] ${item.q}`, opt: [item.a, "Aucune", "Autre", "Je ne sais pas"].sort(()=>Math.random()-0.5), realAns: item.a };
             }
+            return qObj;
         }
 
         function startInfiniteQuiz(level) {
-            let infiniteQ = [];
-            for(let i=0; i<6; i++) {
-                let gen = generateInfiniteQuestion(level);
-                gen.ans = gen.opt.indexOf(gen.realAns);
-                infiniteQ.push(gen);
-            }
-            curQ = infiniteQ; qIdx = 0; score = 0;
-            document.getElementById('q-cat-title').innerText = "♾️ GÉNÉRATEUR " + level.toUpperCase();
-            document.querySelector('.modal-content').classList.remove('quiz-ar-mode'); 
-            openQuizModal();
+            try {
+                let infiniteQ = [];
+                for(let i=0; i<6; i++) {
+                    let gen = generateSciQuestion(level);
+                    gen.ans = gen.opt.indexOf(gen.realAns);
+                    infiniteQ.push(gen);
+                }
+                curQ = infiniteQ; qIdx = 0; score = 0;
+                document.getElementById('q-cat-title').innerText = "♾️ MATHS/PC/SVT (" + level.toUpperCase() + ")";
+                document.querySelector('.modal-content').classList.remove('quiz-ar-mode'); 
+                openQuizModal();
+            } catch(e) { alert("Erreur: " + e); }
         }
 
-        // --- DATA STATIC QUIZ ---
+        // --- 3. BANQUE DE QUIZ STATIC ---
         const quizData = {
             'tc_islam': [{q: "السورة المقررة في الجذع المشترك هي :", opt: ["سورة الكهف", "سورة يوسف", "سورة البقرة"], ans: 0}, {q: "تعريف الإيمان اصطلاحاً :", opt: ["تصديق بالجنان وقول باللسان وعمل بالأركان", "النية الصادقة فقط", "الصلاة والصوم فقط"], ans: 0}],
             'tc_hg': [{q: "انطلقت النهضة الأوروبية من :", opt: ["إيطاليا", "فرنسا", "إنجلترا"], ans: 0}, {q: "النظام القائم على الملكية الخاصة :", opt: ["الرأسمالية", "الاشتراكية", "الإقطاعية"], ans: 0}],
@@ -355,4 +347,18 @@
             'tc_arabe': [{q: "الخبر الجملة يكون :", opt: ["جملة اسمية أو فعلية", "مفرداً فقط", "شبه جملة"], ans: 0}, {q: "جمع 'تقنية' :", opt: ["تقنيات", "تقاني", "تقن"], ans: 0}],
             
             'bac_islam': [{q: "عدد إخوة يوسف عليه السلام :", opt: ["11", "12", "10"], ans: 0}, {q: "الطلاق الرجعي :", opt: ["لا يحتاج عقداً جديداً", "يحتاج عقداً جديداً", "ينهي الزواج"], ans: 0}],
-            'bac_hg': [{q: "فرض الحماية سنة :", opt: ["1912", "1956", "1944"], ans: 0}
+            'bac_hg': [{q: "فرض الحماية سنة :", opt: ["1912", "1956", "1944"], ans: 0}, {q: "المسيرة الخضراء سنة :", opt: ["1975", "1979", "1999"], ans: 0}],
+            'bac_ar': [{q: "وظيفة الإشهار :", opt: ["الإقناع", "الإمتاع", "السرد"], ans: 0}, {q: "الطباق هو :", opt: ["الضد", "التشابه", "التكرار"], ans: 0}],
+            
+            'bac_fr_boite': [{q: "Narrateur ?", opt: ["Sidi Mohammed", "Ahmed", "Driss"], ans: 0}],
+            'bac_fr_antigone': [{q: "Lien Antigone/Hémon ?", opt: ["Fiancés", "Cousins", "Frères"], ans: 0}],
+            'bac_fr_condamne': [{q: "Lieu au début ?", opt: ["Bicêtre", "Conciergerie", "Hôtel de Ville"], ans: 0}, {q: "Thèse défendue ?", opt: ["Contre la peine de mort", "Pour la prison", "Pour la justice"], ans: 0}],
+            'bac_anglais': [{q: "Synonym of 'Happy'?", opt: ["Glad", "Sad", "Angry"], ans: 0}, {q: "Past of 'Go'?", opt: ["Went", "Gone", "Going"], ans: 0}]
+        };
+
+        // --- NAVIGATION & UI ---
+        function switchTab(who) {
+            document.querySelectorAll('.zone').forEach(z => z.classList.remove('show'));
+            document.querySelectorAll('.tab-btn').forEach(b => { b.classList.remove('active-h'); b.classList.remove('active-t'); });
+            if(who === 'hamza') { document.getElementById('zone-hamza').classList.add('show'); document.getElementById('btn-hamza').classList.add('active-h'); } 
+            else { document.getElementById('zone-twins')

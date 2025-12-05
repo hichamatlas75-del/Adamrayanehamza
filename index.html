@@ -3,135 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>QG FAMILY V6</title>
+    <title>QG FAMILY V7 FINAL</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Orbitron:wght@700&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #0f172a;
-            --surface: #1e293b;
-            --primary-h: #3b82f6;
-            --primary-t: #8b5cf6;
-            --text: #f8fafc;
-            --chat-bg: #25d366;
-            --eng: #0ea5e9;
+            --bg: #0f172a; --surface: #1e293b;
+            --primary-h: #3b82f6; --primary-t: #8b5cf6;
+            --text: #f8fafc; --chat-bg: #25d366; --eng: #0ea5e9;
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; -webkit-tap-highlight-color: transparent; }
         .ar-text { font-family: 'Cairo', sans-serif; direction: rtl; text-align: right; }
         body { background-color: var(--bg); color: var(--text); padding-bottom: 100px; }
 
-        /* HEADER & NAV */
         header { text-align: center; padding: 20px; background: rgba(15,23,42,0.98); border-bottom: 1px solid #334155; }
         h1 { font-weight: 900; letter-spacing: 1px; font-size: 1.4rem; }
 
         .nav-bar { display: flex; gap: 10px; padding: 15px; position: sticky; top: 0; background: var(--bg); z-index: 100; border-bottom: 1px solid #334155; }
         .tab-btn { flex: 1; padding: 12px; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; background: #334155; color: #94a3b8; transition: 0.3s; }
-        .tab-btn.active-h { background: var(--primary-h); color: white; box-shadow: 0 4px 12px rgba(59,130,246,0.3); }
-        .tab-btn.active-t { background: var(--primary-t); color: white; box-shadow: 0 4px 12px rgba(139,92,246,0.3); }
+        .tab-btn.active-h { background: var(--primary-h); color: white; }
+        .tab-btn.active-t { background: var(--primary-t); color: white; }
 
-        /* ZONES */
-        .zone { display: none; padding: 15px; animation: fade 0.4s; }
-        .show { display: block; }
+        .zone { display: none; padding: 15px; }
+        .show { display: block; animation: fade 0.3s; }
         @keyframes fade { from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:translateY(0)} }
 
-        /* BOUTONS GENERATEURS (CORRIGÉS) */
         .gen-container { display: flex; flex-direction: column; gap: 15px; margin-bottom: 25px; }
-        
         .infinite-btn {
             width: 100%; padding: 20px; border-radius: 12px; border: none;
             color: white; font-weight: 900; font-size: 1rem; text-transform: uppercase;
             display: flex; align-items: center; justify-content: center; gap: 10px;
-            cursor: pointer; position: relative; overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
         .infinite-btn:active { transform: scale(0.95); opacity: 0.9; }
+        .btn-maths { background: linear-gradient(135deg, #b45309 0%, #f59e0b 100%); border: 2px solid #fcd34d; }
+        .btn-psycho { background: linear-gradient(135deg, #4c1d95 0%, #8b5cf6 100%); border: 2px solid #c4b5fd; }
 
-        .btn-maths {
-            background: linear-gradient(135deg, #b45309 0%, #f59e0b 100%);
-            border: 2px solid #fcd34d; 
-        }
-        .btn-psycho {
-            background: linear-gradient(135deg, #4c1d95 0%, #8b5cf6 100%);
-            border: 2px solid #c4b5fd;
-            animation: pulse 3s infinite;
-        }
-        @keyframes pulse { 0% {transform: scale(1);} 50% {transform: scale(1.02);} 100% {transform: scale(1);} }
+        .countdown-box { background: linear-gradient(180deg, #450a0a 0%, #7f1d1d 100%); border: 2px solid #ef4444; border-radius: 12px; padding: 15px; text-align: center; margin-bottom: 25px; }
+        .timer-display { font-family: 'Orbitron', sans-serif; font-size: 1.8rem; color: white; }
 
-        /* COUNTDOWN */
-        .countdown-box {
-            background: linear-gradient(180deg, #450a0a 0%, #7f1d1d 100%);
-            border: 2px solid #ef4444; border-radius: 12px; padding: 15px;
-            text-align: center; margin-bottom: 25px;
-        }
-        .timer-display { font-family: 'Orbitron', sans-serif; font-size: 1.8rem; color: white; display: flex; justify-content: center; gap: 10px; }
-        .unit-label { font-family: 'Outfit', sans-serif; font-size: 0.6rem; opacity: 0.7; }
-
-        /* TITRES & GRILLES */
-        .section-title { font-size: 0.9rem; font-weight: 800; color: #64748b; margin: 30px 0 10px 0; text-transform: uppercase; display: flex; align-items: center; gap: 8px; }
+        .section-title { font-size: 0.9rem; font-weight: 800; color: #64748b; margin: 30px 0 10px 0; text-transform: uppercase; }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 15px; }
-        
-        .card { 
-            background: var(--surface); padding: 15px; border-radius: 12px; text-decoration: none; color: white; 
-            border: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px;
-        }
-        .card-icon { font-size: 1.5rem; }
+        .card { background: var(--surface); padding: 15px; border-radius: 12px; text-decoration: none; color: white; border: 1px solid rgba(255,255,255,0.05); text-align: center; }
+        .card-icon { font-size: 1.5rem; display:block; margin-bottom:5px; }
 
-        /* BOUTONS QUIZ CLASSIQUE */
         .btn-quiz {
             background: #1e293b; color: white; border: 1px solid rgba(255,255,255,0.1); 
             padding: 15px; border-radius: 12px; font-weight: 700; text-align: left; width: 100%;
             display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; cursor: pointer;
         }
         .btn-quiz:active { background: #334155; }
-        .q-fr { border-left: 4px solid #3b82f6; } 
-        .q-eng { border-left: 4px solid var(--eng); }
+        .q-fr { border-left: 4px solid #3b82f6; } .q-eng { border-left: 4px solid var(--eng); }
         .q-sci { border-left: 4px solid #ef4444; }
         .q-ar { border-left: 4px solid #10b981; border-right: 4px solid #10b981; text-align: right; flex-direction: row-reverse; }
 
-        /* FAB CHAT */
-        .fab-chat {
-            position: fixed; bottom: 20px; right: 20px; background: var(--chat-bg); color: white;
-            width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            font-size: 30px; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.5); z-index: 900; border: 2px solid white; cursor: pointer;
-        }
+        .fab-chat { position: fixed; bottom: 20px; right: 20px; background: var(--chat-bg); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.5); z-index: 900; border: 2px solid white; cursor: pointer; }
 
-        /* MODALS */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95); z-index: 2000; display: none;
-            justify-content: center; align-items: center; padding: 20px;
-        }
-        .modal-content {
-            background: #1e293b; width: 100%; max-width: 500px; border-radius: 16px;
-            padding: 25px; border: 1px solid #475569; position: relative; max-height: 80vh; overflow-y: auto;
-        }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; display: none; justify-content: center; align-items: center; padding: 20px; }
+        .modal-content { background: #1e293b; width: 100%; max-width: 500px; border-radius: 16px; padding: 25px; border: 1px solid #475569; position: relative; max-height: 80vh; overflow-y: auto; }
         .close-modal { position: absolute; top: 15px; right: 20px; background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
 
-        /* QUIZ MODAL STYLES */
-        .quiz-opt-btn {
-            width: 100%; padding: 14px; margin-bottom: 10px; background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1); color: #cbd5e1; border-radius: 8px; text-align: left; font-weight: 600; cursor: pointer;
-        }
+        .quiz-opt-btn { width: 100%; padding: 14px; margin-bottom: 10px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #cbd5e1; border-radius: 8px; text-align: left; font-weight: 600; cursor: pointer; }
         .quiz-opt-btn.correct { background: #10b981; color: white; }
         .quiz-opt-btn.wrong { background: #ef4444; color: white; }
-        .score-final { font-size: 2rem; font-weight: 900; color: #fbbf24; text-align: center; margin-top: 20px; }
         
         .quiz-ar-mode .quiz-question { font-family: 'Cairo'; text-align: right; direction: rtl; font-size: 1.3rem; }
         .quiz-ar-mode .quiz-opt-btn { font-family: 'Cairo'; text-align: right; direction: rtl; font-size: 1.1rem; }
         
-        /* CHAT STYLES */
         .chat-input { width: 100%; background: #0f172a; border: 1px solid #475569; color: white; padding: 15px; border-radius: 10px; margin: 15px 0; resize: none; height: 100px; }
-        .quick-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 15px; }
-        .tag { background: #334155; padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; cursor: pointer; }
         .btn-send { width: 100%; background: var(--chat-bg); color: white; font-weight: 800; padding: 15px; border: none; border-radius: 10px; cursor: pointer; }
-
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>⚡ QG FAMILY V6</h1>
-    </header>
+    <header><h1>⚡ QG FAMILY V7</h1></header>
 
     <div class="nav-bar">
         <button id="btn-hamza" class="tab-btn active-h" onclick="switchTab('hamza')">HAMZA (TC)</button>
@@ -140,97 +84,60 @@
 
     <div class="fab-chat" onclick="openChat()">💬</div>
 
-    <!-- =============================================
-         HAMZA (TC)
-    ============================================= -->
+    <!-- HAMZA -->
     <div id="zone-hamza" class="zone show">
-        
         <div class="gen-container">
-            <button class="infinite-btn btn-maths" onclick="startInfiniteQuiz('tc')">
-                <span>♾️</span> GÉNÉRATEUR (MATHS/PC/SVT)
-            </button>
-            <button class="infinite-btn btn-psycho" onclick="startInfinitePsycho()">
-                <span>🧩</span> PRÉPA CONCOURS (LOGIQUE)
-            </button>
+            <button class="infinite-btn btn-maths" onclick="startInfiniteQuiz('tc')"><span>♾️</span> GÉNÉRATEUR (MATHS/PC)</button>
+            <button class="infinite-btn btn-psycho" onclick="startInfinitePsycho()"><span>🧩</span> LOGIQUE (CONCOURS)</button>
         </div>
-
-        <div class="section-title"><span>🧪</span> PÔLE SCIENTIFIQUE</div>
+        <div class="section-title"><span>🧪</span> SCIENTIFIQUE</div>
         <div class="grid">
-            <a href="https://www.youtube.com/@YoussefNejjari" target="_blank" class="card" style="border-left: 3px solid #ef4444;"><div class="card-icon">📐</div><div><h3>Maths</h3></div></a>
-            <a href="https://www.youtube.com/results?search_query=zakaria+choukri+tronc+commun" target="_blank" class="card" style="border-left: 3px solid #f59e0b;"><div class="card-icon">⚡</div><div><h3>Physique</h3></div></a>
+            <a href="https://www.youtube.com/@YoussefNejjari" target="_blank" class="card" style="border-left:3px solid #ef4444;"><span class="card-icon">📐</span>Maths</a>
+            <a href="https://www.youtube.com/results?search_query=zakaria+choukri+tronc+commun" target="_blank" class="card" style="border-left:3px solid #f59e0b;"><span class="card-icon">⚡</span>Physique</a>
         </div>
-
-        <div class="section-title"><span>🧠</span> QUIZ LITTÉRAIRE (AR)</div>
+        <div class="section-title"><span>🧠</span> QUIZ (AR)</div>
         <button class="btn-quiz q-ar" onclick="startQuiz('tc_islam')"><div class="ar-text">التربية الإسلامية</div><span>🕌</span></button>
         <button class="btn-quiz q-ar" onclick="startQuiz('tc_hg')"><div class="ar-text">الاجتماعيات</div><span>🌍</span></button>
         <button class="btn-quiz q-ar" onclick="startQuiz('tc_philo')"><div class="ar-text">الفلسفة</div><span>🦉</span></button>
         <button class="btn-quiz q-ar" onclick="startQuiz('tc_arabe')"><div class="ar-text">اللغة العربية</div><span>🇸🇦</span></button>
-        
-        <div class="section-title"><span>📂</span> RESSOURCES</div>
-        <div class="grid">
-             <a href="https://www.youtube.com/results?search_query=moul+l+falsafa+tronc+commun" target="_blank" class="card"><div class="card-icon">🦉</div><h3>Philo</h3></a>
-             <a href="https://www.alloschool.com/" target="_blank" class="card"><div class="card-icon">📚</div><h3>AlloSchool</h3></a>
-        </div>
     </div>
 
-    <!-- =============================================
-         TWINS (BAC)
-    ============================================= -->
+    <!-- TWINS -->
     <div id="zone-twins" class="zone">
-        
         <div class="countdown-box">
-            <div style="color: #fca5a5; font-size: 0.8rem; margin-bottom:10px;">🚨 DÉBUT EXAMEN RÉGIONAL</div>
-            <div class="timer-display" id="timer">
-                <div><span id="days">00</span><small class="unit-label">J</small></div> :
-                <div><span id="hours">00</span><small class="unit-label">H</small></div> :
-                <div><span id="mins">00</span><small class="unit-label">M</small></div>
-            </div>
+            <div style="color:#fca5a5; font-size:0.8rem; margin-bottom:10px;">🚨 EXAMEN RÉGIONAL</div>
+            <div class="timer-display" id="timer">00 : 00 : 00</div>
         </div>
-
         <div class="gen-container">
-            <button class="infinite-btn btn-maths" onclick="startInfiniteQuiz('bac')">
-                <span>♾️</span> GÉNÉRATEUR (MATHS/PC/SVT)
-            </button>
-            <button class="infinite-btn btn-psycho" onclick="startInfinitePsycho()">
-                <span>🧩</span> PRÉPA CONCOURS (LOGIQUE)
-            </button>
+            <button class="infinite-btn btn-maths" onclick="startInfiniteQuiz('bac')"><span>♾️</span> GÉNÉRATEUR (MATHS/PC)</button>
+            <button class="infinite-btn btn-psycho" onclick="startInfinitePsycho()"><span>🧩</span> LOGIQUE (CONCOURS)</button>
         </div>
-
-        <div class="section-title" style="color: #fbbf24;"><span>📚</span> MISSION RÉGIONAL (AR)</div>
+        <div class="section-title" style="color:#fbbf24;"><span>📚</span> MISSION RÉGIONAL</div>
         <button class="btn-quiz q-ar" onclick="startQuiz('bac_islam')"><div class="ar-text">التربية الإسلامية</div><span>🕌</span></button>
         <button class="btn-quiz q-ar" onclick="startQuiz('bac_hg')"><div class="ar-text">الاجتماعيات</div><span>🌍</span></button>
         <button class="btn-quiz q-ar" onclick="startQuiz('bac_ar')"><div class="ar-text">اللغة العربية</div><span>🇸🇦</span></button>
-
         <div class="section-title"><span>🇫🇷</span> FRANÇAIS & ANGLAIS</div>
         <button class="btn-quiz q-fr" onclick="startQuiz('bac_fr_boite')"><div>Boîte à Merveilles</div><span>📦</span></button>
         <button class="btn-quiz q-fr" onclick="startQuiz('bac_fr_antigone')"><div>Antigone</div><span>🎭</span></button>
-        <button class="btn-quiz q-fr" onclick="startQuiz('bac_fr_condamne')"><div>Dernier Jour Condamné</div><span>⚖️</span></button>
-        <button class="btn-quiz q-eng" onclick="startQuiz('bac_anglais')"><div>English (Quiz)</div><span>🇬🇧</span></button>
-
-        <div class="section-title"><span>📂</span> DOCS & LOISIRS</div>
+        <button class="btn-quiz q-fr" onclick="startQuiz('bac_fr_condamne')"><div>Dernier Jour</div><span>⚖️</span></button>
+        <button class="btn-quiz q-eng" onclick="startQuiz('bac_anglais')"><div>English Quiz</div><span>🇬🇧</span></button>
+        <div class="section-title"><span>📂</span> LIENS</div>
         <div class="grid">
-            <a href="https://moutamadris.ma/" target="_blank" class="card"><div class="card-icon">📝</div><h3>Annales</h3></a>
-            <a href="https://www.flashscore.fr/" target="_blank" class="card"><div class="card-icon">⚽</div><h3>FlashScore</h3></a>
+            <a href="https://moutamadris.ma/" target="_blank" class="card"><span class="card-icon">📝</span>Annales</a>
+            <a href="https://www.flashscore.fr/" target="_blank" class="card"><span class="card-icon">⚽</span>FlashScore</a>
         </div>
     </div>
 
-    <!-- CHAT MODAL -->
+    <!-- MODALS -->
     <div id="chat-modal" class="modal-overlay">
         <div class="modal-content">
             <button class="close-modal" onclick="closeChat()">×</button>
-            <h3 style="color:white; margin-bottom:5px;">💬 CONTACTER PARENTS</h3>
-            <div class="quick-tags">
-                <div class="tag" onclick="addTag('Besoin d\'argent 💸')">💸 Argent</div>
-                <div class="tag" onclick="addTag('Je sors 🚶')">🚶 Sortie</div>
-                <div class="tag" onclick="addTag('Aide devoirs 🆘')">🆘 Aide</div>
-                <div class="tag" onclick="addTag('J\'ai fini ✅')">✅ Fini</div>
-            </div>
-            <textarea id="msg-input" class="chat-input" placeholder="Message..."></textarea>
-            <button class="btn-send" onclick="sendToWhatsApp()"><span>ENVOYER (WHATSAPP)</span> <span>🚀</span></button>
+            <h3 style="color:white; margin-bottom:10px;">💬 MESSAGE PARENTS</h3>
+            <textarea id="msg-input" class="chat-input" placeholder="J'ai besoin de..."></textarea>
+            <button class="btn-send" onclick="sendToWhatsApp()">ENVOYER WHATSAPP 🚀</button>
         </div>
     </div>
 
-    <!-- QUIZ MODAL -->
     <div id="quiz-modal" class="modal-overlay">
         <div class="modal-content">
             <button class="close-modal" onclick="closeQuiz()">×</button>
@@ -240,7 +147,7 @@
                 <div id="q-options"></div>
             </div>
             <div id="quiz-result" style="display:none;">
-                <div id="score-val" class="score-final"></div>
+                <div id="score-val" class="score-final" style="color:#fbbf24; font-size:2rem; text-align:center; font-weight:900;"></div>
                 <button class="btn-quiz" style="margin-top:20px; justify-content:center; background:#3b82f6;" onclick="closeQuiz()">Fermer</button>
             </div>
             <button id="btn-next" style="width:100%; padding:15px; background:#3b82f6; color:white; border:none; border-radius:10px; margin-top:15px; display:none; font-weight:700;" onclick="nextQuestion()">Suivant ➜</button>
@@ -248,13 +155,10 @@
     </div>
 
     <script>
-        // CONFIGURATION TELEPHONE
         const parentNumber = "212661446680"; 
-
-        // VARIABLES GLOBALES (Essentielles pour que ça marche)
         let curQ = [], qIdx = 0, score = 0;
 
-        // --- 1. MOTEUR PSYCHOTECHNIQUE ---
+        // --- 1. FONCTIONS DE GENERATION (C'était le manque !) ---
         function generatePsychoQuestion() {
             const types = ['suite_nb', 'suite_lettre', 'math_mental'];
             const type = types[Math.floor(Math.random() * types.length)];
@@ -264,23 +168,47 @@
                 const step = Math.floor(Math.random() * 5) + 2;
                 const seq = [start, start+step, start+(step*2), start+(step*3)];
                 const ans = start+(step*4);
-                return { q: `Suite : ${seq.join(' , ')} , ?`, opt: [ans, ans+1, ans-2, ans+step].sort(()=>Math.random()-0.5), ansIdx: -1, realAns: ans };
-            } 
-            else if (type === 'suite_lettre') {
+                return { q: `Suite : ${seq.join(' , ')} , ?`, opt: [ans, ans+1, ans-2, ans+step].sort(()=>Math.random()-0.5), realAns: ans };
+            } else if (type === 'suite_lettre') {
                 const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
                 const start = Math.floor(Math.random() * 15);
                 const step = Math.floor(Math.random() * 2) + 1;
+                const l1 = alphabet[start]; const l2 = alphabet[start+step]; const l3 = alphabet[start+(step*2)];
                 const ans = alphabet[start+(step*3)] || "Z";
-                return { q: `Lettres : ${alphabet[start]}, ${alphabet[start+step]}, ${alphabet[start+(step*2)]}, ?`, opt: [ans, "X", "A", "M"].sort(()=>Math.random()-0.5), ansIdx: -1, realAns: ans };
-            } 
-            else {
+                return { q: `Lettres : ${l1}, ${l2}, ${l3}, ?`, opt: [ans, "X", "A", "M"].sort(()=>Math.random()-0.5), realAns: ans };
+            } else {
                 const pct = [10, 20, 25, 50][Math.floor(Math.random()*4)];
                 const val = Math.floor(Math.random() * 20) * 10;
                 const ans = (val * pct) / 100;
-                return { q: `Mental : ${pct}% de ${val} ?`, opt: [ans, ans+5, ans/2, ans*2].sort(()=>Math.random()-0.5), ansIdx: -1, realAns: ans };
+                return { q: `Mental : ${pct}% de ${val} ?`, opt: [ans, ans+5, ans/2, ans*2].sort(()=>Math.random()-0.5), realAns: ans };
             }
         }
 
+        function generateInfiniteQuestion(level) {
+            const matieres = ['math', 'pc', 'svt'];
+            const matiere = matieres[Math.floor(Math.random() * 3)];
+            
+            if (matiere === 'math') {
+                let a = Math.floor(Math.random() * 5) + 1;
+                let b = Math.floor(Math.random() * 8) + 1;
+                let c = Math.floor(Math.random() * 5) - 2;
+                const delta = (b * b) - (4 * a * c);
+                return { q: `[MATHS] Discriminant Δ de ${a}x² + ${b}x + ${c} ?`, opt: [delta, delta+2, delta-5, delta*2].sort(()=>Math.random()-0.5), realAns: delta };
+            } else if (matiere === 'pc') {
+                let m = Math.floor(Math.random() * 10) + 1;
+                let h = Math.floor(Math.random() * 20) + 5;
+                const ep = m * 10 * h;
+                return { q: `[PC] Ep (mgh) pour m=${m}kg, h=${h}m ?`, opt: [ep, ep+50, ep*2, ep/2].sort(()=>Math.random()-0.5), realAns: ep };
+            } else {
+                const svtTC = [{q:"Structure vivant ?", a:"Cellule"}, {q:"Niveau plantes ?", a:"Producteurs"}];
+                const svtBac = [{q:"Phase S cycle ?", a:"Réplication ADN"}, {q:"Constituant ADN ?", a:"Nucléotides"}];
+                const pool = (level === 'tc') ? svtTC : svtBac;
+                const item = pool[Math.floor(Math.random() * pool.length)];
+                return { q: `[SVT] ${item.q}`, opt: [item.a, "Autre", "Aucune", "Je ne sais pas"].sort(()=>Math.random()-0.5), realAns: item.a };
+            }
+        }
+
+        // --- 2. LANCEURS QUIZ INFINIS ---
         function startInfinitePsycho() {
             try {
                 let infiniteQ = [];
@@ -293,72 +221,45 @@
                 document.getElementById('q-cat-title').innerText = "🧩 PRÉPA CONCOURS";
                 document.querySelector('.modal-content').classList.remove('quiz-ar-mode'); 
                 openQuizModal();
-            } catch(e) { alert("Erreur générateur: " + e); }
-        }
-
-        // --- 2. MOTEUR MATHS/PC/SVT (INFINI) ---
-        function generateSciQuestion(level) {
-            const matieres = ['math', 'pc', 'svt'];
-            const matiere = matieres[Math.floor(Math.random() * 3)];
-            let qObj = {};
-
-            if (matiere === 'math') {
-                let a = Math.floor(Math.random() * 5) + 1;
-                let b = Math.floor(Math.random() * 8) + 1;
-                let c = Math.floor(Math.random() * 5) - 2;
-                const delta = (b * b) - (4 * a * c);
-                qObj = { q: `[MATHS] Discriminant Δ de ${a}x² + ${b}x + ${c} ?`, opt: [delta, delta+2, delta-5, delta*2].sort(()=>Math.random()-0.5), realAns: delta };
-            } else if (matiere === 'pc') {
-                let m = Math.floor(Math.random() * 10) + 1;
-                let h = Math.floor(Math.random() * 20) + 5;
-                const ep = m * 10 * h;
-                qObj = { q: `[PC] Ep (mgh) pour m=${m}kg, h=${h}m ?`, opt: [ep, ep+50, ep*2, ep/2].sort(()=>Math.random()-0.5), realAns: ep };
-            } else {
-                // SVT Banques
-                const svtTC = [{q:"Structure du vivant ?", a:"Cellule"}, {q:"Niveau plantes vertes ?", a:"Producteurs"}, {q:"Facteurs climatiques ?", a:"Abiotiques"}];
-                const svtBac = [{q:"Phase S du cycle ?", a:"Réplication ADN"}, {q:"Constituant ADN ?", a:"Nucléotides"}, {q:"Information génétique ?", a:"Dans le noyau"}];
-                const pool = (level === 'tc') ? svtTC : svtBac;
-                const item = pool[Math.floor(Math.random() * pool.length)];
-                qObj = { q: `[SVT] ${item.q}`, opt: [item.a, "Aucune", "Autre", "Je ne sais pas"].sort(()=>Math.random()-0.5), realAns: item.a };
-            }
-            return qObj;
+            } catch(e) { alert("Erreur: " + e); }
         }
 
         function startInfiniteQuiz(level) {
             try {
                 let infiniteQ = [];
                 for(let i=0; i<6; i++) {
-                    let gen = generateSciQuestion(level);
+                    let gen = generateInfiniteQuestion(level);
                     gen.ans = gen.opt.indexOf(gen.realAns);
                     infiniteQ.push(gen);
                 }
                 curQ = infiniteQ; qIdx = 0; score = 0;
-                document.getElementById('q-cat-title').innerText = "♾️ MATHS/PC/SVT (" + level.toUpperCase() + ")";
+                document.getElementById('q-cat-title').innerText = "♾️ GÉNÉRATEUR " + level.toUpperCase();
                 document.querySelector('.modal-content').classList.remove('quiz-ar-mode'); 
                 openQuizModal();
             } catch(e) { alert("Erreur: " + e); }
         }
 
-        // --- 3. BANQUE DE QUIZ STATIC ---
+        // --- 3. QUIZ STATIC ---
         const quizData = {
             'tc_islam': [{q: "السورة المقررة في الجذع المشترك هي :", opt: ["سورة الكهف", "سورة يوسف", "سورة البقرة"], ans: 0}, {q: "تعريف الإيمان اصطلاحاً :", opt: ["تصديق بالجنان وقول باللسان وعمل بالأركان", "النية الصادقة فقط", "الصلاة والصوم فقط"], ans: 0}],
             'tc_hg': [{q: "انطلقت النهضة الأوروبية من :", opt: ["إيطاليا", "فرنسا", "إنجلترا"], ans: 0}, {q: "النظام القائم على الملكية الخاصة :", opt: ["الرأسمالية", "الاشتراكية", "الإقطاعية"], ans: 0}],
             'tc_philo': [{q: "تعني الفلسفة :", opt: ["حب الحكمة", "امتلاك الحكمة", "رفض الحكمة"], ans: 0}, {q: "أصل كلمة فلسفة :", opt: ["يوناني", "عربي", "لاتيني"], ans: 0}],
             'tc_arabe': [{q: "الخبر الجملة يكون :", opt: ["جملة اسمية أو فعلية", "مفرداً فقط", "شبه جملة"], ans: 0}, {q: "جمع 'تقنية' :", opt: ["تقنيات", "تقاني", "تقن"], ans: 0}],
-            
             'bac_islam': [{q: "عدد إخوة يوسف عليه السلام :", opt: ["11", "12", "10"], ans: 0}, {q: "الطلاق الرجعي :", opt: ["لا يحتاج عقداً جديداً", "يحتاج عقداً جديداً", "ينهي الزواج"], ans: 0}],
             'bac_hg': [{q: "فرض الحماية سنة :", opt: ["1912", "1956", "1944"], ans: 0}, {q: "المسيرة الخضراء سنة :", opt: ["1975", "1979", "1999"], ans: 0}],
             'bac_ar': [{q: "وظيفة الإشهار :", opt: ["الإقناع", "الإمتاع", "السرد"], ans: 0}, {q: "الطباق هو :", opt: ["الضد", "التشابه", "التكرار"], ans: 0}],
-            
             'bac_fr_boite': [{q: "Narrateur ?", opt: ["Sidi Mohammed", "Ahmed", "Driss"], ans: 0}],
             'bac_fr_antigone': [{q: "Lien Antigone/Hémon ?", opt: ["Fiancés", "Cousins", "Frères"], ans: 0}],
-            'bac_fr_condamne': [{q: "Lieu au début ?", opt: ["Bicêtre", "Conciergerie", "Hôtel de Ville"], ans: 0}, {q: "Thèse défendue ?", opt: ["Contre la peine de mort", "Pour la prison", "Pour la justice"], ans: 0}],
+            'bac_fr_condamne': [{q: "Lieu au début ?", opt: ["Bicêtre", "Conciergerie", "Hôtel de Ville"], ans: 0}, {q: "Thèse ?", opt: ["Contre la peine de mort", "Pour la prison", "Autre"], ans: 0}],
             'bac_anglais': [{q: "Synonym of 'Happy'?", opt: ["Glad", "Sad", "Angry"], ans: 0}, {q: "Past of 'Go'?", opt: ["Went", "Gone", "Going"], ans: 0}]
         };
 
-        // --- NAVIGATION & UI ---
+        // --- NAVIGATION / UI ---
         function switchTab(who) {
             document.querySelectorAll('.zone').forEach(z => z.classList.remove('show'));
             document.querySelectorAll('.tab-btn').forEach(b => { b.classList.remove('active-h'); b.classList.remove('active-t'); });
             if(who === 'hamza') { document.getElementById('zone-hamza').classList.add('show'); document.getElementById('btn-hamza').classList.add('active-h'); } 
-            else { document.getElementById('zone-twins')
+            else { document.getElementById('zone-twins').classList.add('show'); document.getElementById('btn-twins').classList.add('active-t'); }
+        }
+
+        function openChat() { document.getElementById('chat-

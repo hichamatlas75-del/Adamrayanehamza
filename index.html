@@ -3,246 +3,286 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HUB SCOLAIRE & LOISIRS</title>
+    <title>QG SCOLAIRE - FINAL</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #0f172a;
             --surface: #1e293b;
             --text: #f1f5f9;
-            --accent-h: #3b82f6; /* Hamza Blue */
-            --accent-t: #8b5cf6; /* Twins Purple */
+            --accent-h: #3b82f6; /* Bleu Hamza */
+            --accent-t: #8b5cf6; /* Violet Frères */
+            /* Couleurs Matières */
             --maths: #ef4444; 
             --pc: #f59e0b; 
             --svt: #10b981;
             --fr: #0ea5e9;
-            --ar: #8b5cf6;
+            --ar: #a855f7;
             --hg: #d97706;
             --sport: #eab308;
             --manga: #d946ef;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
-        body { background: var(--bg); color: var(--text); padding-bottom: 50px; }
+        body { background: var(--bg); color: var(--text); padding-bottom: 60px; }
 
         /* HEADER */
-        header { text-align: center; padding: 20px; background: #111827; border-bottom: 1px solid #374151; }
-        h1 { font-size: 1.5rem; font-weight: 900; letter-spacing: 1px; }
-
-        /* TABS */
-        .nav-bar { display: flex; gap: 10px; padding: 10px; position: sticky; top: 0; background: rgba(15,23,42,0.95); z-index: 100; backdrop-filter: blur(5px); }
-        .tab-btn { flex: 1; padding: 12px; border: none; border-radius: 8px; font-weight: 800; cursor: pointer; opacity: 0.5; transition: 0.2s; background: #334155; color: white; }
-        .tab-btn.active { opacity: 1; transform: scale(1.02); }
-        #btn-hamza.active { background: var(--accent-h); }
-        #btn-twins.active { background: var(--accent-t); }
-
-        /* CONTENT */
-        .section { display: none; padding: 10px; }
-        .section.active { display: block; animation: fade 0.3s; }
-        @keyframes fade { from {opacity:0} to {opacity:1} }
-
-        /* GRIDS */
-        .grid-compact { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 15px; }
-        .grid-full { display: grid; grid-template-columns: 1fr; gap: 8px; margin-bottom: 15px; }
-
-        /* CARDS */
-        .card { 
-            background: var(--surface); padding: 12px; border-radius: 10px; 
-            text-decoration: none; color: white; border: 1px solid #334155;
-            display: flex; align-items: center; gap: 10px; transition: 0.2s;
+        header { 
+            text-align: center; padding: 20px; 
+            background: #111827; border-bottom: 1px solid #374151; 
         }
-        .card:hover { background: #334155; }
-        .card-icon { font-size: 1.2rem; width: 30px; text-align: center; }
-        .card-title { font-size: 0.85rem; font-weight: 700; line-height: 1.2; }
-        .card-sub { font-size: 0.7rem; color: #94a3b8; display: block; }
+        h1 { font-size: 1.5rem; font-weight: 900; letter-spacing: 1px; color: white; }
 
-        /* COLORS BORDERS */
-        .b-maths { border-left: 3px solid var(--maths); }
-        .b-pc { border-left: 3px solid var(--pc); }
-        .b-svt { border-left: 3px solid var(--svt); }
-        .b-fr { border-left: 3px solid var(--fr); }
-        .b-ar { border-left: 3px solid var(--ar); }
-        .b-hg { border-left: 3px solid var(--hg); }
+        /* NAVIGATION (Boutons) */
+        .nav-bar { 
+            display: flex; gap: 10px; padding: 10px; 
+            position: sticky; top: 0; background: rgba(15,23,42,0.98); 
+            z-index: 1000; border-bottom: 1px solid #334155;
+        }
+        
+        .tab-btn { 
+            flex: 1; padding: 14px; border: none; border-radius: 8px; 
+            font-weight: 800; font-size: 0.9rem; cursor: pointer; 
+            background: #334155; color: #94a3b8; transition: 0.2s; 
+        }
 
-        /* SEPARATORS */
-        .sep-title { font-size: 0.8rem; font-weight: 900; text-transform: uppercase; margin: 20px 0 5px 5px; color: #64748b; }
-        .hobby-banner { background: linear-gradient(90deg, #1e293b, #000); border: 1px solid #475569; padding: 10px; margin-top: 20px; border-radius: 8px; }
+        /* État Actif des Boutons */
+        .tab-btn.active-h { background: var(--accent-h) !important; color: white !important; transform: scale(1.02); box-shadow: 0 4px 10px rgba(59, 130, 246, 0.4); }
+        .tab-btn.active-t { background: var(--accent-t) !important; color: white !important; transform: scale(1.02); box-shadow: 0 4px 10px rgba(139, 92, 246, 0.4); }
+
+        /* SECTIONS (Contenu) */
+        .content-zone { display: none; padding: 15px; animation: fadeIn 0.3s; }
+        
+        /* La classe qui affiche le contenu */
+        .show { display: block !important; }
+
+        @keyframes fadeIn { from {opacity:0; transform: translateY(10px);} to {opacity:1; transform: translateY(0);} }
+
+        /* GRILLES & CARTES */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+        .grid-1 { display: grid; grid-template-columns: 1fr; gap: 10px; margin-bottom: 20px; }
+
+        .card { 
+            background: var(--surface); padding: 15px; border-radius: 12px; 
+            text-decoration: none; color: white; border: 1px solid #334155;
+            display: flex; align-items: center; gap: 12px; transition: 0.2s;
+            position: relative; overflow: hidden;
+        }
+        .card:active { transform: scale(0.96); background: #334155; }
+        
+        .icon { font-size: 1.4rem; width: 35px; text-align: center; flex-shrink: 0; }
+        .txt h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 2px; }
+        .txt p { font-size: 0.75rem; color: #cbd5e1; }
+
+        /* BORDURES COULEURS */
+        .b-maths { border-left: 4px solid var(--maths); }
+        .b-pc { border-left: 4px solid var(--pc); }
+        .b-svt { border-left: 4px solid var(--svt); }
+        .b-fr { border-left: 4px solid var(--fr); }
+        .b-ar { border-left: 4px solid var(--ar); }
+        .b-hg { border-left: 4px solid var(--hg); }
+
+        /* TITRES SEPARATEURS */
+        .sep { 
+            font-size: 0.85rem; font-weight: 900; text-transform: uppercase; 
+            margin: 25px 0 10px 5px; color: #64748b; letter-spacing: 1px;
+        }
+
+        /* LOISIRS */
+        .hobby-box { 
+            background: linear-gradient(135deg, #1e293b, #020617); 
+            border: 1px solid #475569; padding: 15px; 
+            border-radius: 12px; margin-top: 30px; 
+        }
 
     </style>
 </head>
 <body>
 
 <header>
-    <h1>🎯 DASHBOARD REVISIONS</h1>
+    <h1>🚀 DASHBOARD</h1>
 </header>
 
+<!-- NAVIGATION -->
 <div class="nav-bar">
-    <button class="tab-btn active" id="btn-hamza" onclick="openTab('hamza')">HAMZA (TC)</button>
-    <button class="tab-btn" id="btn-twins" onclick="openTab('twins')">LES FRÈRES (BAC)</button>
+    <button id="btn-1" class="tab-btn active-h" onclick="changerOnglet('hamza')">HAMZA (TC)</button>
+    <button id="btn-2" class="tab-btn" onclick="changerOnglet('twins')">LES FRÈRES (BAC)</button>
 </div>
 
 <!-- ==========================================
-     SECTION HAMZA (Toutes les matières)
+     CONTENU HAMZA (TRONC COMMUN)
 ========================================== -->
-<div id="hamza" class="section active">
+<div id="zone-hamza" class="content-zone show">
     
-    <div class="sep-title">🧪 Pôle Scientifique (Coef Max)</div>
-    <div class="grid-compact">
+    <div class="sep">🧪 Pôle Scientifique</div>
+    <div class="grid-2">
         <a href="https://www.youtube.com/@YoussefNejjari/playlists" target="_blank" class="card b-maths">
-            <div class="card-icon">📐</div>
-            <div><span class="card-title">Maths Nejjari</span><span class="card-sub">Cours & Exos</span></div>
+            <div class="icon">📐</div>
+            <div class="txt"><h3>Maths</h3><p>Nejjari</p></div>
         </a>
-        <a href="https://www.youtube.com/results?search_query=Zakaria+Choukri+tronc+commun" target="_blank" class="card b-pc">
-            <div class="card-icon">⚡</div>
-            <div><span class="card-title">PC Zakaria</span><span class="card-sub">Physique Chimie</span></div>
+        <a href="https://www.youtube.com/results?search_query=physique+tronc+commun+zakaria+choukri" target="_blank" class="card b-pc">
+            <div class="icon">⚡</div>
+            <div class="txt"><h3>Physique</h3><p>Zakaria</p></div>
         </a>
         <a href="https://www.youtube.com/@SVTFABOUR/playlists" target="_blank" class="card b-svt">
-            <div class="card-icon">🧬</div>
-            <div><span class="card-title">SVT Fabour</span><span class="card-sub">Schémas clairs</span></div>
+            <div class="icon">🧬</div>
+            <div class="txt"><h3>SVT</h3><p>Fabour</p></div>
         </a>
-         <a href="https://www.youtube.com/results?search_query=informatique+tronc+commun" target="_blank" class="card b-pc">
-            <div class="card-icon">💻</div>
-            <div><span class="card-title">Informatique</span><span class="card-sub">Algorithmes</span></div>
+        <a href="https://www.youtube.com/results?search_query=informatique+tronc+commun+cours" target="_blank" class="card b-pc">
+            <div class="icon">💻</div>
+            <div class="txt"><h3>Info</h3><p>Algo</p></div>
         </a>
     </div>
 
-    <div class="sep-title">📚 Pôle Littéraire</div>
-    <div class="grid-compact">
+    <div class="sep">📚 Littéraire & Langues</div>
+    <div class="grid-2">
         <a href="https://www.youtube.com/results?search_query=aux+champs+analyse" target="_blank" class="card b-fr">
-            <div class="card-icon">🇫🇷</div>
-            <div><span class="card-title">Français</span><span class="card-sub">Aux Champs/Parure</span></div>
+            <div class="icon">🇫🇷</div>
+            <div class="txt"><h3>Français</h3><p>Œuvres</p></div>
         </a>
         <a href="https://www.youtube.com/results?search_query=tronc+commun+arabe+cours" target="_blank" class="card b-ar">
-            <div class="card-icon">🇸🇦</div>
-            <div><span class="card-title">Arabe</span><span class="card-sub">Langue & Textes</span></div>
+            <div class="icon">🇸🇦</div>
+            <div class="txt"><h3>Arabe</h3><p>Cours</p></div>
         </a>
         <a href="https://www.youtube.com/@EnglishwithSimo" target="_blank" class="card b-fr">
-            <div class="card-icon">🇬🇧</div>
-            <div><span class="card-title">Anglais Simo</span><span class="card-sub">Grammaire</span></div>
+            <div class="icon">🇬🇧</div>
+            <div class="txt"><h3>Anglais</h3><p>Simo</p></div>
         </a>
         <a href="https://www.youtube.com/results?search_query=philosophie+tronc+commun+maroc" target="_blank" class="card b-ar">
-            <div class="card-icon">🦉</div>
-            <div><span class="card-title">Philosophie</span><span class="card-sub">Initiation (Rech.)</span></div>
+            <div class="icon">🦉</div>
+            <div class="txt"><h3>Philo</h3><p>Initiation</p></div>
         </a>
     </div>
 
-    <div class="sep-title">🌍 Société</div>
-    <div class="grid-compact">
+    <div class="sep">🌍 Société</div>
+    <div class="grid-2">
         <a href="https://www.youtube.com/@ProfJamal" target="_blank" class="card b-hg">
-            <div class="card-icon">🗺️</div>
-            <div><span class="card-title">Hist-Géo</span><span class="card-sub">Prof Jamal</span></div>
+            <div class="icon">🗺️</div>
+            <div class="txt"><h3>Hist-Géo</h3><p>Jamal</p></div>
         </a>
         <a href="https://www.youtube.com/results?search_query=education+islamique+tronc+commun" target="_blank" class="card b-svt">
-            <div class="card-icon">🕌</div>
-            <div><span class="card-title">Islamique</span><span class="card-sub">Cours TC</span></div>
+            <div class="icon">🕌</div>
+            <div class="txt"><h3>Islamique</h3><p>Cours</p></div>
         </a>
     </div>
 
     <!-- HOBBY HAMZA -->
-    <div class="hobby-banner" style="border-color: var(--sport);">
-        <div class="sep-title" style="margin-top:0; color:var(--sport);">⚽ PAUSE SPORT (HAMZA)</div>
-        <div class="grid-compact" style="margin-top:10px;">
+    <div class="hobby-box" style="border-color: var(--sport);">
+        <div class="sep" style="margin-top:0; color:var(--sport);">⚽ PAUSE SPORT</div>
+        <div class="grid-2">
             <a href="https://www.kooora.com/" target="_blank" class="card">
-                <div class="card-icon">🏆</div>
-                <div class="card-title">Kooora</div>
+                <div class="icon">🏆</div>
+                <div class="txt"><h3>Kooora</h3><p>Actu Foot</p></div>
             </a>
             <a href="https://www.youtube.com/@NassimSahili" target="_blank" class="card">
-                <div class="card-icon">💪</div>
-                <div class="card-title">Nassim Muscu</div>
+                <div class="icon">💪</div>
+                <div class="txt"><h3>Muscu</h3><p>Nassim</p></div>
             </a>
         </div>
     </div>
 </div>
 
 <!-- ==========================================
-     SECTION ADAM & RAYANE (1er BAC)
+     CONTENU FRÈRES (BAC)
 ========================================== -->
-<div id="twins" class="section">
+<div id="zone-twins" class="content-zone">
 
     <!-- URGENT REGIONAL -->
-    <div style="background: #7f1d1d; padding:10px; border-radius:8px; margin-bottom:15px; text-align:center;">
-        <span style="font-weight:900; color:#fca5a5;">🚨 PACK RÉGIONAL</span>
+    <div style="background: #991b1b; padding:15px; border-radius:12px; margin-bottom:20px; text-align:center; border: 1px solid #ef4444;">
+        <span style="font-weight:900; color:white; font-size:1.1rem;">🚨 PACK RÉGIONAL</span>
+        <div style="font-size:0.8rem; color:#fca5a5;">Priorité Absolue (Coeff élevé)</div>
     </div>
 
-    <div class="grid-compact">
+    <div class="grid-2">
         <a href="https://www.youtube.com/@SoutienAdnan" target="_blank" class="card b-fr">
-            <div class="card-icon">👑</div>
-            <div><span class="card-title">Soutien Adnan</span><span class="card-sub">Le ROI du FR</span></div>
+            <div class="icon">👑</div>
+            <div class="txt"><h3>S. Adnan</h3><p>Français</p></div>
         </a>
         <a href="https://www.youtube.com/@khalidhachadi" target="_blank" class="card b-ar">
-            <div class="card-icon">🇸🇦</div>
-            <div><span class="card-title">Khalid Hachadi</span><span class="card-sub">Arabe (Sûr)</span></div>
+            <div class="icon">🇸🇦</div>
+            <div class="txt"><h3>Khalid</h3><p>Arabe</p></div>
         </a>
         <a href="https://www.youtube.com/@ProfJamal" target="_blank" class="card b-hg">
-            <div class="card-icon">🌍</div>
-            <div><span class="card-title">Hist-Géo</span><span class="card-sub">Prof Jamal</span></div>
+            <div class="icon">🌍</div>
+            <div class="txt"><h3>Jamal</h3><p>Hist-Géo</p></div>
         </a>
         <a href="https://www.youtube.com/@AymanOueldLhaj" target="_blank" class="card b-svt">
-            <div class="card-icon">🕌</div>
-            <div><span class="card-title">Islam Ayman</span><span class="card-sub">Le top (Humour)</span></div>
+            <div class="icon">🕌</div>
+            <div class="txt"><h3>Ayman</h3><p>Islam</p></div>
         </a>
     </div>
 
-    <div class="sep-title">⚛️ MATIÈRES SC. EXP (KEZAKOO & CO)</div>
-    <div class="grid-full">
-        <a href="https://www.kezakoo.com/" target="_blank" class="card b-maths" style="background: #1e1b4b; border-color: #4338ca;">
-            <div class="card-icon">🎓</div>
-            <div><span class="card-title" style="font-size:1.1rem; color:#a5b4fc;">KEZAKOO OFFICIEL</span><span class="card-sub">Tout le programme Bac</span></div>
+    <div class="sep">⚛️ MATIÈRES SC. EXP</div>
+    <div class="grid-1">
+        <a href="https://www.kezakoo.com/" target="_blank" class="card b-maths" style="background: #312e81; border: 1px solid #6366f1;">
+            <div class="icon">🎓</div>
+            <div class="txt"><h3 style="font-size:1.1rem; color:#e0e7ff;">KEZAKOO OFFICIEL</h3><p style="color:#a5b4fc;">Site complet (Toutes matières)</p></div>
         </a>
     </div>
-    <div class="grid-compact">
+    <div class="grid-2">
         <a href="https://www.youtube.com/@profFaysal" target="_blank" class="card b-pc">
-            <div class="card-icon">⚡</div>
-            <div><span class="card-title">Prof Faysal</span><span class="card-sub">Physique Chimie</span></div>
+            <div class="icon">⚡</div>
+            <div class="txt"><h3>Faysal</h3><p>Physique</p></div>
         </a>
-        <a href="https://www.youtube.com/results?search_query=SVT+1+bac+maroc" target="_blank" class="card b-svt">
-            <div class="card-icon">🧬</div>
-            <div><span class="card-title">SVT 1 Bac</span><span class="card-sub">Recherche vidéos</span></div>
-        </a>
-        <a href="https://www.youtube.com/results?search_query=maths+1+bac+sc+exp" target="_blank" class="card b-maths">
-            <div class="card-icon">📐</div>
-            <div><span class="card-title">Maths Bac</span><span class="card-sub">Cours & Exos</span></div>
+        <a href="https://www.youtube.com/results?search_query=SVT+1+bac+science+ex" target="_blank" class="card b-svt">
+            <div class="icon">🧬</div>
+            <div class="txt"><h3>SVT</h3><p>1 Bac</p></div>
         </a>
     </div>
 
     <!-- HOBBY ADAM -->
-    <div class="hobby-banner" style="border-color: var(--sport);">
-        <div class="sep-title" style="margin-top:0; color:var(--sport);">🏋️ PAUSE ADAM (SPORT)</div>
-        <div class="grid-compact" style="margin-top:10px;">
+    <div class="hobby-box" style="border-color: var(--sport);">
+        <div class="sep" style="margin-top:0; color:var(--sport);">🏋️ PAUSE ADAM</div>
+        <div class="grid-2">
             <a href="https://www.flashscore.fr/" target="_blank" class="card">
-                <div class="card-icon">⚽</div>
-                <div class="card-title">FlashScore</div>
+                <div class="icon">⚽</div>
+                <div class="txt"><h3>Scores</h3><p>FlashScore</p></div>
             </a>
             <a href="https://www.youtube.com/@NassimSahili" target="_blank" class="card">
-                <div class="card-icon">💪</div>
-                <div class="card-title">Nassim Gym</div>
+                <div class="icon">💪</div>
+                <div class="txt"><h3>Muscu</h3><p>Nassim</p></div>
             </a>
         </div>
     </div>
 
     <!-- HOBBY RAYANE -->
-    <div class="hobby-banner" style="border-color: var(--manga);">
-        <div class="sep-title" style="margin-top:0; color:var(--manga);">⛩️ PAUSE RAYANE (MANGA)</div>
-        <div class="grid-compact" style="margin-top:10px;">
+    <div class="hobby-box" style="border-color: var(--manga);">
+        <div class="sep" style="margin-top:0; color:var(--manga);">⛩️ PAUSE RAYANE</div>
+        <div class="grid-2">
             <a href="https://mangaplus.shueisha.co.jp/updates" target="_blank" class="card">
-                <div class="card-icon">📖</div>
-                <div class="card-title">MangaPlus</div>
+                <div class="icon">📖</div>
+                <div class="txt"><h3>Manga+</h3><p>Chapitres</p></div>
             </a>
             <a href="https://www.adkami.com/" target="_blank" class="card">
-                <div class="card-icon">📺</div>
-                <div class="card-title">Adkami</div>
+                <div class="icon">📺</div>
+                <div class="txt"><h3>Adkami</h3><p>Animes</p></div>
             </a>
         </div>
     </div>
 
 </div>
 
+<!-- SCRIPT DE NAVIGATION INDESTRUCTIBLE -->
 <script>
-    function openTab(tabName) {
-        var i, x, tablinks;
-        x = document.getElementsByClassName("section");
-        for (i = 0; i < x.length; i++) {
-            x[i].classList.remove("active");
+    function changerOnglet(nom) {
+        // 1. Cacher tout le monde
+        document.getElementById('zone-hamza').classList.remove('show');
+        document.getElementById('zone-twins').classList.remove('show');
+        
+        // 2. Désactiver les boutons
+        document.getElementById('btn-1').classList.remove('active-h');
+        document.getElementById('btn-2').classList.remove('active-t');
+
+        // 3. Afficher le bon
+        if (nom === 'hamza') {
+            document.getElementById('zone-hamza').classList.add('show');
+            document.getElementById('btn-1').classList.add('active-h');
+        } else {
+            document.getElementById('zone-twins').classList.add('show');
+            document.getElementById('btn-2').classList.add('active-t');
         }
-        tablinks = document.getElementsByClassName("tab-btn");
-        for (i = 0; i < tablinks.length; i++)
+    }
+</script>
+
+</body>
+</html>

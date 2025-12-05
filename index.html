@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>QG FAMILY V7 FINAL</title>
+    <title>QG FAMILY V7</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Orbitron:wght@700&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -27,16 +27,18 @@
         .show { display: block; animation: fade 0.3s; }
         @keyframes fade { from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:translateY(0)} }
 
+        /* BOUTONS GENERATEURS */
         .gen-container { display: flex; flex-direction: column; gap: 15px; margin-bottom: 25px; }
         .infinite-btn {
             width: 100%; padding: 20px; border-radius: 12px; border: none;
             color: white; font-weight: 900; font-size: 1rem; text-transform: uppercase;
             display: flex; align-items: center; justify-content: center; gap: 10px;
-            cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3); position: relative;
         }
-        .infinite-btn:active { transform: scale(0.95); opacity: 0.9; }
+        .infinite-btn:active { transform: scale(0.96); }
         .btn-maths { background: linear-gradient(135deg, #b45309 0%, #f59e0b 100%); border: 2px solid #fcd34d; }
-        .btn-psycho { background: linear-gradient(135deg, #4c1d95 0%, #8b5cf6 100%); border: 2px solid #c4b5fd; }
+        .btn-psycho { background: linear-gradient(135deg, #4c1d95 0%, #8b5cf6 100%); border: 2px solid #c4b5fd; animation: pulse 3s infinite; }
+        @keyframes pulse { 0% {transform: scale(1);} 50% {transform: scale(1.02);} 100% {transform: scale(1);} }
 
         .countdown-box { background: linear-gradient(180deg, #450a0a 0%, #7f1d1d 100%); border: 2px solid #ef4444; border-radius: 12px; padding: 15px; text-align: center; margin-bottom: 25px; }
         .timer-display { font-family: 'Orbitron', sans-serif; font-size: 1.8rem; color: white; }
@@ -87,8 +89,13 @@
     <!-- HAMZA -->
     <div id="zone-hamza" class="zone show">
         <div class="gen-container">
-            <button class="infinite-btn btn-maths" onclick="startInfiniteQuiz('tc')"><span>♾️</span> GÉNÉRATEUR (MATHS/PC)</button>
-            <button class="infinite-btn btn-psycho" onclick="startInfinitePsycho()"><span>🧩</span> LOGIQUE (CONCOURS)</button>
+            <!-- BOUTON GENERATEUR HAMZA -->
+            <button class="infinite-btn btn-maths" onclick="lancerGenerateurSciences('tc')">
+                <span>♾️</span> GÉNÉRATEUR (MATHS/PC/SVT)
+            </button>
+            <button class="infinite-btn btn-psycho" onclick="lancerGenerateurPsycho()">
+                <span>🧩</span> LOGIQUE (CONCOURS)
+            </button>
         </div>
         <div class="section-title"><span>🧪</span> SCIENTIFIQUE</div>
         <div class="grid">
@@ -96,10 +103,15 @@
             <a href="https://www.youtube.com/results?search_query=zakaria+choukri+tronc+commun" target="_blank" class="card" style="border-left:3px solid #f59e0b;"><span class="card-icon">⚡</span>Physique</a>
         </div>
         <div class="section-title"><span>🧠</span> QUIZ (AR)</div>
-        <button class="btn-quiz q-ar" onclick="startQuiz('tc_islam')"><div class="ar-text">التربية الإسلامية</div><span>🕌</span></button>
-        <button class="btn-quiz q-ar" onclick="startQuiz('tc_hg')"><div class="ar-text">الاجتماعيات</div><span>🌍</span></button>
-        <button class="btn-quiz q-ar" onclick="startQuiz('tc_philo')"><div class="ar-text">الفلسفة</div><span>🦉</span></button>
-        <button class="btn-quiz q-ar" onclick="startQuiz('tc_arabe')"><div class="ar-text">اللغة العربية</div><span>🇸🇦</span></button>
+        <button class="btn-quiz q-ar" onclick="lancerQuizStatic('tc_islam')"><div class="ar-text">التربية الإسلامية</div><span>🕌</span></button>
+        <button class="btn-quiz q-ar" onclick="lancerQuizStatic('tc_hg')"><div class="ar-text">الاجتماعيات</div><span>🌍</span></button>
+        <button class="btn-quiz q-ar" onclick="lancerQuizStatic('tc_philo')"><div class="ar-text">الفلسفة</div><span>🦉</span></button>
+        <button class="btn-quiz q-ar" onclick="lancerQuizStatic('tc_arabe')"><div class="ar-text">اللغة العربية</div><span>🇸🇦</span></button>
+        <div class="section-title"><span>📂</span> RESSOURCES</div>
+        <div class="grid">
+             <a href="https://www.youtube.com/results?search_query=moul+l+falsafa+tronc+commun" target="_blank" class="card"><div class="card-icon">🦉</div><h3>Philo</h3></a>
+             <a href="https://www.alloschool.com/" target="_blank" class="card"><div class="card-icon">📚</div><h3>AlloSchool</h3></a>
+        </div>
     </div>
 
     <!-- TWINS -->
@@ -109,18 +121,23 @@
             <div class="timer-display" id="timer">00 : 00 : 00</div>
         </div>
         <div class="gen-container">
-            <button class="infinite-btn btn-maths" onclick="startInfiniteQuiz('bac')"><span>♾️</span> GÉNÉRATEUR (MATHS/PC)</button>
-            <button class="infinite-btn btn-psycho" onclick="startInfinitePsycho()"><span>🧩</span> LOGIQUE (CONCOURS)</button>
+            <!-- BOUTON GENERATEUR FRERES -->
+            <button class="infinite-btn btn-maths" onclick="lancerGenerateurSciences('bac')">
+                <span>♾️</span> GÉNÉRATEUR (MATHS/PC/SVT)
+            </button>
+            <button class="infinite-btn btn-psycho" onclick="lancerGenerateurPsycho()">
+                <span>🧩</span> LOGIQUE (CONCOURS)
+            </button>
         </div>
         <div class="section-title" style="color:#fbbf24;"><span>📚</span> MISSION RÉGIONAL</div>
-        <button class="btn-quiz q-ar" onclick="startQuiz('bac_islam')"><div class="ar-text">التربية الإسلامية</div><span>🕌</span></button>
-        <button class="btn-quiz q-ar" onclick="startQuiz('bac_hg')"><div class="ar-text">الاجتماعيات</div><span>🌍</span></button>
-        <button class="btn-quiz q-ar" onclick="startQuiz('bac_ar')"><div class="ar-text">اللغة العربية</div><span>🇸🇦</span></button>
+        <button class="btn-quiz q-ar" onclick="lancerQuizStatic('bac_islam')"><div class="ar-text">التربية الإسلامية</div><span>🕌</span></button>
+        <button class="btn-quiz q-ar" onclick="lancerQuizStatic('bac_hg')"><div class="ar-text">الاجتماعيات</div><span>🌍</span></button>
+        <button class="btn-quiz q-ar" onclick="lancerQuizStatic('bac_ar')"><div class="ar-text">اللغة العربية</div><span>🇸🇦</span></button>
         <div class="section-title"><span>🇫🇷</span> FRANÇAIS & ANGLAIS</div>
-        <button class="btn-quiz q-fr" onclick="startQuiz('bac_fr_boite')"><div>Boîte à Merveilles</div><span>📦</span></button>
-        <button class="btn-quiz q-fr" onclick="startQuiz('bac_fr_antigone')"><div>Antigone</div><span>🎭</span></button>
-        <button class="btn-quiz q-fr" onclick="startQuiz('bac_fr_condamne')"><div>Dernier Jour</div><span>⚖️</span></button>
-        <button class="btn-quiz q-eng" onclick="startQuiz('bac_anglais')"><div>English Quiz</div><span>🇬🇧</span></button>
+        <button class="btn-quiz q-fr" onclick="lancerQuizStatic('bac_fr_boite')"><div>Boîte à Merveilles</div><span>📦</span></button>
+        <button class="btn-quiz q-fr" onclick="lancerQuizStatic('bac_fr_antigone')"><div>Antigone</div><span>🎭</span></button>
+        <button class="btn-quiz q-fr" onclick="lancerQuizStatic('bac_fr_condamne')"><div>Dernier Jour</div><span>⚖️</span></button>
+        <button class="btn-quiz q-eng" onclick="lancerQuizStatic('bac_anglais')"><div>English Quiz</div><span>🇬🇧</span></button>
         <div class="section-title"><span>📂</span> LIENS</div>
         <div class="grid">
             <a href="https://moutamadris.ma/" target="_blank" class="card"><span class="card-icon">📝</span>Annales</a>
@@ -158,8 +175,8 @@
         const parentNumber = "212661446680"; 
         let curQ = [], qIdx = 0, score = 0;
 
-        // --- 1. FONCTIONS DE GENERATION (C'était le manque !) ---
-        function generatePsychoQuestion() {
+        // --- 1. MOTEUR PSYCHOTECHNIQUE ---
+        function genererQuestionPsycho() {
             const types = ['suite_nb', 'suite_lettre', 'math_mental'];
             const type = types[Math.floor(Math.random() * types.length)];
             
@@ -169,14 +186,16 @@
                 const seq = [start, start+step, start+(step*2), start+(step*3)];
                 const ans = start+(step*4);
                 return { q: `Suite : ${seq.join(' , ')} , ?`, opt: [ans, ans+1, ans-2, ans+step].sort(()=>Math.random()-0.5), realAns: ans };
-            } else if (type === 'suite_lettre') {
+            } 
+            else if (type === 'suite_lettre') {
                 const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
                 const start = Math.floor(Math.random() * 15);
                 const step = Math.floor(Math.random() * 2) + 1;
                 const l1 = alphabet[start]; const l2 = alphabet[start+step]; const l3 = alphabet[start+(step*2)];
                 const ans = alphabet[start+(step*3)] || "Z";
                 return { q: `Lettres : ${l1}, ${l2}, ${l3}, ?`, opt: [ans, "X", "A", "M"].sort(()=>Math.random()-0.5), realAns: ans };
-            } else {
+            } 
+            else {
                 const pct = [10, 20, 25, 50][Math.floor(Math.random()*4)];
                 const val = Math.floor(Math.random() * 20) * 10;
                 const ans = (val * pct) / 100;
@@ -184,62 +203,84 @@
             }
         }
 
-        function generateInfiniteQuestion(level) {
+        // --- 2. MOTEUR MATHS/PC/SVT (INFINI) ---
+        function genererQuestionSciences(level) {
             const matieres = ['math', 'pc', 'svt'];
             const matiere = matieres[Math.floor(Math.random() * 3)];
-            
+            let qObj = {};
+
             if (matiere === 'math') {
                 let a = Math.floor(Math.random() * 5) + 1;
                 let b = Math.floor(Math.random() * 8) + 1;
                 let c = Math.floor(Math.random() * 5) - 2;
                 const delta = (b * b) - (4 * a * c);
-                return { q: `[MATHS] Discriminant Δ de ${a}x² + ${b}x + ${c} ?`, opt: [delta, delta+2, delta-5, delta*2].sort(()=>Math.random()-0.5), realAns: delta };
+                qObj = { q: `[MATHS] Discriminant Δ de ${a}x² + ${b}x + ${c} ?`, opt: [delta, delta+2, delta-5, delta*2].sort(()=>Math.random()-0.5), realAns: delta };
             } else if (matiere === 'pc') {
                 let m = Math.floor(Math.random() * 10) + 1;
                 let h = Math.floor(Math.random() * 20) + 5;
                 const ep = m * 10 * h;
-                return { q: `[PC] Ep (mgh) pour m=${m}kg, h=${h}m ?`, opt: [ep, ep+50, ep*2, ep/2].sort(()=>Math.random()-0.5), realAns: ep };
+                qObj = { q: `[PC] Ep (mgh) pour m=${m}kg, h=${h}m ?`, opt: [ep, ep+50, ep*2, ep/2].sort(()=>Math.random()-0.5), realAns: ep };
             } else {
                 const svtTC = [{q:"Structure vivant ?", a:"Cellule"}, {q:"Niveau plantes ?", a:"Producteurs"}];
                 const svtBac = [{q:"Phase S cycle ?", a:"Réplication ADN"}, {q:"Constituant ADN ?", a:"Nucléotides"}];
                 const pool = (level === 'tc') ? svtTC : svtBac;
                 const item = pool[Math.floor(Math.random() * pool.length)];
-                return { q: `[SVT] ${item.q}`, opt: [item.a, "Autre", "Aucune", "Je ne sais pas"].sort(()=>Math.random()-0.5), realAns: item.a };
+                qObj = { q: `[SVT] ${item.q}`, opt: [item.a, "Aucune", "Autre", "Je ne sais pas"].sort(()=>Math.random()-0.5), realAns: item.a };
             }
+            return qObj;
         }
 
-        // --- 2. LANCEURS QUIZ INFINIS ---
-        function startInfinitePsycho() {
+        // --- 3. LANCEURS QUIZ ---
+        function lancerGenerateurPsycho() {
             try {
                 let infiniteQ = [];
                 for(let i=0; i<6; i++) {
-                    let gen = generatePsychoQuestion();
+                    let gen = genererQuestionPsycho();
                     gen.ans = gen.opt.indexOf(gen.realAns);
                     infiniteQ.push(gen);
                 }
-                curQ = infiniteQ; qIdx = 0; score = 0;
-                document.getElementById('q-cat-title').innerText = "🧩 PRÉPA CONCOURS";
-                document.querySelector('.modal-content').classList.remove('quiz-ar-mode'); 
-                openQuizModal();
-            } catch(e) { alert("Erreur: " + e); }
+                lancerInterfaceQuiz(infiniteQ, "🧩 PRÉPA CONCOURS", false);
+            } catch(e) { alert("Erreur générateur: " + e); }
         }
 
-        function startInfiniteQuiz(level) {
+        function lancerGenerateurSciences(level) {
             try {
                 let infiniteQ = [];
                 for(let i=0; i<6; i++) {
-                    let gen = generateInfiniteQuestion(level);
+                    let gen = genererQuestionSciences(level);
                     gen.ans = gen.opt.indexOf(gen.realAns);
                     infiniteQ.push(gen);
                 }
-                curQ = infiniteQ; qIdx = 0; score = 0;
-                document.getElementById('q-cat-title').innerText = "♾️ GÉNÉRATEUR " + level.toUpperCase();
-                document.querySelector('.modal-content').classList.remove('quiz-ar-mode'); 
-                openQuizModal();
+                lancerInterfaceQuiz(infiniteQ, "♾️ GÉNÉRATEUR " + level.toUpperCase(), false);
             } catch(e) { alert("Erreur: " + e); }
         }
 
-        // --- 3. QUIZ STATIC ---
+        function lancerQuizStatic(cat) {
+            let data = quizData[cat];
+            if(!data) return alert("Quiz vide !");
+            
+            // Detection Arabe
+            let isAr = (cat.includes('islam') || cat.includes('hg') || cat.includes('arabe') || cat.includes('philo') || cat.includes('bac_ar'));
+            lancerInterfaceQuiz(data, "QUIZ", isAr);
+        }
+
+        // --- MOTEUR INTERFACE COMMUN ---
+        function lancerInterfaceQuiz(questions, titre, isArabe) {
+            curQ = questions; 
+            qIdx = 0; 
+            score = 0;
+            document.getElementById('q-cat-title').innerText = titre;
+            
+            if(isArabe) {
+                document.querySelector('.modal-content').classList.add('quiz-ar-mode');
+            } else {
+                document.querySelector('.modal-content').classList.remove('quiz-ar-mode');
+            }
+            
+            openQuizModal();
+        }
+
+        // --- DATA STATIC QUIZ ---
         const quizData = {
             'tc_islam': [{q: "السورة المقررة في الجذع المشترك هي :", opt: ["سورة الكهف", "سورة يوسف", "سورة البقرة"], ans: 0}, {q: "تعريف الإيمان اصطلاحاً :", opt: ["تصديق بالجنان وقول باللسان وعمل بالأركان", "النية الصادقة فقط", "الصلاة والصوم فقط"], ans: 0}],
             'tc_hg': [{q: "انطلقت النهضة الأوروبية من :", opt: ["إيطاليا", "فرنسا", "إنجلترا"], ans: 0}, {q: "النظام القائم على الملكية الخاصة :", opt: ["الرأسمالية", "الاشتراكية", "الإقطاعية"], ans: 0}],
@@ -262,4 +303,61 @@
             else { document.getElementById('zone-twins').classList.add('show'); document.getElementById('btn-twins').classList.add('active-t'); }
         }
 
-        function openChat() { document.getElementById('chat-
+        function openChat() { document.getElementById('chat-modal').style.display = 'flex'; }
+        function closeChat() { document.getElementById('chat-modal').style.display = 'none'; }
+        function sendToWhatsApp() {
+            const msg = document.getElementById('msg-input').value;
+            if(msg) {
+                window.open(`https://wa.me/${parentNumber}?text=${encodeURIComponent(msg)}`, '_blank');
+                closeChat();
+            }
+        }
+
+        const examDate = new Date("June 8, 2026 08:00:00").getTime();
+        setInterval(() => {
+            const now = new Date().getTime(), dist = examDate - now;
+            document.getElementById("timer").innerText = 
+                Math.floor(dist/(864e5)) + "j " + Math.floor((dist%(864e5))/(36e5)) + "h " + Math.floor((dist%(36e5))/6e4) + "m";
+        }, 1000);
+
+        function openQuizModal() {
+            document.getElementById('quiz-result').style.display = 'none';
+            document.getElementById('quiz-body').style.display = 'block';
+            document.getElementById('btn-next').style.display = 'none';
+            document.getElementById('quiz-modal').style.display = 'flex';
+            showQ();
+        }
+
+        function showQ() {
+            const q = curQ[qIdx];
+            document.getElementById('q-text').innerText = (qIdx+1) + ". " + q.q;
+            const div = document.getElementById('q-options'); div.innerHTML = '';
+            q.opt.forEach((o, i) => {
+                const b = document.createElement('button'); b.className = 'quiz-opt-btn'; b.innerText = o;
+                b.onclick = () => check(i, b);
+                div.appendChild(b);
+            });
+        }
+
+        function check(i, b) {
+            document.querySelectorAll('.quiz-opt-btn').forEach(btn => btn.disabled = true);
+            const ans = curQ[qIdx].ans || curQ[qIdx].opt.indexOf(curQ[qIdx].realAns); 
+            if(i === ans) { b.classList.add('correct'); score++; }
+            else { b.classList.add('wrong'); document.querySelectorAll('.quiz-opt-btn')[ans].classList.add('correct'); }
+            document.getElementById('btn-next').style.display = 'block';
+        }
+
+        function nextQuestion() {
+            qIdx++; document.getElementById('btn-next').style.display = 'none';
+            if(qIdx < curQ.length) showQ(); else endQuiz();
+        }
+
+        function endQuiz() {
+            document.getElementById('quiz-body').style.display = 'none';
+            document.getElementById('quiz-result').style.display = 'block';
+            document.getElementById('score-val').innerText = score + " / " + curQ.length;
+        }
+        function closeQuiz() { document.getElementById('quiz-modal').style.display = 'none'; }
+    </script>
+</body>
+</html>

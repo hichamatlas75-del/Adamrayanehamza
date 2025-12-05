@@ -3,25 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>QG FAMILY ULTIMATE V3</title>
-    <!-- Police CAIRO pour l'Arabe et OUTFIT pour le Français -->
+    <title>QG FAMILY PREPA CONCOURS</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Orbitron:wght@700&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #0f172a;
             --surface: #1e293b;
-            --primary-h: #3b82f6; /* Bleu Hamza */
-            --primary-t: #8b5cf6; /* Violet Twins */
+            --primary-h: #3b82f6;
+            --primary-t: #8b5cf6;
             --text: #f8fafc;
             --chat-bg: #25d366;
-            --infinite: #f59e0b;
+            --psycho: #8b5cf6; /* Violet pour la logique */
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; -webkit-tap-highlight-color: transparent; }
-        
-        /* Classe spéciale pour le texte en Arabe */
         .ar-text { font-family: 'Cairo', sans-serif; direction: rtl; text-align: right; }
-
         body { background-color: var(--bg); color: var(--text); padding-bottom: 100px; }
 
         /* HEADER & NAV */
@@ -33,21 +29,36 @@
         .tab-btn.active-h { background: var(--primary-h); color: white; box-shadow: 0 4px 12px rgba(59,130,246,0.3); }
         .tab-btn.active-t { background: var(--primary-t); color: white; box-shadow: 0 4px 12px rgba(139,92,246,0.3); }
 
-        /* ZONES CONTENT */
+        /* ZONES */
         .zone { display: none; padding: 15px; animation: fade 0.4s; }
         .show { display: block; }
         @keyframes fade { from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:translateY(0)} }
 
-        /* BOUTON GENERATEUR INFINI */
+        /* BOUTONS GENERATEURS (MATHS & PSYCHO) */
+        .gen-container { display: flex; flex-direction: column; gap: 15px; margin-bottom: 25px; }
+        
         .infinite-btn {
-            background: linear-gradient(135deg, #b45309 0%, #f59e0b 100%);
-            width: 100%; padding: 20px; border-radius: 15px; border: 2px solid #fcd34d;
-            color: white; font-weight: 900; font-size: 1.1rem; text-transform: uppercase;
-            display: flex; align-items: center; justify-content: center; gap: 15px;
-            margin-bottom: 25px; cursor: pointer; box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
-            animation: pulse 2s infinite;
+            width: 100%; padding: 15px; border-radius: 12px; 
+            color: white; font-weight: 900; font-size: 1rem; text-transform: uppercase;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            cursor: pointer; position: relative; overflow: hidden;
+            transition: transform 0.2s;
         }
-        @keyframes pulse { 0% {transform: scale(1);} 50% {transform: scale(1.02);} 100% {transform: scale(1);} }
+        .infinite-btn:active { transform: scale(0.98); }
+
+        .btn-maths {
+            background: linear-gradient(135deg, #b45309 0%, #f59e0b 100%);
+            border: 2px solid #fcd34d; box-shadow: 0 0 15px rgba(245, 158, 11, 0.3);
+        }
+        
+        /* Nouveau bouton Psychotechnique */
+        .btn-psycho {
+            background: linear-gradient(135deg, #4c1d95 0%, #8b5cf6 100%);
+            border: 2px solid #c4b5fd; box-shadow: 0 0 15px rgba(139, 92, 246, 0.3);
+            animation: pulse 3s infinite;
+        }
+
+        @keyframes pulse { 0% {box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.4);} 70% {box-shadow: 0 0 0 10px rgba(139, 92, 246, 0);} 100% {box-shadow: 0 0 0 0 rgba(139, 92, 246, 0);} }
 
         /* COUNTDOWN */
         .countdown-box {
@@ -68,7 +79,7 @@
         }
         .card-icon { font-size: 1.5rem; }
 
-        /* BOUTONS QUIZ */
+        /* BOUTONS QUIZ CLASSIQUE */
         .btn-quiz {
             background: #1e293b; color: white; border: 1px solid rgba(255,255,255,0.1); 
             padding: 15px; border-radius: 12px; font-weight: 700; text-align: left; 
@@ -76,14 +87,13 @@
         }
         .q-fr { border-left: 4px solid #3b82f6; } 
         .q-sci { border-left: 4px solid #ef4444; }
-        /* Style Arabe (Vert + Inversé) */
-        .q-ar { border-left: 4px solid #10b981; border-right: 4px solid #10b981; text-align: right; flex-direction: row-reverse; } 
+        .q-ar { border-left: 4px solid #10b981; border-right: 4px solid #10b981; text-align: right; flex-direction: row-reverse; }
 
         /* CHAT FAB */
         .fab-chat {
             position: fixed; bottom: 20px; right: 20px; background: var(--chat-bg); color: white;
             width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            font-size: 30px; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.5); z-index: 900; border: 2px solid white;
+            font-size: 30px; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.5); z-index: 900; border: 2px solid white; cursor: pointer;
         }
 
         /* MODALS */
@@ -96,33 +106,32 @@
             background: #1e293b; width: 100%; max-width: 500px; border-radius: 16px;
             padding: 25px; border: 1px solid #475569; position: relative; max-height: 80vh; overflow-y: auto;
         }
-        .close-modal { position: absolute; top: 15px; right: 20px; background: none; border: none; color: white; font-size: 1.5rem; }
-
-        /* CHAT STYLES */
-        .chat-input { width: 100%; background: #0f172a; border: 1px solid #475569; color: white; padding: 15px; border-radius: 10px; margin: 15px 0; resize: none; height: 100px; }
-        .quick-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 15px; }
-        .tag { background: #334155; padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; cursor: pointer; }
-        .btn-send { width: 100%; background: var(--chat-bg); color: white; font-weight: 800; padding: 15px; border: none; border-radius: 10px; }
+        .close-modal { position: absolute; top: 15px; right: 20px; background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
 
         /* QUIZ STYLES */
         .quiz-opt-btn {
             width: 100%; padding: 14px; margin-bottom: 10px; background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1); color: #cbd5e1; border-radius: 8px; text-align: left; font-weight: 600;
+            border: 1px solid rgba(255,255,255,0.1); color: #cbd5e1; border-radius: 8px; text-align: left; font-weight: 600; cursor: pointer;
         }
         .quiz-opt-btn.correct { background: #10b981; color: white; }
         .quiz-opt-btn.wrong { background: #ef4444; color: white; }
         .score-final { font-size: 2rem; font-weight: 900; color: #fbbf24; text-align: center; margin-top: 20px; }
         
-        /* STYLE SPECIFIQUE QUIZ ARABE DANS LA MODAL */
         .quiz-ar-mode .quiz-question { font-family: 'Cairo'; text-align: right; direction: rtl; font-size: 1.3rem; }
         .quiz-ar-mode .quiz-opt-btn { font-family: 'Cairo'; text-align: right; direction: rtl; font-size: 1.1rem; }
+        
+        /* CHAT */
+        .chat-input { width: 100%; background: #0f172a; border: 1px solid #475569; color: white; padding: 15px; border-radius: 10px; margin: 15px 0; resize: none; height: 100px; }
+        .quick-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 15px; }
+        .tag { background: #334155; padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; cursor: pointer; }
+        .btn-send { width: 100%; background: var(--chat-bg); color: white; font-weight: 800; padding: 15px; border: none; border-radius: 10px; cursor: pointer; }
 
     </style>
 </head>
 <body>
 
     <header>
-        <h1>⚡ QG FAMILY</h1>
+        <h1>⚡ QG FAMILY & PREPA</h1>
     </header>
 
     <div class="nav-bar">
@@ -133,50 +142,34 @@
     <div class="fab-chat" onclick="openChat()">💬</div>
 
     <!-- =============================================
-         HAMZA (TRONC COMMUN)
+         HAMZA (TC)
     ============================================= -->
     <div id="zone-hamza" class="zone show">
         
-        <div class="infinite-btn" onclick="startInfiniteQuiz('tc')">
-            <span>♾️</span> GÉNÉRATEUR MATHS/PC
+        <div class="gen-container">
+            <div class="infinite-btn btn-maths" onclick="startInfiniteQuiz('tc')">
+                <span>♾️</span> GÉNÉRATEUR MATHS
+            </div>
+            <div class="infinite-btn btn-psycho" onclick="startInfinitePsycho()">
+                <span>🧩</span> PRÉPA CONCOURS (LOGIQUE)
+            </div>
         </div>
 
-        <!-- BLOC SCIENTIFIQUE -->
         <div class="section-title"><span>🧪</span> PÔLE SCIENTIFIQUE</div>
         <div class="grid">
             <a href="https://www.youtube.com/@YoussefNejjari" target="_blank" class="card" style="border-left: 3px solid #ef4444;"><div class="card-icon">📐</div><div><h3>Maths</h3></div></a>
             <a href="https://www.youtube.com/results?search_query=zakaria+choukri+tronc+commun" target="_blank" class="card" style="border-left: 3px solid #f59e0b;"><div class="card-icon">⚡</div><div><h3>Physique</h3></div></a>
         </div>
 
-        <!-- BLOC QUIZ COMPLET (ARABE) -->
-        <div class="section-title"><span>🧠</span> QUIZ LITTÉRAIRE & SOCIÉTÉ (AR)</div>
+        <div class="section-title"><span>🧠</span> QUIZ (ARABE)</div>
+        <button class="btn-quiz q-ar" onclick="startQuiz('tc_islam')"><div class="ar-text">التربية الإسلامية</div><span>🕌</span></button>
+        <button class="btn-quiz q-ar" onclick="startQuiz('tc_hg')"><div class="ar-text">الاجتماعيات</div><span>🌍</span></button>
+        <button class="btn-quiz q-ar" onclick="startQuiz('tc_philo')"><div class="ar-text">الفلسفة</div><span>🦉</span></button>
         
-        <button class="btn-quiz q-ar" onclick="startQuiz('tc_islam')">
-            <div class="ar-text">التربية الإسلامية <small>سورة الكهف، الإيمان</small></div><span>🕌</span>
-        </button>
-        <button class="btn-quiz q-ar" onclick="startQuiz('tc_hg')">
-            <div class="ar-text">الاجتماعيات <small>التحولات، النهضة الأوروبية</small></div><span>🌍</span>
-        </button>
-        <button class="btn-quiz q-ar" onclick="startQuiz('tc_arabe')">
-            <div class="ar-text">اللغة العربية <small>النحو والبلاغة</small></div><span>🇸🇦</span>
-        </button>
-        <button class="btn-quiz q-ar" onclick="startQuiz('tc_philo')">
-            <div class="ar-text">الفلسفة <small>نشأة الفلسفة، الطبيعة والثقافة</small></div><span>🦉</span>
-        </button>
-        
-        <div class="section-title"><span>🇫🇷</span> QUIZ FRANÇAIS</div>
-        <button class="btn-quiz q-fr" onclick="startQuiz('tc_fr')"><div>La Parure & Aux Champs</div><span>🇫🇷</span></button>
-
         <div class="section-title"><span>📂</span> RESSOURCES</div>
         <div class="grid">
-             <a href="https://www.youtube.com/@moullfalsafa" target="_blank" class="card"><div class="card-icon">🦉</div><h3>Moul l'Falsafa</h3></a>
+             <a href="https://www.youtube.com/@moullfalsafa" target="_blank" class="card"><div class="card-icon">🦉</div><h3>Philo</h3></a>
              <a href="https://www.alloschool.com/" target="_blank" class="card"><div class="card-icon">📚</div><h3>AlloSchool</h3></a>
-        </div>
-
-        <div class="section-title"><span>⚽</span> LOISIRS</div>
-        <div class="grid">
-            <a href="https://www.kooora.com/" target="_blank" class="card"><div class="card-icon">🏆</div><h3>Kooora</h3></a>
-            <a href="https://www.youtube.com/@NassimSahili" target="_blank" class="card"><div class="card-icon">💪</div><h3>Muscu</h3></a>
         </div>
     </div>
 
@@ -185,10 +178,6 @@
     ============================================= -->
     <div id="zone-twins" class="zone">
         
-        <div class="infinite-btn" onclick="startInfiniteQuiz('bac')">
-            <span>♾️</span> GÉNÉRATEUR MATHS/PC
-        </div>
-
         <div class="countdown-box">
             <div style="color: #fca5a5; font-size: 0.8rem; margin-bottom:10px;">🚨 DÉBUT EXAMEN RÉGIONAL</div>
             <div class="timer-display" id="timer">
@@ -198,31 +187,27 @@
             </div>
         </div>
 
+        <div class="gen-container">
+            <div class="infinite-btn btn-maths" onclick="startInfiniteQuiz('bac')">
+                <span>♾️</span> GÉNÉRATEUR MATHS/PC
+            </div>
+            <div class="infinite-btn btn-psycho" onclick="startInfinitePsycho()">
+                <span>🧩</span> PRÉPA CONCOURS (LOGIQUE)
+            </div>
+        </div>
+
         <div class="section-title" style="color: #fbbf24;"><span>📚</span> MISSION RÉGIONAL (AR)</div>
-        
-        <button class="btn-quiz q-ar" onclick="startQuiz('bac_islam')">
-            <div class="ar-text">التربية الإسلامية <small>سورة يوسف، الطلاق، الكفاءة</small></div><span>🕌</span>
-        </button>
-        <button class="btn-quiz q-ar" onclick="startQuiz('bac_hg')">
-            <div class="ar-text">الاجتماعيات <small>المغرب، العالم العربي، أمريكا</small></div><span>🌍</span>
-        </button>
-         <button class="btn-quiz q-ar" onclick="startQuiz('bac_ar')">
-            <div class="ar-text">اللغة العربية <small>الخطاب الإشهاري والسياسي</small></div><span>🇸🇦</span>
-        </button>
+        <button class="btn-quiz q-ar" onclick="startQuiz('bac_islam')"><div class="ar-text">التربية الإسلامية</div><span>🕌</span></button>
+        <button class="btn-quiz q-ar" onclick="startQuiz('bac_hg')"><div class="ar-text">الاجتماعيات</div><span>🌍</span></button>
+        <button class="btn-quiz q-ar" onclick="startQuiz('bac_ar')"><div class="ar-text">اللغة العربية</div><span>🇸🇦</span></button>
 
         <div class="section-title"><span>🇫🇷</span> FRANÇAIS</div>
         <button class="btn-quiz q-fr" onclick="startQuiz('bac_fr_boite')"><div>Boîte à Merveilles</div><span>📦</span></button>
         <button class="btn-quiz q-fr" onclick="startQuiz('bac_fr_antigone')"><div>Antigone</div><span>🎭</span></button>
 
-        <div class="section-title"><span>📂</span> RESSOURCES</div>
+        <div class="section-title"><span>📂</span> DOCS & LOISIRS</div>
         <div class="grid">
-            <a href="https://www.youtube.com/@SoutienAdnan" target="_blank" class="card"><div class="card-icon">👑</div><h3>Adnan (FR)</h3></a>
             <a href="https://moutamadris.ma/" target="_blank" class="card"><div class="card-icon">📝</div><h3>Annales</h3></a>
-        </div>
-        
-        <div class="section-title"><span>⛩️</span> LOISIRS</div>
-        <div class="grid">
-            <a href="https://mangaplus.shueisha.co.jp/updates" target="_blank" class="card"><div class="card-icon">📖</div><h3>Manga+</h3></a>
             <a href="https://www.flashscore.fr/" target="_blank" class="card"><div class="card-icon">⚽</div><h3>FlashScore</h3></a>
         </div>
     </div>
@@ -234,9 +219,9 @@
             <h3 style="color:white; margin-bottom:5px;">💬 CONTACTER PARENTS</h3>
             <div class="quick-tags">
                 <div class="tag" onclick="addTag('Besoin d\'argent 💸')">💸 Argent</div>
-                <div class="tag" onclick="addTag('Je sors un peu 🚶')">🚶 Sortie</div>
+                <div class="tag" onclick="addTag('Je sors 🚶')">🚶 Sortie</div>
                 <div class="tag" onclick="addTag('Aide devoirs 🆘')">🆘 Aide</div>
-                <div class="tag" onclick="addTag('Fini mes révisions ✅')">✅ Fini</div>
+                <div class="tag" onclick="addTag('J\'ai fini ✅')">✅ Fini</div>
             </div>
             <textarea id="msg-input" class="chat-input" placeholder="Message..."></textarea>
             <button class="btn-send" onclick="sendToWhatsApp()"><span>ENVOYER (WHATSAPP)</span> <span>🚀</span></button>
@@ -262,56 +247,64 @@
 
     <script>
         // CONFIG
-        const parentNumber = "212661446680"; // METTRE VOTRE NUMERO ICI
+        const parentNumber = "212661446680"; // NUMERO MIS A JOUR
 
-        // --- DONNÉES QUIZ (ARABE & FRANCAIS) ---
-        const quizData = {
-            // ================= HAMZA (TC) =================
-            'tc_islam': [
-                {q: "السورة المقررة في الجذع المشترك هي :", opt: ["سورة الكهف", "سورة يوسف", "سورة البقرة"], ans: 0},
-                {q: "تعريف الإيمان اصطلاحاً :", opt: ["تصديق بالجنان وقول باللسان وعمل بالأركان", "النية الصادقة فقط", "الصلاة والصوم فقط"], ans: 0},
-                {q: "بدأت الدعوة الإسلامية في مكة :", opt: ["سراً", "جهراً", "بالقتال"], ans: 0},
-                {q: "أعلى مراتب الدين هو :", opt: ["الإحسان", "الإسلام", "الإيمان"], ans: 0}
-            ],
-            'tc_hg': [
-                {q: "انطلقت النهضة الأوروبية من :", opt: ["إيطاليا", "فرنسا", "إنجلترا"], ans: 0},
-                {q: "من أسباب الاكتشافات الجغرافية :", opt: ["البحث عن طرق تجارية جديدة", "نشر الإسلام", "السياحة"], ans: 0},
-                {q: "طبقة الغلاف الجوي التي تحمي الأرض هي :", opt: ["الستراتوسفير (الأوزون)", "التروبوسفير", "الميزوسفير"], ans: 0},
-                {q: "النظام الذي يقوم على الملكية الخاصة لوسائل الإنتاج هو :", opt: ["النظام الرأسمالي", "النظام الاشتراكي", "النظام الإقطاعي"], ans: 0}
-            ],
-            'tc_philo': [
-                {q: "أصل كلمة 'فلسفة' هو :", opt: ["يوناني", "عربي", "لاتيني"], ans: 0},
-                {q: "تعني الفلسفة (فيلوسوفيا) :", opt: ["حب الحكمة", "امتلاك الحكمة", "رفض الحكمة"], ans: 0},
-                {q: "من خصائص التفكير الفلسفي :", opt: ["الدهشة والشك", "التسليم بالخرافات", "التقليد"], ans: 0}
-            ],
-            'tc_arabe': [
-                {q: "الخبر الجملة يكون :", opt: ["جملة اسمية أو فعلية", "مفرداً فقط", "شبه جملة"], ans: 0},
-                {q: "أركان التشبيه هي :", opt: ["المشبه، المشبه به، الأداة، وجه الشبه", "الفعل والفاعل", "المبتدأ والخبر"], ans: 0},
-                {q: "جمع كلمة 'تقنية' هو :", opt: ["تقنيات", "تقاني", "تقن"], ans: 0}
-            ],
-            'tc_fr': [
-                 {q: "Auteur de 'La Parure' ?", opt: ["Maupassant", "Hugo", "Zola"], ans: 0},
-                 {q: "Dans 'Aux Champs', qui adopte l'enfant ?", opt: ["Les d'Hubières", "Le curé", "Le maire"], ans: 0}
-            ],
+        // --- MOTEUR GENERATEUR PSYCHOTECHNIQUE (CONCOURS) ---
+        function generatePsychoQuestion() {
+            // Algorithme qui génère des suites logiques
+            const types = ['suite_nb', 'suite_lettre', 'math_mental'];
+            const type = types[Math.floor(Math.random() * types.length)];
 
-            // ================= TWINS (BAC) =================
-            'bac_islam': [
-                {q: "عدد إخوة يوسف عليه السلام :", opt: ["11", "12", "10"], ans: 0},
-                {q: "الطلاق الرجعي هو الذي :", opt: ["يحق للزوج إرجاع زوجته بدون عقد", "يحتاج عقداً جديداً", "ينهي الزواج فوراً"], ans: 0},
-                {q: "رؤيا الملك في سورة يوسف كانت عن :", opt: ["سبع بقرات سمان", "سبع سنوات قحط", "سبعة كواكب"], ans: 0}
-            ],
-            'bac_hg': [
-                {q: "تم فرض الحماية على المغرب سنة :", opt: ["1912", "1956", "1944"], ans: 0},
-                {q: "انطلقت المسيرة الخضراء سنة :", opt: ["1975", "1979", "1999"], ans: 0},
-                {q: "أزمة 1929 انطلقت من :", opt: ["بورصة وول ستريت (أمريكا)", "باريس", "لندن"], ans: 0}
-            ],
-            'bac_ar': [
-                {q: "وظيفة الخطاب الإشهاري :", opt: ["الإقناع والتأثير", "الإمتاع", "السرد"], ans: 0},
-                {q: "الطباق هو :", opt: ["الجمع بين الكلمة وضدها", "تشابه الحروف", "تكرار الكلمة"], ans: 0}
-            ],
-            'bac_fr_boite': [{q: "Narrateur ?", opt: ["Sidi Mohammed", "Ahmed", "Driss"], ans: 0}, {q: "Métier du père ?", opt: ["Tisserand", "Barbier", "Maçon"], ans: 0}],
-            'bac_fr_antigone': [{q: "Lien Antigone/Hémon ?", opt: ["Cousins", "Fiancés", "Frères"], ans: 1}, {q: "Dénouement ?", opt: ["Tragique", "Heureux", "Comique"], ans: 0}]
-        };
+            if(type === 'suite_nb') {
+                // Suite arithmétique (Ex: 2, 5, 8, 11, ?)
+                const start = Math.floor(Math.random() * 10);
+                const step = Math.floor(Math.random() * 5) + 2;
+                const seq = [start, start+step, start+(step*2), start+(step*3)];
+                const ans = start+(step*4);
+                return {
+                    q: `Suite logique : ${seq.join(' , ')} , ?`,
+                    opt: [ans, ans+1, ans-2, ans+step].sort(()=>Math.random()-0.5),
+                    ansIdx: -1, realAns: ans
+                };
+            } else if (type === 'suite_lettre') {
+                // Suite lettres (Ex: A, C, E, ?)
+                const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                const startIdx = Math.floor(Math.random() * 15);
+                const step = Math.floor(Math.random() * 2) + 1; // Saut de 1 ou 2
+                const l1 = alphabet[startIdx];
+                const l2 = alphabet[startIdx+step];
+                const l3 = alphabet[startIdx+(step*2)];
+                const ans = alphabet[startIdx+(step*3)];
+                return {
+                    q: `Suite logique : ${l1}, ${l2}, ${l3}, ?`,
+                    opt: [ans, alphabet[startIdx+(step*3)+1], alphabet[startIdx+(step*3)-1], "Z"].sort(()=>Math.random()-0.5),
+                    ansIdx: -1, realAns: ans
+                };
+            } else {
+                // Calcul mental % (Ex: 20% de 50)
+                const pct = [10, 20, 25, 50][Math.floor(Math.random()*4)];
+                const val = Math.floor(Math.random() * 20) * 10; // multiple de 10
+                const ans = (val * pct) / 100;
+                return {
+                    q: `Calcul mental : ${pct}% de ${val} ?`,
+                    opt: [ans, ans+5, ans/2, ans*2].sort(()=>Math.random()-0.5),
+                    ansIdx: -1, realAns: ans
+                };
+            }
+        }
+
+        function startInfinitePsycho() {
+            let infiniteQ = [];
+            for(let i=0; i<6; i++) {
+                let gen = generatePsychoQuestion();
+                gen.ans = gen.opt.indexOf(gen.realAns);
+                infiniteQ.push(gen);
+            }
+            curQ = infiniteQ; qIdx = 0; score = 0;
+            document.getElementById('q-cat-title').innerText = "🧩 PRÉPA CONCOURS (POST-BAC)";
+            document.querySelector('.modal-content').classList.remove('quiz-ar-mode'); 
+            openQuizModal();
+        }
 
         // --- MOTEUR GENERATEUR MATHS ---
         function generateMathQuestion(level) {
@@ -340,6 +333,40 @@
             document.querySelector('.modal-content').classList.remove('quiz-ar-mode'); 
             openQuizModal();
         }
+
+        // --- DATA STATIC QUIZ ---
+        const quizData = {
+            'tc_islam': [
+                {q: "السورة المقررة في الجذع المشترك هي :", opt: ["سورة الكهف", "سورة يوسف", "سورة البقرة"], ans: 0},
+                {q: "تعريف الإيمان اصطلاحاً :", opt: ["تصديق بالجنان وقول باللسان وعمل بالأركان", "النية الصادقة فقط", "الصلاة والصوم فقط"], ans: 0}
+            ],
+            'tc_hg': [
+                {q: "انطلقت النهضة الأوروبية من :", opt: ["إيطاليا", "فرنسا", "إنجلترا"], ans: 0},
+                {q: "النظام القائم على الملكية الخاصة :", opt: ["الرأسمالية", "الاشتراكية", "الإقطاعية"], ans: 0}
+            ],
+            'tc_philo': [
+                {q: "تعني الفلسفة :", opt: ["حب الحكمة", "امتلاك الحكمة", "رفض الحكمة"], ans: 0},
+                {q: "أصل كلمة فلسفة :", opt: ["يوناني", "عربي", "لاتيني"], ans: 0}
+            ],
+            'tc_arabe': [
+                {q: "الخبر الجملة يكون :", opt: ["جملة اسمية أو فعلية", "مفرداً فقط", "شبه جملة"], ans: 0},
+                {q: "جمع 'تقنية' :", opt: ["تقنيات", "تقاني", "تقن"], ans: 0}
+            ],
+            'bac_islam': [
+                {q: "عدد إخوة يوسف عليه السلام :", opt: ["11", "12", "10"], ans: 0},
+                {q: "الطلاق الرجعي :", opt: ["لا يحتاج عقداً جديداً", "يحتاج عقداً جديداً", "ينهي الزواج"], ans: 0}
+            ],
+            'bac_hg': [
+                {q: "فرض الحماية سنة :", opt: ["1912", "1956", "1944"], ans: 0},
+                {q: "المسيرة الخضراء سنة :", opt: ["1975", "1979", "1999"], ans: 0}
+            ],
+            'bac_ar': [
+                {q: "وظيفة الإشهار :", opt: ["الإقناع", "الإمتاع", "السرد"], ans: 0},
+                {q: "الطباق هو :", opt: ["الضد", "التشابه", "التكرار"], ans: 0}
+            ],
+            'bac_fr_boite': [{q: "Narrateur ?", opt: ["Sidi Mohammed", "Ahmed", "Driss"], ans: 0}],
+            'bac_fr_antigone': [{q: "Lien Antigone/Hémon ?", opt: ["Fiancés", "Cousins", "Frères"], ans: 0}]
+        };
 
         // --- NAVIGATION ---
         function switchTab(who) {
@@ -378,7 +405,6 @@
             qIdx = 0; score = 0;
             document.getElementById('q-cat-title').innerText = "QUIZ";
             
-            // Detection Arabe pour changer le style
             if(cat.includes('islam') || cat.includes('hg') || cat.includes('arabe') || cat.includes('philo') || cat.includes('bac_ar')) {
                 document.querySelector('.modal-content').classList.add('quiz-ar-mode');
             } else {

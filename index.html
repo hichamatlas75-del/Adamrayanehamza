@@ -2,287 +2,416 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QG SCOLAIRE - FINAL</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>QG REVISIONS - ULTIMATE QUIZ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #0f172a;
             --surface: #1e293b;
-            --text: #f1f5f9;
-            --accent-h: #3b82f6; /* Bleu Hamza */
-            --accent-t: #8b5cf6; /* Violet Frères */
-            /* Couleurs Matières */
-            --maths: #ef4444; 
-            --pc: #f59e0b; 
-            --svt: #10b981;
-            --fr: #0ea5e9;
-            --ar: #a855f7;
-            --hg: #d97706;
-            --sport: #eab308;
-            --manga: #d946ef;
+            --primary-h: #3b82f6; /* Hamza */
+            --primary-t: #8b5cf6; /* Twins */
+            --text: #f8fafc;
+            --success: #10b981;
+            --error: #ef4444;
+            --quiz-bg: #2d3748;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
-        body { background: var(--bg); color: var(--text); padding-bottom: 60px; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background-color: var(--bg); color: var(--text); padding-bottom: 80px; }
 
-        /* HEADER */
-        header { 
-            text-align: center; padding: 20px; 
-            background: #111827; border-bottom: 1px solid #374151; 
-        }
-        h1 { font-size: 1.5rem; font-weight: 900; letter-spacing: 1px; color: white; }
+        /* HEADER & NAV */
+        header { text-align: center; padding: 20px; background: rgba(15,23,42,0.95); border-bottom: 1px solid #334155; }
+        h1 { font-weight: 800; letter-spacing: 1px; font-size: 1.4rem; }
 
-        /* NAVIGATION (Boutons) */
-        .nav-bar { 
-            display: flex; gap: 10px; padding: 10px; 
-            position: sticky; top: 0; background: rgba(15,23,42,0.98); 
-            z-index: 1000; border-bottom: 1px solid #334155;
-        }
-        
-        .tab-btn { 
-            flex: 1; padding: 14px; border: none; border-radius: 8px; 
-            font-weight: 800; font-size: 0.9rem; cursor: pointer; 
-            background: #334155; color: #94a3b8; transition: 0.2s; 
-        }
+        .nav-bar { display: flex; gap: 10px; padding: 15px; position: sticky; top: 0; background: var(--bg); z-index: 100; border-bottom: 1px solid #334155; }
+        .tab-btn { flex: 1; padding: 12px; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; background: #334155; color: #94a3b8; transition: 0.3s; }
+        .tab-btn.active-h { background: var(--primary-h); color: white; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(59,130,246,0.3); }
+        .tab-btn.active-t { background: var(--primary-t); color: white; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(139,92,246,0.3); }
 
-        /* État Actif des Boutons */
-        .tab-btn.active-h { background: var(--accent-h) !important; color: white !important; transform: scale(1.02); box-shadow: 0 4px 10px rgba(59, 130, 246, 0.4); }
-        .tab-btn.active-t { background: var(--accent-t) !important; color: white !important; transform: scale(1.02); box-shadow: 0 4px 10px rgba(139, 92, 246, 0.4); }
+        /* ZONES */
+        .zone { display: none; padding: 15px; animation: fade 0.4s; }
+        .show { display: block; }
+        @keyframes fade { from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:translateY(0)} }
 
-        /* SECTIONS (Contenu) */
-        .content-zone { display: none; padding: 15px; animation: fadeIn 0.3s; }
-        
-        /* La classe qui affiche le contenu */
-        .show { display: block !important; }
+        /* TITRES & GRILLES */
+        .section-title { font-size: 0.9rem; font-weight: 800; color: #64748b; margin: 30px 0 10px 0; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 8px; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 15px; }
 
-        @keyframes fadeIn { from {opacity:0; transform: translateY(10px);} to {opacity:1; transform: translateY(0);} }
-
-        /* GRILLES & CARTES */
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
-        .grid-1 { display: grid; grid-template-columns: 1fr; gap: 10px; margin-bottom: 20px; }
-
+        /* CARTES LIENS (RESSOURCES) */
         .card { 
-            background: var(--surface); padding: 15px; border-radius: 12px; 
-            text-decoration: none; color: white; border: 1px solid #334155;
-            display: flex; align-items: center; gap: 12px; transition: 0.2s;
-            position: relative; overflow: hidden;
+            background: var(--surface); padding: 15px; border-radius: 12px; text-decoration: none; color: white; 
+            border: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; transition: 0.2s;
         }
-        .card:active { transform: scale(0.96); background: #334155; }
-        
-        .icon { font-size: 1.4rem; width: 35px; text-align: center; flex-shrink: 0; }
-        .txt h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 2px; }
-        .txt p { font-size: 0.75rem; color: #cbd5e1; }
+        .card:active { transform: scale(0.95); }
+        .card-icon { font-size: 1.5rem; }
+        .card h3 { font-size: 0.9rem; font-weight: 700; }
+        .card p { font-size: 0.7rem; opacity: 0.7; }
 
-        /* BORDURES COULEURS */
-        .b-maths { border-left: 4px solid var(--maths); }
-        .b-pc { border-left: 4px solid var(--pc); }
-        .b-svt { border-left: 4px solid var(--svt); }
-        .b-fr { border-left: 4px solid var(--fr); }
-        .b-ar { border-left: 4px solid var(--ar); }
-        .b-hg { border-left: 4px solid var(--hg); }
-
-        /* TITRES SEPARATEURS */
-        .sep { 
-            font-size: 0.85rem; font-weight: 900; text-transform: uppercase; 
-            margin: 25px 0 10px 5px; color: #64748b; letter-spacing: 1px;
+        /* BOUTONS QUIZ (NOUVEAU DESIGN) */
+        .btn-quiz {
+            background: linear-gradient(135deg, #4c1d95 0%, #6d28d9 100%);
+            color: white; border: none; padding: 15px; border-radius: 12px;
+            font-weight: 700; text-align: left; display: flex; align-items: center; justify-content: space-between;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2); cursor: pointer; margin-bottom: 8px;
         }
+        .btn-quiz span { font-size: 1.2rem; }
+        .btn-quiz small { display: block; font-size: 0.7rem; font-weight: 400; opacity: 0.8; }
+        .q-science { background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%); } /* Teal */
+        .q-litt { background: linear-gradient(135deg, #be185d 0%, #f43f5e 100%); } /* Pink */
 
-        /* LOISIRS */
-        .hobby-box { 
-            background: linear-gradient(135deg, #1e293b, #020617); 
-            border: 1px solid #475569; padding: 15px; 
-            border-radius: 12px; margin-top: 30px; 
+        /* MODAL QUIZ (POPUP) */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); z-index: 2000; display: none;
+            justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(5px);
+        }
+        .modal-content {
+            background: var(--quiz-bg); width: 100%; max-width: 500px; border-radius: 16px;
+            padding: 25px; border: 1px solid #4a5568; position: relative;
+        }
+        .close-btn {
+            position: absolute; top: 15px; right: 15px; background: none; border: none;
+            color: #a0aec0; font-size: 1.5rem; cursor: pointer;
+        }
+        .quiz-question { font-size: 1.1rem; font-weight: 700; margin-bottom: 20px; line-height: 1.4; }
+        .quiz-opt-btn {
+            width: 100%; padding: 14px; margin-bottom: 10px; background: rgba(255,255,255,0.05);
+            border: 2px solid rgba(255,255,255,0.1); color: white; border-radius: 8px;
+            text-align: left; font-weight: 600; cursor: pointer; transition: 0.2s;
+        }
+        .quiz-opt-btn.correct { background: var(--success); border-color: var(--success); color: #000; }
+        .quiz-opt-btn.wrong { background: var(--error); border-color: var(--error); }
+        .score-display { text-align: center; font-size: 1.5rem; font-weight: 900; color: var(--success); margin-top: 20px; }
+
+        /* BOUTONS DOCS */
+        .btn-doc { 
+            display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 15px; 
+            border-radius: 10px; margin-bottom: 10px; text-decoration: none; font-weight: 700; 
+            background: rgba(255,255,255,0.05); color: white; border: 1px solid rgba(255,255,255,0.1);
         }
 
     </style>
 </head>
 <body>
 
-<header>
-    <h1>🚀 DASHBOARD</h1>
-</header>
+    <header>
+        <h1>🎓 MASTER CLASS 2025</h1>
+    </header>
 
-<!-- NAVIGATION -->
-<div class="nav-bar">
-    <button id="btn-1" class="tab-btn active-h" onclick="changerOnglet('hamza')">HAMZA (TC)</button>
-    <button id="btn-2" class="tab-btn" onclick="changerOnglet('twins')">LES FRÈRES (BAC)</button>
-</div>
-
-<!-- ==========================================
-     CONTENU HAMZA (TRONC COMMUN)
-========================================== -->
-<div id="zone-hamza" class="content-zone show">
-    
-    <div class="sep">🧪 Pôle Scientifique</div>
-    <div class="grid-2">
-        <a href="https://www.youtube.com/@YoussefNejjari/playlists" target="_blank" class="card b-maths">
-            <div class="icon">📐</div>
-            <div class="txt"><h3>Maths</h3><p>Nejjari</p></div>
-        </a>
-        <a href="https://www.youtube.com/results?search_query=physique+tronc+commun+zakaria+choukri" target="_blank" class="card b-pc">
-            <div class="icon">⚡</div>
-            <div class="txt"><h3>Physique</h3><p>Zakaria</p></div>
-        </a>
-        <a href="https://www.youtube.com/@SVTFABOUR/playlists" target="_blank" class="card b-svt">
-            <div class="icon">🧬</div>
-            <div class="txt"><h3>SVT</h3><p>Fabour</p></div>
-        </a>
-        <a href="https://www.youtube.com/results?search_query=informatique+tronc+commun+cours" target="_blank" class="card b-pc">
-            <div class="icon">💻</div>
-            <div class="txt"><h3>Info</h3><p>Algo</p></div>
-        </a>
+    <div class="nav-bar">
+        <button id="btn-hamza" class="tab-btn active-h" onclick="switchTab('hamza')">HAMZA (TC)</button>
+        <button id="btn-twins" class="tab-btn" onclick="switchTab('twins')">FRÈRES (BAC)</button>
     </div>
 
-    <div class="sep">📚 Littéraire & Langues</div>
-    <div class="grid-2">
-        <a href="https://www.youtube.com/results?search_query=aux+champs+analyse" target="_blank" class="card b-fr">
-            <div class="icon">🇫🇷</div>
-            <div class="txt"><h3>Français</h3><p>Œuvres</p></div>
-        </a>
-        <a href="https://www.youtube.com/results?search_query=tronc+commun+arabe+cours" target="_blank" class="card b-ar">
-            <div class="icon">🇸🇦</div>
-            <div class="txt"><h3>Arabe</h3><p>Cours</p></div>
-        </a>
-        <a href="https://www.youtube.com/@EnglishwithSimo" target="_blank" class="card b-fr">
-            <div class="icon">🇬🇧</div>
-            <div class="txt"><h3>Anglais</h3><p>Simo</p></div>
-        </a>
-        <a href="https://www.youtube.com/results?search_query=philosophie+tronc+commun+maroc" target="_blank" class="card b-ar">
-            <div class="icon">🦉</div>
-            <div class="txt"><h3>Philo</h3><p>Initiation</p></div>
-        </a>
-    </div>
-
-    <div class="sep">🌍 Société</div>
-    <div class="grid-2">
-        <a href="https://www.youtube.com/@ProfJamal" target="_blank" class="card b-hg">
-            <div class="icon">🗺️</div>
-            <div class="txt"><h3>Hist-Géo</h3><p>Jamal</p></div>
-        </a>
-        <a href="https://www.youtube.com/results?search_query=education+islamique+tronc+commun" target="_blank" class="card b-svt">
-            <div class="icon">🕌</div>
-            <div class="txt"><h3>Islamique</h3><p>Cours</p></div>
-        </a>
-    </div>
-
-    <!-- HOBBY HAMZA -->
-    <div class="hobby-box" style="border-color: var(--sport);">
-        <div class="sep" style="margin-top:0; color:var(--sport);">⚽ PAUSE SPORT</div>
-        <div class="grid-2">
-            <a href="https://www.kooora.com/" target="_blank" class="card">
-                <div class="icon">🏆</div>
-                <div class="txt"><h3>Kooora</h3><p>Actu Foot</p></div>
-            </a>
-            <a href="https://www.youtube.com/@NassimSahili" target="_blank" class="card">
-                <div class="icon">💪</div>
-                <div class="txt"><h3>Muscu</h3><p>Nassim</p></div>
-            </a>
-        </div>
-    </div>
-</div>
-
-<!-- ==========================================
-     CONTENU FRÈRES (BAC)
-========================================== -->
-<div id="zone-twins" class="content-zone">
-
-    <!-- URGENT REGIONAL -->
-    <div style="background: #991b1b; padding:15px; border-radius:12px; margin-bottom:20px; text-align:center; border: 1px solid #ef4444;">
-        <span style="font-weight:900; color:white; font-size:1.1rem;">🚨 PACK RÉGIONAL</span>
-        <div style="font-size:0.8rem; color:#fca5a5;">Priorité Absolue (Coeff élevé)</div>
-    </div>
-
-    <div class="grid-2">
-        <a href="https://www.youtube.com/@SoutienAdnan" target="_blank" class="card b-fr">
-            <div class="icon">👑</div>
-            <div class="txt"><h3>S. Adnan</h3><p>Français</p></div>
-        </a>
-        <a href="https://www.youtube.com/@khalidhachadi" target="_blank" class="card b-ar">
-            <div class="icon">🇸🇦</div>
-            <div class="txt"><h3>Khalid</h3><p>Arabe</p></div>
-        </a>
-        <a href="https://www.youtube.com/@ProfJamal" target="_blank" class="card b-hg">
-            <div class="icon">🌍</div>
-            <div class="txt"><h3>Jamal</h3><p>Hist-Géo</p></div>
-        </a>
-        <a href="https://www.youtube.com/@AymanOueldLhaj" target="_blank" class="card b-svt">
-            <div class="icon">🕌</div>
-            <div class="txt"><h3>Ayman</h3><p>Islam</p></div>
-        </a>
-    </div>
-
-    <div class="sep">⚛️ MATIÈRES SC. EXP</div>
-    <div class="grid-1">
-        <a href="https://www.kezakoo.com/" target="_blank" class="card b-maths" style="background: #312e81; border: 1px solid #6366f1;">
-            <div class="icon">🎓</div>
-            <div class="txt"><h3 style="font-size:1.1rem; color:#e0e7ff;">KEZAKOO OFFICIEL</h3><p style="color:#a5b4fc;">Site complet (Toutes matières)</p></div>
-        </a>
-    </div>
-    <div class="grid-2">
-        <a href="https://www.youtube.com/@profFaysal" target="_blank" class="card b-pc">
-            <div class="icon">⚡</div>
-            <div class="txt"><h3>Faysal</h3><p>Physique</p></div>
-        </a>
-        <a href="https://www.youtube.com/results?search_query=SVT+1+bac+science+ex" target="_blank" class="card b-svt">
-            <div class="icon">🧬</div>
-            <div class="txt"><h3>SVT</h3><p>1 Bac</p></div>
-        </a>
-    </div>
-
-    <!-- HOBBY ADAM -->
-    <div class="hobby-box" style="border-color: var(--sport);">
-        <div class="sep" style="margin-top:0; color:var(--sport);">🏋️ PAUSE ADAM</div>
-        <div class="grid-2">
-            <a href="https://www.flashscore.fr/" target="_blank" class="card">
-                <div class="icon">⚽</div>
-                <div class="txt"><h3>Scores</h3><p>FlashScore</p></div>
-            </a>
-            <a href="https://www.youtube.com/@NassimSahili" target="_blank" class="card">
-                <div class="icon">💪</div>
-                <div class="txt"><h3>Muscu</h3><p>Nassim</p></div>
-            </a>
-        </div>
-    </div>
-
-    <!-- HOBBY RAYANE -->
-    <div class="hobby-box" style="border-color: var(--manga);">
-        <div class="sep" style="margin-top:0; color:var(--manga);">⛩️ PAUSE RAYANE</div>
-        <div class="grid-2">
-            <a href="https://mangaplus.shueisha.co.jp/updates" target="_blank" class="card">
-                <div class="icon">📖</div>
-                <div class="txt"><h3>Manga+</h3><p>Chapitres</p></div>
-            </a>
-            <a href="https://www.adkami.com/" target="_blank" class="card">
-                <div class="icon">📺</div>
-                <div class="txt"><h3>Adkami</h3><p>Animes</p></div>
-            </a>
-        </div>
-    </div>
-
-</div>
-
-<!-- SCRIPT DE NAVIGATION INDESTRUCTIBLE -->
-<script>
-    function changerOnglet(nom) {
-        // 1. Cacher tout le monde
-        document.getElementById('zone-hamza').classList.remove('show');
-        document.getElementById('zone-twins').classList.remove('show');
+    <!-- =============================================
+         SECTION HAMZA (TC)
+    ============================================= -->
+    <div id="zone-hamza" class="zone show">
         
-        // 2. Désactiver les boutons
-        document.getElementById('btn-1').classList.remove('active-h');
-        document.getElementById('btn-2').classList.remove('active-t');
+        <!-- RESSOURCES -->
+        <div class="section-title"><span>📚</span> COURS & VIDÉOS</div>
+        <div class="grid">
+            <a href="https://www.youtube.com/@YoussefNejjari" target="_blank" class="card" style="border-left: 3px solid #ef4444;">
+                <div class="card-icon">📐</div>
+                <div><h3>Maths</h3><p>Nejjari</p></div>
+            </a>
+            <a href="https://www.youtube.com/results?search_query=zakaria+choukri+tronc+commun" target="_blank" class="card" style="border-left: 3px solid #f59e0b;">
+                <div class="card-icon">⚡</div>
+                <div><h3>Physique</h3><p>Zakaria</p></div>
+            </a>
+            <a href="https://www.youtube.com/@SVTFABOUR" target="_blank" class="card" style="border-left: 3px solid #10b981;">
+                <div class="card-icon">🧬</div>
+                <div><h3>SVT</h3><p>Fabour</p></div>
+            </a>
+            <a href="https://www.youtube.com/results?search_query=aux+champs+analyse" target="_blank" class="card" style="border-left: 3px solid #3b82f6;">
+                <div class="card-icon">🇫🇷</div>
+                <div><h3>Français</h3><p>Œuvres</p></div>
+            </a>
+        </div>
 
-        // 3. Afficher le bon
-        if (nom === 'hamza') {
-            document.getElementById('zone-hamza').classList.add('show');
-            document.getElementById('btn-1').classList.add('active-h');
-        } else {
-            document.getElementById('zone-twins').classList.add('show');
-            document.getElementById('btn-2').classList.add('active-t');
+        <!-- ZONE QUIZ HAMZA -->
+        <div class="section-title"><span>🧠</span> QUIZ EXPRESS (Entraînement)</div>
+        <button class="btn-quiz q-science" onclick="startQuiz('tc_maths')">
+            <div>Mathématiques <small>Vecteurs, Calcul, Ordre</small></div>
+            <span>📐</span>
+        </button>
+        <button class="btn-quiz q-science" onclick="startQuiz('tc_pc')">
+            <div>Physique-Chimie <small>Gravitation, Espèces Chimiques</small></div>
+            <span>⚡</span>
+        </button>
+        <button class="btn-quiz q-litt" onclick="startQuiz('tc_fr')">
+            <div>Français <small>La Parure, Aux Champs</small></div>
+            <span>🇫🇷</span>
+        </button>
+        <button class="btn-quiz q-litt" onclick="startQuiz('tc_svt')">
+            <div>SVT <small>Écologie, Chaînes trophiques</small></div>
+            <span>🧬</span>
+        </button>
+
+        <!-- HOBBIES -->
+        <div class="section-title"><span>⚽</span> PAUSE SPORT</div>
+        <div class="grid">
+            <a href="https://www.kooora.com/" target="_blank" class="card">
+                <div class="card-icon">🏆</div>
+                <h3>Kooora</h3>
+            </a>
+            <a href="https://www.youtube.com/@NassimSahili" target="_blank" class="card">
+                <div class="card-icon">💪</div>
+                <h3>Muscu</h3>
+            </a>
+        </div>
+    </div>
+
+    <!-- =============================================
+         SECTION FRÈRES (BAC)
+    ============================================= -->
+    <div id="zone-twins" class="zone">
+        
+        <!-- ALERT REGIONAL -->
+        <div style="background: linear-gradient(90deg, #7f1d1d, #991b1b); padding: 15px; border-radius: 12px; margin-bottom: 20px; border: 1px solid #ef4444; text-align: center;">
+            <h3 style="color: white;">🚨 MISSION RÉGIONAL</h3>
+            <p style="color: #fca5a5; font-size: 0.8rem;">Objectif : Sécuriser les 25%</p>
+        </div>
+
+        <!-- RESSOURCES -->
+        <div class="grid">
+            <a href="https://www.youtube.com/@SoutienAdnan" target="_blank" class="card" style="border-color: #3b82f6;">
+                <div class="card-icon">👑</div>
+                <div><h3>S. Adnan</h3><p>Le Boss du FR</p></div>
+            </a>
+            <a href="https://www.youtube.com/@AymanOueldLhaj" target="_blank" class="card" style="border-color: #10b981;">
+                <div class="card-icon">🕌</div>
+                <div><h3>Islam</h3><p>Ayman</p></div>
+            </a>
+        </div>
+
+        <!-- ZONE QUIZ TWINS -->
+        <div class="section-title"><span>📝</span> TEST CONNAISSANCES (Régional)</div>
+        <button class="btn-quiz q-litt" onclick="startQuiz('bac_fr')">
+            <div>Français <small>Boîte à Merveilles, Antigone</small></div>
+            <span>🇫🇷</span>
+        </button>
+        <button class="btn-quiz q-litt" onclick="startQuiz('bac_islam')">
+            <div>Éducation Islamique <small>Sourates, Définitions</small></div>
+            <span>🕌</span>
+        </button>
+        <button class="btn-quiz q-litt" onclick="startQuiz('bac_hg')">
+            <div>Histoire-Géo <small>Maroc, Capitalisme, Europe</small></div>
+            <span>🌍</span>
+        </button>
+        <button class="btn-quiz q-litt" onclick="startQuiz('bac_ar')">
+            <div>Arabe <small>Langue & Analyse</small></div>
+            <span>🇸🇦</span>
+        </button>
+
+        <div class="section-title"><span>⚛️</span> TEST SCIENCES (Sc. Exp)</div>
+        <button class="btn-quiz q-science" onclick="startQuiz('bac_maths')">
+            <div>Mathématiques <small>Logique, Généralités Fonctions</small></div>
+            <span>📐</span>
+        </button>
+        <button class="btn-quiz q-science" onclick="startQuiz('bac_pc')">
+            <div>Physique-Chimie <small>Rotation, Travail, Titrage</small></div>
+            <span>⚡</span>
+        </button>
+
+        <!-- LIENS UTILES -->
+        <div class="section-title"><span>📂</span> DOCUMENTS</div>
+        <a href="https://moutamadris.ma/" target="_blank" class="btn-doc">
+            <span>📝 Annales Examens (PDF)</span> <span>➜</span>
+        </a>
+        <a href="https://www.kezakoo.com/" target="_blank" class="btn-doc" style="background: #1e1b4b; border-color: #4f46e5; color: #a5b4fc;">
+            <span>🎓 KEZAKOO OFFICIEL</span> <span>➜</span>
+        </a>
+
+        <!-- HOBBIES -->
+        <div class="section-title"><span>⛩️</span> PAUSE MANGA & FOOT</div>
+        <div class="grid">
+            <a href="https://www.flashscore.fr/" target="_blank" class="card">
+                <div class="card-icon">⚽</div>
+                <h3>FlashScore</h3>
+            </a>
+            <a href="https://mangaplus.shueisha.co.jp/updates" target="_blank" class="card">
+                <div class="card-icon">📖</div>
+                <h3>Manga+</h3>
+            </a>
+        </div>
+    </div>
+
+    <!-- =============================================
+         MODAL QUIZ (POPUP)
+    ============================================= -->
+    <div id="quiz-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeQuiz()">×</button>
+            <div id="quiz-body">
+                <h3 id="q-category" style="color:#a5b4fc; text-transform:uppercase; font-size:0.8rem; margin-bottom:10px;">MATIÈRE</h3>
+                <div id="q-text" class="quiz-question">Chargement...</div>
+                <div id="q-options">
+                    <!-- Options injectées par JS -->
+                </div>
+            </div>
+            <div id="quiz-result" class="score-display" style="display:none;"></div>
+            <button id="btn-next" class="btn-doc" style="margin-top:20px; justify-content:center; display:none;" onclick="nextQuestion()">Suivant ➜</button>
+        </div>
+    </div>
+
+    <script>
+        // --- DONNÉES DES QUESTIONS ---
+        const quizData = {
+            // HAMZA (TC)
+            'tc_maths': [
+                { q: "Un nombre pair s'écrit toujours sous la forme :", opt: ["2k", "2k+1", "k²", "2k-1"], ans: 0 },
+                { q: "Si AB = CD (vecteurs), alors ABDC est un :", opt: ["Carré", "Parallélogramme", "Losange", "Trapèze"], ans: 1 },
+                { q: "La projection conserve :", opt: ["Les longueurs", "Les angles", "Le coefficient de colinéarité", "Les aires"], ans: 2 }
+            ],
+            'tc_pc': [
+                { q: "L'unité de la constante de gravitation G est :", opt: ["N.kg", "N.m²/kg²", "kg/N", "m/s²"], ans: 1 },
+                { q: "Pour extraire l'huile essentielle de lavande, on utilise :", opt: ["La décantation", "L'hydrodistillation", "La filtration", "L'électrolyse"], ans: 1 },
+                { q: "Une espèce chimique pure a :", opt: ["Des températures de changement d'état fixes", "Une couleur unique", "Une odeur forte", "Aucune masse"], ans: 0 }
+            ],
+            'tc_fr': [
+                { q: "Qui est l'auteur de 'La Parure' ?", opt: ["Victor Hugo", "Guy de Maupassant", "Émile Zola", "Balzac"], ans: 1 },
+                { q: "Dans 'Aux Champs', pourquoi les Tuvache refusent-ils ?", opt: ["Par amour", "Par fierté", "Pour l'argent", "Ils acceptent"], ans: 1 },
+                { q: "Quel est le genre de ces œuvres ?", opt: ["Roman", "Nouvelle réaliste", "Théâtre", "Poésie"], ans: 1 }
+            ],
+            'tc_svt': [
+                { q: "Un ensemble d'individus de la même espèce vivant dans un lieu donné :", opt: ["Biocénose", "Population", "Biotope", "Écosystème"], ans: 1 },
+                { q: "Dans une chaîne trophique, les plantes vertes sont des :", opt: ["Consommateurs I", "Producteurs", "Décomposeurs", "Consommateurs II"], ans: 1 }
+            ],
+
+            // TWINS (BAC)
+            'bac_fr': [
+                { q: "Qui est le narrateur de la Boîte à Merveilles ?", opt: ["Sidi Mohammed", "Ahmed Sefrioui", "Le Maalem Abdeslam", "Driss El Aouad"], ans: 0 },
+                { q: "Antigone est une tragédie écrite par :", opt: ["Sophocle", "Jean Anouilh", "Molière", "Corneille"], ans: 1 },
+                { q: "La relation entre Créon et Antigone est :", opt: ["Père/Fille", "Oncle/Nièce", "Frère/Sœur", "Inconnus"], ans: 1 },
+                { q: "La figure de style : 'Ma solitude ne date pas d'hier' est :", opt: ["Une métaphore", "Une litote", "Une hyperbole", "Une comparaison"], ans: 1 }
+            ],
+            'bac_islam': [
+                { q: "Le traité de Houdaibiya a eu lieu en l'an :", opt: ["2 Hégire", "6 Hégire", "8 Hégire", "10 Hégire"], ans: 1 },
+                { q: "L'Iman (La foi), c'est croire :", opt: ["Avec le cœur, la langue et les actes", "Seulement avec le cœur", "Seulement en priant", "En aidant les pauvres"], ans: 0 },
+                { q: "Youssef (Joseph) a été jeté dans le puits par :", opt: ["Des voleurs", "Ses frères", "Le roi", "Des marchands"], ans: 1 }
+            ],
+            'bac_hg': [
+                { q: "La crise économique de 1929 a débuté :", opt: ["En France", "Aux USA", "En Allemagne", "Au Maroc"], ans: 1 },
+                { q: "Le Maroc est situé :", opt: ["Au Nord-Est de l'Afrique", "Au Nord-Ouest de l'Afrique", "Au Sud de l'Europe", "En Asie"], ans: 1 },
+                { q: "Une transformation sociale du capitalisme au 19ème siècle :", opt: ["L'apparition du prolétariat", "La fin de l'esclavage", "L'invention d'Internet", "La monarchie"], ans: 0 }
+            ],
+            'bac_ar': [
+                { q: "La fonction principale du discours publicitaire est :", opt: ["Informative", "Persuasive (Incitative)", "Narrative", "Poétique"], ans: 1 },
+                { q: "Quel est le pluriel de 'Technologie' en arabe ?", opt: ["Teknolojiat", "Teknoloja", "Tekniya", "Tekn"], ans: 0 }
+            ],
+            'bac_maths': [
+                { q: "La négation de '∀x∈R, f(x)>0' est :", opt: ["∀x∈R, f(x)≤0", "∃x∈R, f(x)≤0", "∃x∈R, f(x)<0", "Aucune"], ans: 1 },
+                { q: "Si f est une fonction paire, sa courbe est symétrique par rapport à :", opt: ["L'axe des abscisses", "L'axe des ordonnées", "L'origine O", "La droite y=x"], ans: 1 }
+            ],
+            'bac_pc': [
+                { q: "L'énergie cinétique d'un solide en translation est :", opt: ["Ec = 1/2 mv²", "Ec = mgh", "Ec = 1/2 Jω²", "Ec = mv"], ans: 0 },
+                { q: "Lors d'un dosage, à l'équivalence :", opt: ["Les réactifs sont limitants", "Les réactifs ont été introduits dans les proportions stœchiométriques", "Le pH est toujours 7", "La couleur change toujours au bleu"], ans: 1 }
+            ]
+        };
+
+        // --- ETAT DU QUIZ ---
+        let currentQuiz = [];
+        let qIndex = 0;
+        let score = 0;
+
+        // --- NAVIGATION ONGLETS ---
+        function switchTab(who) {
+            document.querySelectorAll('.zone').forEach(z => z.classList.remove('show'));
+            document.querySelectorAll('.tab-btn').forEach(b => {
+                b.classList.remove('active-h');
+                b.classList.remove('active-t');
+            });
+            if(who === 'hamza') {
+                document.getElementById('zone-hamza').classList.add('show');
+                document.getElementById('btn-hamza').classList.add('active-h');
+            } else {
+                document.getElementById('zone-twins').classList.add('show');
+                document.getElementById('btn-twins').classList.add('active-t');
+            }
         }
-    }
-</script>
+
+        // --- LOGIQUE QUIZ ---
+        function startQuiz(category) {
+            currentQuiz = quizData[category];
+            if(!currentQuiz) { alert("Quiz bientôt disponible !"); return; }
+            
+            qIndex = 0;
+            score = 0;
+            
+            document.getElementById('q-category').innerText = category.replace('_', ' ').toUpperCase();
+            document.getElementById('quiz-result').style.display = 'none';
+            document.getElementById('quiz-body').style.display = 'block';
+            document.getElementById('btn-next').style.display = 'none';
+            document.getElementById('quiz-modal').style.display = 'flex';
+            
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const q = currentQuiz[qIndex];
+            document.getElementById('q-text').innerText = (qIndex + 1) + ". " + q.q;
+            
+            const optDiv = document.getElementById('q-options');
+            optDiv.innerHTML = '';
+
+            q.opt.forEach((option, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'quiz-opt-btn';
+                btn.innerText = option;
+                btn.onclick = () => checkAnswer(idx, btn);
+                optDiv.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selectedIdx, btnElement) {
+            // Bloquer tous les boutons
+            const allBtns = document.querySelectorAll('.quiz-opt-btn');
+            allBtns.forEach(b => b.disabled = true);
+
+            const correctIdx = currentQuiz[qIndex].ans;
+
+            if(selectedIdx === correctIdx) {
+                btnElement.classList.add('correct');
+                score++;
+            } else {
+                btnElement.classList.add('wrong');
+                allBtns[correctIdx].classList.add('correct'); // Montrer la bonne réponse
+            }
+
+            document.getElementById('btn-next').style.display = 'flex';
+        }
+
+        function nextQuestion() {
+            qIndex++;
+            document.getElementById('btn-next').style.display = 'none';
+            
+            if(qIndex < currentQuiz.length) {
+                showQuestion();
+            } else {
+                endQuiz();
+            }
+        }
+
+        function endQuiz() {
+            document.getElementById('quiz-body').style.display = 'none';
+            const resDiv = document.getElementById('quiz-result');
+            resDiv.style.display = 'block';
+            
+            let msg = "";
+            if(score === currentQuiz.length) msg = "🥇 PARFAIT !";
+            else if(score > currentQuiz.length / 2) msg = "✅ BIEN JOUÉ !";
+            else msg = "⚠️ À REVOIR";
+
+            resDiv.innerHTML = `SCORE : ${score} / ${currentQuiz.length}<br><span style="font-size:1rem; color:white; font-weight:400;">${msg}</span>`;
+        }
+
+        function closeQuiz() {
+            document.getElementById('quiz-modal').style.display = 'none';
+        }
+
+    </script>
 
 </body>
 </html>

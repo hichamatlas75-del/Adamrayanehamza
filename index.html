@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>QG FAMILY V10 (FORMS)</title>
+    <title>QG FAMILY V11</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Orbitron:wght@700&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -21,11 +21,11 @@
 
         .nav-bar { display: flex; gap: 10px; padding: 15px; position: sticky; top: 0; background: var(--bg); z-index: 100; border-bottom: 1px solid #334155; }
         .tab-btn { flex: 1; padding: 12px; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; background: #334155; color: #94a3b8; transition: 0.3s; }
-        .tab-btn.active-h { background: var(--primary-h); color: white; }
-        .tab-btn.active-t { background: var(--primary-t); color: white; }
+        .tab-btn.active-h { background: var(--primary-h); color: white; box-shadow: 0 4px 12px rgba(59,130,246,0.3); }
+        .tab-btn.active-t { background: var(--primary-t); color: white; box-shadow: 0 4px 12px rgba(139,92,246,0.3); }
 
-        .zone { display: none; padding: 15px; }
-        .show { display: block; animation: fade 0.3s; }
+        .zone { display: none; padding: 15px; animation: fade 0.3s; }
+        .show { display: block; }
         @keyframes fade { from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:translateY(0)} }
 
         .gen-container { display: flex; flex-direction: column; gap: 15px; margin-bottom: 25px; }
@@ -57,8 +57,6 @@
         .q-fr { border-left: 4px solid #3b82f6; } .q-eng { border-left: 4px solid var(--eng); }
         .q-sci { border-left: 4px solid #ef4444; }
         .q-ar { border-left: 4px solid #10b981; border-right: 4px solid #10b981; text-align: right; flex-direction: row-reverse; }
-        
-        /* STYLE SPECIAL GOOGLE FORM */
         .q-form { border-left: 4px solid var(--forms); background: rgba(114, 72, 185, 0.1); }
 
         .fab-chat { position: fixed; bottom: 20px; right: 20px; background: var(--chat-bg); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.5); z-index: 900; border: 2px solid white; cursor: pointer; }
@@ -66,7 +64,6 @@
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 2000; display: none; justify-content: center; align-items: center; padding: 20px; }
         .modal-content { background: #1e293b; width: 100%; max-width: 500px; border-radius: 16px; padding: 25px; border: 1px solid #475569; position: relative; max-height: 80vh; overflow-y: auto; }
         
-        /* Modal Web FULLSCREEN */
         .modal-web { width: 100%; height: 100%; padding: 0; background: #000; max-width: 100%; border-radius: 0; }
         .web-frame { width: 100%; height: 100%; border: none; background: white; }
         .close-web { position: absolute; top: 15px; right: 15px; background: #ef4444; color: white; border: none; padding: 8px 20px; border-radius: 8px; font-weight: bold; z-index: 2100; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
@@ -85,7 +82,7 @@
 </head>
 <body>
 
-    <header><h1>⚡ QG FAMILY V10</h1></header>
+    <header><h1>⚡ QG FAMILY V11</h1></header>
 
     <div class="nav-bar">
         <button id="btn-hamza" class="tab-btn active-h" onclick="switchTab('hamza')">HAMZA (TC)</button>
@@ -94,50 +91,60 @@
 
     <div class="fab-chat" onclick="openChat()">💬</div>
 
-    <!-- HAMZA -->
+    <!-- =================================================================
+         ZONE HAMZA (TRONC COMMUN)
+    ================================================================= -->
     <div id="zone-hamza" class="zone show">
+        
         <div class="gen-container">
             <button class="infinite-btn btn-maths" onclick="lancerGenerateurSciences('tc')"><span>♾️</span> GÉNÉRATEUR MATHS/PC</button>
             <button class="infinite-btn btn-psycho" onclick="lancerGenerateurPsycho()"><span>🧩</span> LOGIQUE (CONCOURS)</button>
         </div>
 
-        <!-- ZONE GOOGLE FORMS HAMZA -->
-       <div class="section-title"><span>📝</span> DEVOIRS SURVEILLÉS (FORMS)</div>
-<button class="btn-quiz q-form" onclick="openExternalQuiz('https://forms.gle/nX1iBEVHtPfFxDC59')">
-    <div>Nouveau Quiz (Cliquer pour ouvrir)</div><span>📝</span>
-</button>
-        <div class="section-title"><span>🧪</span> SCIENTIFIQUE</div>
+        <!-- LE BOUTON REPARÉ AVEC VOTRE LIEN -->
+        <div class="section-title"><span>📝</span> DEVOIRS SURVEILLÉS (FORMS)</div>
+        <button class="btn-quiz q-form" onclick="openExternalQuiz('https://forms.gle/nX1iBEVHtPfFxDC59')">
+            <div>Quiz Boîte à Merveilles (Nouveau)</div><span>📝</span>
+        </button>
+
+        <div class="section-title"><span>🧪</span> PÔLE SCIENTIFIQUE</div>
         <div class="grid">
             <a href="https://www.youtube.com/@YoussefNejjari" target="_blank" class="card" style="border-left:3px solid #ef4444;"><span class="card-icon">📐</span>Maths</a>
             <a href="https://www.youtube.com/results?search_query=zakaria+choukri+tronc+commun" target="_blank" class="card" style="border-left:3px solid #f59e0b;"><span class="card-icon">⚡</span>Physique</a>
         </div>
-        <div class="section-title"><span>🧠</span> QUIZ RAPIDES (AR)</div>
+
+        <div class="section-title"><span>🧠</span> QUIZ INTERNES (AR)</div>
         <button class="btn-quiz q-ar" onclick="lancerQuizStatic('tc_islam')"><div class="ar-text">التربية الإسلامية</div><span>🕌</span></button>
         <button class="btn-quiz q-ar" onclick="lancerQuizStatic('tc_hg')"><div class="ar-text">الاجتماعيات</div><span>🌍</span></button>
+        <button class="btn-quiz q-ar" onclick="lancerQuizStatic('tc_philo')"><div class="ar-text">الفلسفة</div><span>🦉</span></button>
         <button class="btn-quiz q-ar" onclick="lancerQuizStatic('tc_arabe')"><div class="ar-text">اللغة العربية</div><span>🇸🇦</span></button>
+
+        <div class="section-title"><span>📂</span> RESSOURCES</div>
+        <div class="grid">
+             <a href="https://www.youtube.com/results?search_query=moul+l+falsafa+tronc+commun" target="_blank" class="card"><div class="card-icon">🦉</div><h3>Philo</h3></a>
+             <a href="https://www.alloschool.com/" target="_blank" class="card"><div class="card-icon">📚</div><h3>AlloSchool</h3></a>
+        </div>
     </div>
 
-    <!-- TWINS -->
+    <!-- =================================================================
+         ZONE TWINS (1er BAC)
+    ================================================================= -->
     <div id="zone-twins" class="zone">
         <div class="countdown-box">
             <div style="color:#fca5a5; font-size:0.8rem; margin-bottom:10px;">🚨 EXAMEN RÉGIONAL</div>
             <div class="timer-display" id="timer">00 : 00 : 00</div>
         </div>
+
         <div class="gen-container">
             <button class="infinite-btn btn-maths" onclick="lancerGenerateurSciences('bac')"><span>♾️</span> GÉNÉRATEUR MATHS/PC</button>
             <button class="infinite-btn btn-psycho" onclick="lancerGenerateurPsycho()"><span>🧩</span> LOGIQUE (CONCOURS)</button>
         </div>
 
-        <!-- ZONE GOOGLE FORMS TWINS -->
-        <div class="section-title" style="color:#7248B9;"><span>📝</span> EXAMENS BLANCS (FORMS)</div>
-        <button class="btn-quiz q-form" onclick="openExternalQuiz('https://docs.google.com/forms/u/0/?tgif=d')">
-            <div>Examen Blanc Régional</div><span>📝</span>
-        </button>
-
-        <div class="section-title" style="color:#fbbf24;"><span>📚</span> QUIZ INTERNES (AR)</div>
+        <div class="section-title" style="color:#fbbf24;"><span>📚</span> MISSION RÉGIONAL (AR)</div>
         <button class="btn-quiz q-ar" onclick="lancerQuizStatic('bac_islam')"><div class="ar-text">التربية الإسلامية</div><span>🕌</span></button>
         <button class="btn-quiz q-ar" onclick="lancerQuizStatic('bac_hg')"><div class="ar-text">الاجتماعيات</div><span>🌍</span></button>
         <button class="btn-quiz q-ar" onclick="lancerQuizStatic('bac_ar')"><div class="ar-text">اللغة العربية</div><span>🇸🇦</span></button>
+
         <div class="section-title"><span>🇫🇷</span> FRANÇAIS & ANGLAIS</div>
         <button class="btn-quiz q-fr" onclick="lancerQuizStatic('bac_fr_boite')"><div>Boîte à Merveilles</div><span>📦</span></button>
         <button class="btn-quiz q-fr" onclick="lancerQuizStatic('bac_fr_antigone')"><div>Antigone</div><span>🎭</span></button>
@@ -233,8 +240,8 @@
                 const ep = m * 10 * h;
                 qObj = { q: `[PC] Ep (mgh) pour m=${m}kg, h=${h}m ?`, opt: [ep, ep+50, ep*2, ep/2].sort(()=>Math.random()-0.5), realAns: ep };
             } else {
-                const svtTC = [{q:"Structure vivant ?", a:"Cellule"}, {q:"Niveau plantes ?", a:"Producteurs"}];
-                const svtBac = [{q:"Phase S cycle ?", a:"Réplication ADN"}, {q:"Constituant ADN ?", a:"Nucléotides"}];
+                const svtTC = [{q:"Structure vivant ?", a:"Cellule"}, {q:"Niveau plantes ?", a:"Producteurs"}, {q:"Facteurs climatiques ?", a:"Abiotiques"}];
+                const svtBac = [{q:"Phase S cycle ?", a:"Réplication ADN"}, {q:"Constituant ADN ?", a:"Nucléotides"}, {q:"Information génétique ?", a:"Dans le noyau"}];
                 const pool = (level === 'tc') ? svtTC : svtBac;
                 const item = pool[Math.floor(Math.random() * pool.length)];
                 qObj = { q: `[SVT] ${item.q}`, opt: [item.a, "Aucune", "Autre", "Je ne sais pas"].sort(()=>Math.random()-0.5), realAns: item.a };
@@ -287,14 +294,14 @@
             showQ();
         }
 
-        // --- 4. LANCEUR GOOGLE FORM (WEB) ---
+        // --- 4. LANCEUR WEB EXTERNE (CORRIGÉ & VALIDÉ) ---
         function openExternalQuiz(url) {
-            // Ici, vous collez vos vrais liens Google Forms
-            if(url.includes("https://forms.gle/nhuBjDyPWueuHaV17")) {
+            // Le correctif est ici : on accepte 'forms.gle'
+            if(url.includes("google") || url.includes("forms.gle")) {
                 document.getElementById('web-frame').src = url;
                 document.getElementById('web-modal').style.display = 'flex';
             } else {
-                alert("Lien non configuré !");
+                alert("Lien non valide ! Le lien doit venir de Google Forms.");
             }
         }
         function closeWeb() {
@@ -354,25 +361,4 @@
         }
 
         function check(i, b) {
-            document.querySelectorAll('.quiz-opt-btn').forEach(btn => btn.disabled = true);
-            let ans = curQ[qIdx].ans;
-            if (ans === undefined) ans = curQ[qIdx].opt.indexOf(curQ[qIdx].realAns);
-            if(i === ans) { b.classList.add('correct'); score++; }
-            else { b.classList.add('wrong'); document.querySelectorAll('.quiz-opt-btn')[ans].classList.add('correct'); }
-            document.getElementById('btn-next').style.display = 'block';
-        }
-
-        function nextQuestion() {
-            qIdx++; document.getElementById('btn-next').style.display = 'none';
-            if(qIdx < curQ.length) showQ(); else endQuiz();
-        }
-
-        function endQuiz() {
-            document.getElementById('quiz-body').style.display = 'none';
-            document.getElementById('quiz-result').style.display = 'block';
-            document.getElementById('score-val').innerText = score + " / " + curQ.length;
-        }
-        function closeQuiz() { document.getElementById('quiz-modal').style.display = 'none'; }
-    </script>
-</body>
-</html>
+            document.querySelecto

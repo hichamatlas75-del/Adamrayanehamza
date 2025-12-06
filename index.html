@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>QG FAMILY V11</title>
+    <title>QG FAMILY V12</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Orbitron:wght@700&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #0f172a; --surface: #1e293b;
             --primary-h: #3b82f6; --primary-t: #8b5cf6;
             --text: #f8fafc; --chat-bg: #25d366; --eng: #0ea5e9;
-            --forms: #7248B9; /* Violet Google Forms */
+            --forms: #7248B9;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; -webkit-tap-highlight-color: transparent; }
         .ar-text { font-family: 'Cairo', sans-serif; direction: rtl; text-align: right; }
@@ -82,7 +82,7 @@
 </head>
 <body>
 
-    <header><h1>⚡ QG FAMILY V11</h1></header>
+    <header><h1>⚡ FAMILY HUB V12</h1></header>
 
     <div class="nav-bar">
         <button id="btn-hamza" class="tab-btn active-h" onclick="switchTab('hamza')">HAMZA (TC)</button>
@@ -101,10 +101,10 @@
             <button class="infinite-btn btn-psycho" onclick="lancerGenerateurPsycho()"><span>🧩</span> LOGIQUE (CONCOURS)</button>
         </div>
 
-        <!-- LE BOUTON REPARÉ AVEC VOTRE LIEN -->
-        <div class="section-title"><span>📝</span> DEVOIRS SURVEILLÉS (FORMS)</div>
-        <button class="btn-quiz q-form" onclick="openExternalQuiz('https://forms.gle/nX1iBEVHtPfFxDC59')">
-            <div>Quiz Boîte à Merveilles (Nouveau)</div><span>📝</span>
+        <!-- BOUTON DU FORMULAIRE MIS A JOUR -->
+        <div class="section-title"><span>📝</span> DEVOIR SURVEILLÉ</div>
+        <button class="btn-quiz q-form" onclick="openExternalQuiz('https://docs.google.com/forms/d/e/1FAIpQLScounuQU-QhbTSEsIJx4-pR07r5ekD3avWxGBFwmuecK1pPnA/viewform?usp=header')">
+            <div>CLIQUEZ ICI POUR COMMENCER</div><span>📝</span>
         </button>
 
         <div class="section-title"><span>🧪</span> PÔLE SCIENTIFIQUE</div>
@@ -139,6 +139,12 @@
             <button class="infinite-btn btn-maths" onclick="lancerGenerateurSciences('bac')"><span>♾️</span> GÉNÉRATEUR MATHS/PC</button>
             <button class="infinite-btn btn-psycho" onclick="lancerGenerateurPsycho()"><span>🧩</span> LOGIQUE (CONCOURS)</button>
         </div>
+
+        <!-- BOUTON DU FORMULAIRE MIS A JOUR -->
+        <div class="section-title" style="color:#7248B9;"><span>📝</span> EXAMEN BLANC</div>
+        <button class="btn-quiz q-form" onclick="openExternalQuiz('https://docs.google.com/forms/d/e/1FAIpQLScounuQU-QhbTSEsIJx4-pR07r5ekD3avWxGBFwmuecK1pPnA/viewform?usp=header')">
+            <div>CLIQUEZ ICI POUR COMMENCER</div><span>📝</span>
+        </button>
 
         <div class="section-title" style="color:#fbbf24;"><span>📚</span> MISSION RÉGIONAL (AR)</div>
         <button class="btn-quiz q-ar" onclick="lancerQuizStatic('bac_islam')"><div class="ar-text">التربية الإسلامية</div><span>🕌</span></button>
@@ -361,4 +367,26 @@
         }
 
         function check(i, b) {
-            document.querySelecto
+            document.querySelectorAll('.quiz-opt-btn').forEach(btn => btn.disabled = true);
+            let ans = curQ[qIdx].ans;
+            if (ans === undefined) ans = curQ[qIdx].opt.indexOf(curQ[qIdx].realAns);
+            
+            if(i === ans) { b.classList.add('correct'); score++; }
+            else { b.classList.add('wrong'); document.querySelectorAll('.quiz-opt-btn')[ans].classList.add('correct'); }
+            document.getElementById('btn-next').style.display = 'block';
+        }
+
+        function nextQuestion() {
+            qIdx++; document.getElementById('btn-next').style.display = 'none';
+            if(qIdx < curQ.length) showQ(); else endQuiz();
+        }
+
+        function endQuiz() {
+            document.getElementById('quiz-body').style.display = 'none';
+            document.getElementById('quiz-result').style.display = 'block';
+            document.getElementById('score-val').innerText = score + " / " + curQ.length;
+        }
+        function closeQuiz() { document.getElementById('quiz-modal').style.display = 'none'; }
+    </script>
+</body>
+</html>

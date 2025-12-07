@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examen Numérique</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body { background-color: #0f172a; color: white; font-family: 'Outfit', sans-serif; padding: 20px; }
+        .header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid #3b82f6; padding-bottom: 10px; }
+        .question-box { background: #1e293b; padding: 20px; border-radius: 12px; margin-bottom: 20px; border: 1px solid #334155; }
+        .q-title { font-size: 1.1rem; font-weight: bold; margin-bottom: 15px; color: #a5b4fc; }
+        .option { 
+            display: block; background: #0f172a; padding: 15px; margin-bottom: 10px; 
+            border-radius: 8px; cursor: pointer; border: 1px solid #475569; transition: 0.2s;
+        }
+        .option:hover { background: #334155; }
+        .option.selected { border-color: #3b82f6; background: #1e3a8a; }
+        .option.correct { background: #059669; border-color: #10b981; } /* Vert */
+        .option.wrong { background: #991b1b; border-color: #ef4444; } /* Rouge */
+        
+        .btn-submit { 
+            width: 100%; padding: 15px; background: #3b82f6; color: white; border: none; 
+            border-radius: 10px; font-weight: bold; font-size: 1.1rem; margin-top: 20px; cursor: pointer;
+        }
+        .score-box { display: none; text-align: center; font-size: 1.5rem; margin-top: 20px; padding: 20px; background: #334155; border-radius: 10px; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h2 id="exam-title">Chargement...</h2>
+    </div>
+
+    <div id="quiz-container"></div>
+
+    <button class="btn-submit" onclick="corrigerExamen()">TERMINER L'EXAMEN</button>
+    <div id="resultat" class="score-box"></div>
+
+    <!-- ON CHARGE VOS QUESTIONS ICI -->
+    <script src="examens_data.js"></script> 
+
+    <script>
+        // Récupérer l'ID de l'examen depuis l'URL (ex: plateforme_examen.html?id=maths_tc_1)
+        const urlParams = new URLSearchParams(window.location.search);
+        const examId = urlParams.get('id');
+        let currentExam = null;
+
+        if(examens[examId]) {
+            currentExam = examens[examId];
+            document.getElementById('exam-title').innerText = currentExam.titre;
+            afficherQuestions();
+        } else {
+            document.body.innerHTML = "<h3 style='text-align:center; color:red'>Examen introuvable. Vérifiez le fichier data.</h3>";
+        }
+
+        function afficherQuestions() {
+            const container = document.getElementById('quiz-container');
+            currentExam.questions.forEach((q, index) => {
+                let html = `<div class="question-box" id="qbox-${index}">
+                    <div class="q-title">Question ${index + 1} : ${q.q}</div>`;
+                
+                q.opt.forEach((opt, i) => {
+                    html += `<div class="option" onclick="selectOption(${index}, ${i})" id="opt-${index}-${i}">${opt}</div>`;
+                });
+                
+                html += `</div>`;
+                container.innerHTML += html;
+            });
+        }
+
+        let userAnswers = {};
+
+        function selectOption(qIdx, optIdx) {
+            // Retirer la sélection précédente
+            for(let i=0; i<4; i++) {
+                let el = document.getElementById(`opt-${qIdx}-${i}`);
+                if(el) el.classList.remove('selected');
+            }
+            // Ajouter la nouvelle
+            document.getElementById(`opt-${qIdx}-${optIdx}`).classList.add('selected');
+            userAnswers[qIdx] = optIdx;
+        }
+
+        function corrigerExamen() {
+            let score = 0;
+            currentExam.questions.forEach((q, index) => {
+                const selected = userAnswers[index];
+                const correct = q.ans;
+                const box = document.getElementById(`qbox-${index}`);
+
+                // Désactiver les clics
+                box.style.pointerEvents = "none";
+
+                if(selected === correct) {
+                    score++;
+                    if(selected !== undefined) document.getElementById(`opt-${index}-${selected}`).classList.add('correct');
+                } else {
+                    if(selected !== undefined) document.getElementById(`opt-${index}-${selected}`).classList.add('wrong');
+                    document.getElementById(`opt-${index}-${correct}`).classList.add('correct'); // Montrer la bonne réponse
+                }
+            });
+
+            const resDiv = document.getElementById('resultat');
+            resDiv.style.display = "block";
+            resDiv.innerHTML = `NOTE FINALE : ${score} / ${currentExam.questions.length}`;
+            window.scrollTo(0, document.body.scrollHeight);
+        }
+    </script>
+</body>
+</html>
